@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import logo from '../logo.svg';
 import './App.css';
-import LoginScreen from './login';
+import KitchenCalendar from './kitchenCalendar/KitchenCalendar';
 
 const titleText = {
   0: 'Welcome !',
@@ -21,7 +21,7 @@ function App() {
   
   return (
     <div className="App">
-      <LoginScreen />
+      <KitchenCalendar />
     </div>
   );
 }
