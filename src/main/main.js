@@ -21,6 +21,8 @@ function createWindow() {
         mainWindow = null;
     });
 
+    mainWindow.webContents.openDevTools();
+
     return mainWindow;
 }
 

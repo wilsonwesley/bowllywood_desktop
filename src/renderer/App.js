@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import logo from '../logo.svg';
 import './App.css';
 
+import { getSaltedBowls } from '../services/bowls';
+
 const titleText = {
   0: 'Welcome !',
   1: 'It\'s up to you!'
@@ -9,6 +11,8 @@ const titleText = {
 
 function App() {
   const [title, setTitle] = useState(0);
+  const [bowls, setBowls] = useState([]);
+
   const handleClick = () => {
     window.electron.send('get-new-title', title);
   }
@@ -16,7 +20,16 @@ function App() {
     window.electron.recieve('display-new-title', (data) => {
       setTitle(data);
     })
-  }, [title])
+
+    getSaltedBowls().then((res) => {
+      setBowls(res.data);
+      console.log(res.data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
+  }, [title, bowls])
   
   return (
     <div className="App">

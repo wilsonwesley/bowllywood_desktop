@@ -1,4 +1,4 @@
-import { axiosInstance } from "../providers/axiosProvider";
+import { axiosInstance } from "../providers/axiosInstance";
 
 export const getOneMeal = (id) => {
     return axiosInstance.get(`/menus/${id}`);
@@ -13,7 +13,6 @@ export const getSaltedBowls = () => {
 }
 
 /*
-
 	export const createMeal = (values) => {
 		return axiosInstance.post('/menus/create', values);
 	}
@@ -25,5 +24,4 @@ export const getSaltedBowls = () => {
 	export const deleteMeal = (id) => {
 		return axiosInstance.delete(`/menus/delete/${id}`);
 	}
-
 */
