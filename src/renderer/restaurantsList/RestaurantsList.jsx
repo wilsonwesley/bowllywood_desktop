@@ -28,6 +28,26 @@ const RestaurantsListScreen = () => {
                     />
                 </Col>
             </Row>
+
+            <Row>
+                    {allRestaurants.map((item)=>(
+                        <Col key={item._id} xs={3}>
+                            <Card border="dark"  className='text-center'>
+                                <Card.Header>{item.city}</Card.Header>
+                                <Card.Body>
+                                    <Card.Title>{item.address}</Card.Title>
+                                    <Card.Text>
+                                        Horaire du jour: 10h 22h
+                                    </Card.Text>
+                                </Card.Body>
+                                <Card.Footer>
+                                    <small className="text-muted">{item.phone}</small>
+                                </Card.Footer>
+                            </Card>
+                        </Col>
+                    ))}
+
+                </Row>
         </Container>
     );
 };
