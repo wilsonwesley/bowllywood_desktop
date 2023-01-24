@@ -56,7 +56,7 @@ const AddFranchiseRequestScreen = () => {
             <Row>
                 <Col className='col-12 flex-center'>
                     <img
-                        src="Bowllywood.png"
+                        src="bowllywood.png"
                         alt="Logo du restaurant de bowls nommé Bowllywood"
                     />
                 </Col>
