@@ -1,0 +1,37 @@
+@import '~bootstrap/scss/bootstrap.scss';
+@import './variables.scss';
+@import './../components/Button.scss';
+@import './../components/template.scss';
+
+.container{
+	max-width: 100%;
+}
+
+// debug class //
+.bb {border: red 2px solid;}
+
+// base style //
+.no-border {border: none;}
+
+.flex-center {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.mauikea_font {
+	font-family: $mauikea-font;
+}
+
+.infoStyle {
+	font-style: italic;
+	font-size: .8em;
+}
+
+.growIcon {
+		transform: scale(4, 4);    
+}
+
+.dark-green {
+	background-color: $dark-green;
+}

@@ -1,0 +1,12 @@
+@import '../sass/variables.scss';
+
+.generalCardStyle {
+    width: 18em;
+    border: 0.1em solid $pale-grey;
+    border-radius: 2px;
+    color: $dark-grey;
+}
+
+.text-muted {
+    color: $pale-grey;
+}
