@@ -1,5 +1,5 @@
 {
-  "name": "bowllywood_desktop",
+  "name": "lm-electron-react-starter",
   "version": "0.1.0",
   "private": true,
   "main": "src/main/main.js",
