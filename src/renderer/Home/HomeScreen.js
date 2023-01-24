@@ -29,8 +29,6 @@ function HomeScreen() {
 
 
 		/*
-		
-		
 		Container
 
 		<ListItem title="" link="" description="" />
