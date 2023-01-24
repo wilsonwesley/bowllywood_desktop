@@ -1,4 +1,4 @@
-import { axiosInstance } from "../providers/axiosProvider";
+import { axiosInstance } from "../providers/axiosInstance";
 
 export const getOneIngredient = (id) => {
     return axiosInstance.get(`/ingredients/${id}`);
