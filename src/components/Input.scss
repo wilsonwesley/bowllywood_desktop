@@ -1,0 +1,20 @@
+@import './../sass/variables.scss';
+
+.inputCtnr{
+    label {
+        font-variant: all-small-caps;
+        font-family: $ibm-font;
+        font-size: .95rem;
+        text-align: start;
+    }
+
+    input {
+        border-bottom: solid 2px $pale-grey;
+        transition: border .2s ease-out;
+        outline-width: 0;
+        background-color: transparent !important;
+
+        &:hover {border-color: $dark-grey;}
+        &:focus {border-color: $dark-grey;}
+    }
+}

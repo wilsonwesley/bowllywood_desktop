@@ -1,9 +1,9 @@
-import { axiosInstance } from "../providers/axiosProvider";
+import { axiosInstance } from "../providers/axiosInstance";
 
 export const getOneIngredient = (id) => {
-    return axiosInstance.get(`/ingredients/${id}`);
-}
+  return axiosInstance.get(`/ingredients/${id}`);
+};
 
 export const getAllIngredients = (cat) => {
-    return axiosInstance.get(`/ingredients/list/${cat}`);
-}
+  return axiosInstance.get(`/ingredients/list/${cat}`);
+};
