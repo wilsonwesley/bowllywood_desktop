@@ -1,29 +1,33 @@
-import {AxiosInstance} from '../providers/axiosInstance';
+import {axiosInstance} from '../providers/axiosInstance';
 
 export const register = (values) => {
-    return AxiosInstance.post('/users/add', values);
+    return axiosInstance.post('/users/add', values);
 }
 
 export const editUser = (id) => {
-    return AxiosInstance.patch('/users/' + id);
+    return axiosInstance.patch('/users/' + id);
 }
 
 export const deleteUser = (id) => {
-    return AxiosInstance.delete('/users/' + id);
+    return axiosInstance.delete('/users/' + id);
 }
 
 export const loginUser = (values) => {
-    return AxiosInstance.post('/users/login/', values);
+    return axiosInstance.post('/users/login/', values);
 }
 
 export const getAllUsers = () => {
-    return AxiosInstance.get('/users/');
+    return axiosInstance.get('/users/');
 }
 
 export const getUserDetails = (id) => {
-    return AxiosInstance.get('/users/' + id);
+    return axiosInstance.get('/users/' + id);
 }
 
 export const getUserFranchiseRequests = (id) => {
-    return AxiosInstance.get(`/users/my-franchise-requests/${id}`);
+    return axiosInstance.get(`/users/my-franchise-requests/${id}`);
+}
+
+export const getCurrentUserDetails = () => {
+    return axiosInstance.get('/users/me');
 }
