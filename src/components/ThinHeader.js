@@ -1,13 +1,14 @@
 import { Col, Row, Container } from 'react-bootstrap';
 
-
-function ThinHeader({subTitle}) {
+const ThinHeader = ({subTitle}) => {
 
 	return (
-	<Container>
+	<Container fluid className="border">
 		<Row>
-			<h1 font-size={16}>Bowllywood</h1>
-			<p>{subTitle}</p>
+			<Col className="px-5 py-4">
+				<h1 className='thinHeader-title m-0'>Bowllywood</h1>
+				<p style={{fontSize:"0.8em"}}>Bonjour {subTitle}</p>
+			</Col>
 		</Row>
 	</Container>
 	)
