@@ -1,9 +1,30 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import FullCalendar from "@fullcalendar/react";
 import timeGridPlugin from "@fullcalendar/timegrid";
-import interactionPlugin from "@fullcalendar/interaction"
+import interactionPlugin from "@fullcalendar/interaction";
+import { getAllKitchenEvents } from "../../services/kitchenCalendar";
 
 function KitchenCalendar() {
+  const [eventsList, setEventsList] = useState([]);
+  useEffect(() => {
+    getAllKitchenEvents()
+      .then((response) => {
+        const correctedEvents = Object.values(response.data).map((event) => {
+          return {
+            title: event.eventPeople,
+            start: event.eventStart,
+            end: event.eventEnd,
+            color: event.eventColor,
+          };
+        });
+        setEventsList(correctedEvents);
+        console.log(eventsList);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
   return (
     <>
       <h1>Planning de la cuisine</h1>
@@ -11,14 +32,10 @@ function KitchenCalendar() {
         plugins={[timeGridPlugin, interactionPlugin]}
         initialView="timeGridWeek"
         locale={["fr"]}
-        events={[
-            { title: 'Isidore', start: '2023-01-01 08:00', end: '2023-01-05 10:00', color: 'red' },
-            { title: 'Alfred', date: '2023-01-02', color: 'orange' }
-          ]}
+        events={eventsList}
       />
     </>
   );
-  
 }
 
 export default KitchenCalendar;
