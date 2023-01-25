@@ -49,47 +49,33 @@ function HomeScreen() {
 			description: '[PDG] Consulter les restaurants'
 		}
 	]
-	
 
 	const Navigation = () => {
 		return (
-			<Container fluid>
-				<Row className="homeNavigation">
-					<Col xs={2}>
-						<div>
-							{/*<FontAwesomeIcon icon="fa-solid fa-right-from-bracket" />*/}
-							{/*<i class="fa-solid fa-right-from-bracket"></i>*/}
-							<p className="m-0">Tableau de bord</p>
-						</div>
-					</Col>
-					<Col xs={2}>
-						<div>
-							{/*<FontAwesomeIcon icon="fa-solid fa-right-from-bracket" />*/}
-							<i class="fa-solid fa-right-from-bracket"></i>
-							<p className="m-0">Profil</p>
-						</div>
-					</Col>
-					<Col xs={2}>
-						<div>
-							{/*<FontAwesomeIcon icon="fa-solid fa-right-from-bracket" />*/}
-							<i class="fa-solid fa-right-from-bracket"></i>
-							<p className="m-0">Déconnexion</p>
-						</div>
-					</Col>
-				</Row>
-			</Container>
+		<div className="homeNavigation d-flex">
+			<div className="d-flex flex-column align-items-center ">
+				<i class="fa-solid fa-house"></i>
+				<p className="mb-0 mt-2 ">Accueil</p>
+			</div>
+			<div className="d-flex flex-column align-items-center ">
+				<i class="fa-solid fa-user"></i>
+				<p className="mb-0 mt-2 ">Profil</p>
+			</div>
+			<div className="d-flex flex-column align-items-center ">
+				<i className="fa-solid fa-right-from-bracket "></i>
+				<p className="mb-0 mt-2 ">Déconnexion</p>
+			</div>
+		</div>
 		)
 	}
-
-
 
 	// className="border"
 
 	return (
-		<div className="border d-flex flex-column justify-content-between">	
+		<div className="d-flex flex-column justify-content-between vh-100 px-5 py-4">	
 			<ThinHeader subTitle={userFullname} />
 
-			<ListGroup className="border container-fluid">
+			<ListGroup className="container-fluid">
 				{linkList.map((link)=>{
 					return <HomeListItem title={link.title} isDisplayed={link.isDisplayed} description={link.description} />
 				})}
