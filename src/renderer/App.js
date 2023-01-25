@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import logo from "../logo.svg";
 import "./App.css";
 import AddFranchiseRequestScreen from "./addFranchiseRequest/AddFranchiseRequestScreen";
+import RestaurantsListScreen from "./restaurantsList/RestaurantsList";
 
 const titleText = {
   0: "Welcome !",
@@ -21,7 +22,8 @@ function App() {
 
   return (
     <div className="App">
-      <AddFranchiseRequestScreen />
+      {/* <AddFranchiseRequestScreen /> */}
+      <RestaurantsListScreen />
       {/* <header className="App-header">
         <img id="logo" src={logo} className="App-logo" alt="logo" />
         <div className="title">
