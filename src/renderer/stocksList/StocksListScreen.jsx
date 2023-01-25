@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 
 import { Col, Row, Container } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
+import Button from 'react-bootstrap/Button';
 
 
 const StocksListScreen = () => {
@@ -70,6 +71,17 @@ const StocksListScreen = () => {
                                             <td>
                                                 {item.DLC}
                                             </td>
+                                            <td>
+                                                    <Button className='text-dark'>
+                                                        Détail
+                                                        {/* <Link
+                                                            to={`stocks/${item._id}`}
+                                                            className="text-decoration-none text-black text-center"
+                                                        >
+                                                            <p>Detail</p>
+                                                        </Link> */}
+                                                    </Button>
+                                                </td>
                                         </tr>
                                     );
                                 }
