@@ -38,10 +38,7 @@
 .title > img {
   max-height: 10rem;
 }
-h1 {
-  text-transform: uppercase;
-  transform: rotate(-10deg);
-}
+
 a {
   text-decoration: none;
   color: #00A3E1;
