@@ -34,12 +34,13 @@ const StocksListScreen = () => {
                     <Table striped bordered hover>
                         <thead>
                             <tr>
-                                <th>Référence</th>
+                                <th>Ref</th>
                                 <th>Produit</th>
                                 <th>Saveur</th>
                                 <th>Quantité</th>
                                 <th>Seuil limite</th>
                                 <th>Status</th>
+                                <th>DLC</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -65,6 +66,9 @@ const StocksListScreen = () => {
                                             </td>
                                             <td>
                                                 {item.status}
+                                            </td>
+                                            <td>
+                                                {item.DLC}
                                             </td>
                                         </tr>
                                     );
