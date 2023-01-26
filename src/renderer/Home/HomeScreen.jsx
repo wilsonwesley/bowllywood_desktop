@@ -2,6 +2,7 @@
 Icon vert qd on est sur la page en question
 */
 
+import './HomeScreen.scss'
 import { useState, useEffect } from 'react';
 import { ListGroup } from 'react-bootstrap';
 import { getCurrentUserDetails } from '../../services/users' ;
@@ -13,13 +14,13 @@ function HomeScreen() {
 	const [user, setUser] = useState({});
 
 	// get user details for names 
-	/*useEffect(()=>{
+	useEffect(()=>{
 		getCurrentUserDetails().then((res)=>{
 			setUser(res.data)
 		}).catch((err)=>{
 			console.log('HOME : GET USER DETAILS', err)
 		})
-	}, [user])*/
+	}, [user])
 
 	// [ en attendant de pouvoir se connecter
 	user.lastName = 'Jean';

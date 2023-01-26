@@ -1,5 +1,5 @@
 import "./App.scss";
-import HomeScreen from "./Home/HomeScreen";
+import HomeScreen from "./Home/";
 // import AddFranchiseRequestScreen from "./addFranchiseRequest/AddFranchiseRequestScreen";
 // import RestaurantsListScreen from "./restaurantsList/RestaurantsList";
 // import StocksListScreen from "./stocksList/StocksListScreen";
