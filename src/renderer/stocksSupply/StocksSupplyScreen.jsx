@@ -27,8 +27,7 @@ const StocksSupplyScreen = () => {
     );
 
     // let { id } = useParams();
-    let { id } = '635141dd6d2bc0f9d6b8f38c';
-
+    let id = '635141dd6d2bc0f9d6b8f38c';
 
     const onSubmit = (values) => {
         console.log(values);
