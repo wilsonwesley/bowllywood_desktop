@@ -4,6 +4,7 @@ import RestaurantsListScreen from "./restaurantsList/RestaurantsList";
 import StocksListScreen from "./stocksList/StocksListScreen";
 import StocksDetailScreen from "./stocksDetail/StocksDetailScreen";
 import StocksSupplyScreen from "./stocksSupply/StocksSupplyScreen";
+import StocksExtractScreen from "./stocksExtract/StocksExtractScreen";
 
 function App() {
   return (
@@ -12,7 +13,8 @@ function App() {
       {/* <RestaurantsListScreen /> */}
       {/* <StocksListScreen /> */}
       {/* <StocksDetailScreen /> */}
-      <StocksSupplyScreen />
+      {/* <StocksSupplyScreen /> */}
+      <StocksExtractScreen />
     </div>
   );
 }
