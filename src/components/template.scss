@@ -1,0 +1,52 @@
+.side-nav {
+    position: fixed;
+    height: 100vh;
+    left: 0;
+    top: 0;
+  }
+  
+  .wrapper {
+    background: $dark-green;
+    height: 100vh;
+    width: 6em;
+      .nav-bloc {
+          padding: 20px 0;
+          display: flex;
+          justify-content: center;
+          cursor: pointer;
+          border-bottom: 1px solid #f2f2f21e;
+          &:hover{
+              background: $green;
+          }
+      }
+  }
+  
+  .imgHome{
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+  }
+  
+  .grow{
+      transform: scale(2, 2);    
+  }
+  
+  @media screen and (min-width: 701px) and (max-width: 900px) {
+      .grow{
+          transform: scale(4, 4);
+          margin-top: 2em;
+          margin-left: 0.5em;
+          margin-bottom: 2em;
+      }
+  }
+
+.main-content{
+    min-height: 100vh;
+}
+
+.footer{
+    height: 10vh;
+    position: sticky;
+    top: 100%;
+    background: $dark-green;
+}

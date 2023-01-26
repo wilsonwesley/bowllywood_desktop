@@ -6,12 +6,13 @@
 	src: url("../assets/font/mauikea-webfont.woff2") format("woff2");
 }
 
-$dark-grey  : #3D3D3D; // Texte
 $off-white  : #F2F2F2; // Fond blanc du site
 $pale-grey  : #C7C7C7; // Gris
+$dark-grey  : #3D3D3D; // !default; // Texte
 $pale-green : #DAFBE2; // Navbar/Footer
 $green      : #A3F5B8; // Interactions utilisateur
 $dark-green : #91D5A3;
+$star       : #EABF63; // rating stars color
 $shadow-grey: #DEDEDE;
 
 // font-family
