@@ -1,5 +1,5 @@
-import { AxiosInstance } from "../providers/axiosInstance";
+import { axiosInstance } from "../providers/axiosInstance";
 
 export const getAllKitchenEvents = () => {
-    return AxiosInstance.get('/kitchencalendar/');
+    return axiosInstance.get('/kitchencalendar/');
 }

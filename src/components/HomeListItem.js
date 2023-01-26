@@ -7,11 +7,11 @@ const HomeListItem = ({title, isDisplayed="true", description, index}) => {
 	return (
 	<ListGroupItem key={index} className={`d-${diplayMode} row gap-5 justify-content-center align-items-center border-0 mb-3`}>
 		<div className="col-sm-4">
-			<h2 className="homeListTitle m-0">{title}</h2>
+			<h2 className="m-0">{title}</h2>
 		</div>
 
 		<div className="col-sm-5">
-			<p className="homeListDesc m-0">{description}</p>
+			<p className="m-0">{description}</p>
 		</div>
 	</ListGroupItem>
 )

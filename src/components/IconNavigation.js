@@ -3,7 +3,7 @@ const IconNavigation = ({iconArr}) => {
 	const IconElement = ({icon, text, route}) => {
 		return (
 			<div className="d-flex flex-column align-items-center ">
-				<i class={icon}></i>
+				<i className={icon}></i>
 				<p className="mb-0 mt-2">{text}</p>
 			</div>
 		)

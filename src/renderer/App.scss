@@ -16,22 +16,35 @@ h1 {
 }
 
 .homeScreen {
-  background-image: uri('../assets/images/homeBg.png')
+  background-image: url('../assets/img/homeBg_cut.png');
+  background-position: bottom right;
+  background-repeat: no-repeat;
+
+  h1 {
+    font-size: 14pt;
+
+    + p {
+      font-size: 0.8em;
+    }
+  }
+
+  // overwrite
+  .list-group-item {
+    background-color: transparent !important;
+  }
 }
 
-.thinHeader-title {
-  font-size: 14pt;
-}
+.homeListGroup {
+  h2 {
+    font-weight: bold;
+    font-size: 1.6em;
+    border-bottom: 3px solid $dark-grey;
+    width: fit-content;
+  }
 
-.homeListTitle {
-  font-weight: bold;
-  font-size: 1.6em;
-  border-bottom: 3px solid $dark-grey;
-  width: fit-content;
-}
-
-.homeListDesc {
-  font-size: 0.9em;
+  p {
+    font-size: 0.9em;
+  }
 }
 
 .homeNavigation {
@@ -41,14 +54,3 @@ h1 {
 
   p {font-size: 0.7em}
 }
-
-
-/*.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}*/
-
