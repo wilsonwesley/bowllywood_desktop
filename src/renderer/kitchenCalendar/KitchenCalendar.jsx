@@ -9,6 +9,7 @@ function KitchenCalendar() {
   useEffect(() => {
     getAllKitchenEvents()
       .then((response) => {
+        console.log(response.data);
         const correctedEvents = Object.values(response.data).map((event) => {
           return {
             title: event.eventPeople,
