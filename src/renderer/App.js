@@ -11,10 +11,10 @@ function App() {
     <div>
       {/*<AddFranchiseRequestScreen /> */}
       {/* <RestaurantsListScreen /> */}
-      {/* <StocksListScreen /> */}
+      <StocksListScreen />
       {/* <StocksDetailScreen /> */}
       {/* <StocksSupplyScreen /> */}
-      <StocksExtractScreen />
+      {/* <StocksExtractScreen /> */}
     </div>
   );
 }
