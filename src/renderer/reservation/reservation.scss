@@ -1,0 +1,19 @@
+@import '../../sass/styles.scss';
+
+.reservationCtnr {
+    // background-image: url('');
+    background-repeat: no-repeat;
+    background-position: bottom right;
+
+	span {
+		font-size: 0.8em;
+	}
+
+	p {
+		font-size: 1em;
+	}
+
+	i {
+		font-size: 1em;
+	}
+}

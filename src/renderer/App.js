@@ -1,5 +1,8 @@
 import "./App.scss";
-import HomeScreen from "./Home/";
+// import HomeScreen from "./home/";
+
+import ReservationList from "./reservation/ReservationList";
+// import ReservationDetail from "./reservation/ReservationDetail";
 // import AddFranchiseRequestScreen from "./addFranchiseRequest/AddFranchiseRequestScreen";
 // import RestaurantsListScreen from "./restaurantsList/RestaurantsList";
 // import StocksListScreen from "./stocksList/StocksListScreen";
@@ -8,7 +11,8 @@ import HomeScreen from "./Home/";
 function App() {
   return (
     <div>
-       <HomeScreen /> 
+       <ReservationList />  
+       {/*<ReservationDetail /> */}
       {/* <AddFranchiseRequestScreen /> */}
       {/* <RestaurantsListScreen /> */}
       {/* <StocksListScreen /> */}
