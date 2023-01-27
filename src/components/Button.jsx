@@ -1,4 +1,4 @@
-import './../sass/styles.scss';
+import '../sass/styles.scss'
 
 const Button = ({type='button', bsType='primary', id=null, onClick=null, children}) => {
     return (

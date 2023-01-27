@@ -4,6 +4,7 @@ import AddFranchiseRequestScreen from "./addFranchiseRequest/AddFranchiseRequest
 import RestaurantsListScreen from "./restaurantsList/RestaurantsList";
 import StocksListScreen from "./stocksList/StocksListScreen";
 import KitchenCalendar from "./kitchenCalendar/KitchenCalendar";
+import LoginScreen from "./login/LoginScreen"
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       {/* <RestaurantsListScreen /> */}
       {/* <StocksListScreen /> */}
       <KitchenCalendar />
+      {/* <LoginScreen /> */}
     </div>
   );
 }

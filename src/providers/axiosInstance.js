@@ -1,7 +1,8 @@
 import axios from "axios";
 
 export const axiosInstance = axios.create({
-  baseURL: 'https://bowllywood.onrender.com/'
+  // baseURL: 'https://bowllywood.onrender.com/'
+  baseURL: 'http://localhost:5000/'
 });
 
 axiosInstance.interceptors.request.use(
@@ -23,7 +24,7 @@ axiosInstance.interceptors.response.use(
     if (!response.headers.Authorization) {
       const authHeaders = JSON.parse(localStorage.getItem("userTokens"));
       response.headers.Authorization = localStorage.getItem("userTokens");
-      console.log(authHeaders);
+
     }
     return response;
   },

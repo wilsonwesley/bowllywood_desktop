@@ -8,6 +8,10 @@ export const editUser = (id) => {
     return axiosInstance.patch('/users/' + id);
 }
 
+export const getUserByRole = (selectedRole) => {
+    return axiosInstance.get('/users/usersByRole/' + selectedRole);
+}
+
 export const deleteUser = (id) => {
     return axiosInstance.delete('/users/' + id);
 }
@@ -17,7 +21,7 @@ export const loginUser = (values) => {
 }
 
 export const getAllUsers = () => {
-    return axiosInstance.get('/users/');
+    return axiosInstance.get('/users/usersList');
 }
 
 export const getUserDetails = (id) => {
