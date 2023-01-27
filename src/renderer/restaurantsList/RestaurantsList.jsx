@@ -31,8 +31,8 @@ const RestaurantsListScreen = () => {
 
             <Row>
                     {allRestaurants.map((item)=>(
-                        <Col key={item._id} xs={3}>
-                            <Card border="dark"  className='text-center'>
+                        <Col key={item._id} xs={4} md={3}>
+                            <Card border="dark"  className='text-center my-2'>
                                 <Card.Header>{item.city}</Card.Header>
                                 <Card.Body>
                                     <Card.Title>{item.address}</Card.Title>
