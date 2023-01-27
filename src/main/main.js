@@ -4,6 +4,8 @@ dotenv.config();
 const path = require("path");
 const { app, BrowserWindow, ipcMain } = require("electron");
 
+let mainWindow
+
 function createWindow() {
   let mainWindow = new BrowserWindow({
     width: 1200,

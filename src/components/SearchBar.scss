@@ -1,0 +1,12 @@
+@import './../sass/variables.scss';
+
+.searchBar{
+    width: 20em;
+    padding: 0.6em 1.4em;
+    font-style: italic;
+    font-family: $ibm-font;
+    border-radius: 0.25em;
+    background-color: $off-white;
+    border: none;
+    outline-width: 0;
+}

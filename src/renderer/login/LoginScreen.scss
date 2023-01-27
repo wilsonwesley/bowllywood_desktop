@@ -1,0 +1,17 @@
+@import '../../sass/styles.scss';
+
+.loginText {
+    word-break: break-all;
+}
+
+.loginLogoContainer {
+    display: flex;
+    flex-direction: row;
+}
+
+.loginForm p.error {
+    margin: 0 0 10px 10px;
+    text-align: left;
+    font-size: 10px;
+    color: red;
+}
