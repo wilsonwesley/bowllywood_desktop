@@ -18,33 +18,27 @@ const items = [
         </Link>
     </SidebarItem>,
     <SidebarItem>
-        <Link to="/reservations" className='text-decoration-none text-black text-center'>
-            <i className="fa-solid fa-money-bill text-black flex-center"></i>
-            <p className='text-black'>Réservation</p>
+        <Link to="/restaurants" className='text-decoration-none text-black text-center'>
+            <i className="fa-solid fa-shop text-black flex-center"></i>
+            <p>Restaurants</p>
         </Link>
     </SidebarItem>,
     <SidebarItem>
-        <Link to="/menus" className='text-decoration-none text-black text-center'>
-            <i className="fa-solid fa-utensils text-black flex-center"></i>
-            <p>Menu</p>
+        <Link to="/stocks" className='text-decoration-none text-black text-center'>
+            <i className="fa-solid fa-box-open text-black flex-center"></i>
+            <p className='text-black'>Inventaire</p>
+        </Link>
+    </SidebarItem>,
+      <SidebarItem> 
+        <Link to="/kitchenCalendar" className='text-decoration-none text-black text-center'>
+            <i className="fa-solid fa-calendar-days text-black flex-center"></i>
+            <p>Agenda</p>
         </Link>
     </SidebarItem>,
     <SidebarItem>
-        <Link to="/mark" className='text-decoration-none text-black text-center'>
-            <i className="fa-solid fa-star text-black flex-center"></i>
-            <p>Évaluation</p>
-        </Link>
-    </SidebarItem>,
-    <SidebarItem> 
-        <Link to="/franchise-request" className='text-decoration-none text-black text-center'>
-            <i className="fa-solid fa-people-roof text-black flex-center"></i>
-            <p>Devenir franchisé</p>
-        </Link>
-    </SidebarItem>,
-    <SidebarItem className="text-center">
-        <Link to="/my-franchise-requests" className='text-decoration-none text-black text-center'>
-            <i className="fa-solid fa-people-roof text-black flex-center"></i>
-            <p>Mes demandes de franchise</p>
+        <Link to="/franchiseRequestsList" className='text-decoration-none text-black text-center'>
+            <i className="fa-solid fa-user-plus text-black flex-center"></i>
+            <p>Adhésion</p>
         </Link>
     </SidebarItem>,
     <SidebarItem>
