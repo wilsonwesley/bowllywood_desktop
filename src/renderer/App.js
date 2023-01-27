@@ -1,35 +1,37 @@
-import { useEffect, useState } from 'react';
-import logo from '../logo.svg';
-import './App.css';
+import "./App.scss";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-const titleText = {
-  0: 'Welcome !',
-  1: 'It\'s up to you!'
-}
+import AddFranchiseRequestScreen from "./addFranchiseRequest/AddFranchiseRequestScreen";
+import HomeScreen from "./Home/HomeScreen";
+import KitchenCalendar from "./kitchenCalendar/KitchenCalendar";
+import RestaurantsListScreen from "./restaurantsList/RestaurantsList";
+import StocksListScreen from "./stocksList/StocksListScreen";
+import StocksDetailScreen from "./stocksDetail/StocksDetailScreen";
+import StocksSupplyScreen from "./stocksSupply/StocksSupplyScreen";
+import StocksExtractScreen from "./stocksExtract/StocksExtractScreen";
+import Template from "./../components/Template";
 
 function App() {
-  const [title, setTitle] = useState(0);
-  const handleClick = () => {
-    window.electron.send('get-new-title', title);
-  }
-  useEffect(() => {
-    window.electron.recieve('display-new-title', (data) => {
-      setTitle(data);
-    })
-  }, [title])
-  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img id="logo" src={logo} className="App-logo" alt="logo" />
-        <div className="title">
-          <h1>{titleText[title]}</h1>
-          <img src="./potion.svg" className="App-potion" alt="potion" />
-        </div>
-        <p>Official Boilerplate for React Electron App</p>
-        <a title="Site La Manu" className="App-link" href="https://lamanu.fr" target="_blank" rel="noopener noreferrer">Visit La Manu</a>
-        <button onClick={handleClick} id="changeTitle">Change Title</button>
-      </header>
+    <div>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Template />}>
+            <Route path="/" element={<HomeScreen />} />
+            <Route path="/restaurants" element={<RestaurantsListScreen />} />
+            <Route path="/stocks" element={<StocksListScreen />} />
+            <Route path="/kitchenCalendar" element={<KitchenCalendar />} />
+            <Route path="/stocks/supply/:id" element={<StocksSupplyScreen />} />
+            <Route
+              path="/stocks/extract/:id"
+              element={<StocksExtractScreen />}
+            />
+          </Route>
+        </Routes>
+      </Router>
+      {/* <StocksDetailScreen /> */}
+      {/* <StocksSupplyScreen /> */}
+      {/* <StocksExtractScreen /> */}
     </div>
   );
 }

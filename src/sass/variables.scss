@@ -1,0 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,600;1,400;1,600&display=swap');
+
+@font-face {
+	font-family: "MAUIKEA Demo Regular";
+	src: url("../assets/font/mauikea-webfont.woff") format("woff");
+	src: url("../assets/font/mauikea-webfont.woff2") format("woff2");
+}
+
+$off-white  : #F2F2F2; // Fond blanc du site
+$pale-grey  : #C7C7C7; // Gris
+$dark-grey  : #3D3D3D; // !default; // Texte
+$pale-green : #DAFBE2; // Navbar/Footer
+$green      : #A3F5B8; // Interactions utilisateur
+$dark-green : #91D5A3;
+$star       : #EABF63; // rating stars color
+$shadow-grey: #DEDEDE;
+
+// font-family
+$ibm-font : 'IBM Plex Sans', Arial, sans-serif;
+$mauikea-font : 'MAUIKEA Demo Regular', Arial, Verdana, sans-serif;
