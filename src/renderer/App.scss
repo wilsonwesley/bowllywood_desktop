@@ -1,5 +1,4 @@
-// @import '~bootstrap/scss/bootstrap.scss';
-@import '../sass/variables.scss';
+@import '../sass/styles.scss';
 
 * {
   font-family: $ibm-font;
@@ -14,37 +13,3 @@ h1 {
 .vh-100 {
   height: 100vh;
 }
-
-.thinHeader-title {
-  font-size: 14pt;
-}
-
-.homeListTitle {
-  font-weight: bold;
-  font-size: 1.6em;
-  border-bottom: 3px solid $dark-grey;
-  width: fit-content;
-}
-
-.homeListDesc {
-  font-size: 0.9em;
-}
-
-.homeNavigation {
-  column-gap: 3.3em;
-
-  i {font-size: 1.3em}
-
-  p {font-size: 0.7em}
-}
-
-
-/*.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}*/
-

@@ -6,8 +6,8 @@ const ThinHeader = ({subTitle}) => {
 	<Container fluid>
 		<Row>
 			<Col>
-				<h1 className='thinHeader-title m-0'>Bowllywood</h1>
-				<p style={{fontSize:"0.8em"}}>Bonjour {subTitle}</p>
+				<h1 className='m-0'>Bowllywood</h1>
+				<p>Bonjour {subTitle}</p>
 			</Col>
 		</Row>
 	</Container>

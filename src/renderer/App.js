@@ -12,6 +12,7 @@ import StocksDetailScreen from "./stocksDetail/StocksDetailScreen";
 import StocksSupplyScreen from "./stocksSupply/StocksSupplyScreen";
 import StocksExtractScreen from "./stocksExtract/StocksExtractScreen";
 import Template from "./../components/Template";
+import ReservationList from "./reservation/ReservationList";
 
 function App() {
   return (

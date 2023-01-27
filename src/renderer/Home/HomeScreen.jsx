@@ -1,8 +1,14 @@
+/*
+Icon vert qd on est sur la page en question
+*/
+
+import './HomeScreen.scss'
 import { useState, useEffect } from 'react';
-import { Col, Row, Container, ListGroup } from 'react-bootstrap';
+import { ListGroup } from 'react-bootstrap';
 import { getCurrentUserDetails } from '../../services/users' ;
 import ThinHeader from '../../components/ThinHeader';
 import HomeListItem from '../../components/HomeListItem';
+import IconNavigation from '../../components/IconNavigation';
 
 function HomeScreen() {
 	const [user, setUser] = useState({});
@@ -50,50 +56,37 @@ function HomeScreen() {
 		}
 	]
 
-	const Navigation = () => {
-		return (
-		<div className="homeNavigation d-flex">
-			<div className="d-flex flex-column align-items-center ">
-				<i class="fa-solid fa-house"></i>
-				<p className="mb-0 mt-2 ">Accueil</p>
-			</div>
-			<div className="d-flex flex-column align-items-center ">
-				<i class="fa-solid fa-user"></i>
-				<p className="mb-0 mt-2 ">Profil</p>
-			</div>
-			<div className="d-flex flex-column align-items-center ">
-				<i className="fa-solid fa-right-from-bracket "></i>
-				<p className="mb-0 mt-2 ">Déconnexion</p>
-			</div>
-		</div>
-		)
-	}
-
-	// className="border"
+	const navList = [
+	{
+		icon: 'fa-solid fa-house',
+		text: 'Accueil',
+		route: ''
+	},
+	{
+		icon: 'fa-solid fa-user',
+		text: 'Profil',
+		route: ''
+	},
+	{
+		icon: 'fa-solid fa-right-from-bracket',
+		text: 'Déconnexion',
+		route: ''
+	},
+	]
 
 	return (
-		<div className="d-flex flex-column justify-content-between vh-100 px-5 py-4">	
+		<div className="homeScreen d-flex flex-column justify-content-between vh-100 px-5 py-4">	
 			<ThinHeader subTitle={userFullname} />
 
-			<ListGroup className="container-fluid">
-				{linkList.map((link)=>{
-					return <HomeListItem title={link.title} isDisplayed={link.isDisplayed} description={link.description} />
+			<ListGroup className="homeListGroup container-fluid">
+				{linkList.map((link, index)=>{
+					return <HomeListItem title={link.title} isDisplayed={link.isDisplayed} description={link.description} index={index} />
 				})}
 			</ListGroup>
 
-			<Navigation />
+			<IconNavigation iconArr={navList} />
 
 		</div>
-
-		/*
-		
-			container
-				row direction-row gaps-2
-					col onClick
-						{div d-flex
-							logo
-							text} boucle x3
-		*/
 	);
 }
 
