@@ -1,19 +1,16 @@
-import { getAllstock } from './../../services/stocks';
+import { getAllFranchiseRequests } from './../../services/franchiseRequests';
 import { useEffect, useState } from 'react';
 
-import { Col, Row, Container } from 'react-bootstrap';
-import Table from 'react-bootstrap/Table';
-import Button from 'react-bootstrap/Button';
+import { Col, Row, Container, Table, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
+const FranchiseRequestsListScreen = () => {
 
-const StocksListScreen = () => {
-
-    const [allStocks, setAllStocks] = useState([]);
+    const [allFranchiseRequests, setAllFranchiseRequests] = useState([]);
     useEffect(() => {
-        getAllstock()
+        getAllFranchiseRequests()
             .then((res) => {
-                setAllStocks(res.data);
+                setAllFranchiseRequests(res.data);
                 console.log(res.data)
             })
             .catch((err) => {
@@ -31,61 +28,46 @@ const StocksListScreen = () => {
                     />
                 </Col>
             </Row>
+
             <Row>
                 <Col>
                     <Table striped bordered hover>
                         <thead>
-                            <tr>
-                                <th>Ref</th>
-                                <th>Produit</th>
-                                <th>Saveur</th>
-                                <th>Quantité</th>
-                                <th>Seuil limite</th>
+                            <tr className='text-center'>
+                                <th>Date de création</th>
+                                <th>Montant estimé</th>
+                                <th>Financement envisagé</th>
+                                <th>Ville d'implantation</th>
                                 <th>Status</th>
-                                <th>DLC</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {allStocks.map(
+                            {allFranchiseRequests.map(
                                 (item) => {
                                     return (
-                                        <tr
+                                        <tr className='text-center'
                                             key={item._id}>
                                             <td>
-                                                {item.ref}
+                                                {item.createdAt}
                                             </td>
                                             <td>
-                                                {item.name}
+                                                {item.estimatedAmount + ' €'}
                                             </td>
                                             <td>
-                                                {item.category}
+                                                {item.hopedFinancing + ' €'}
                                             </td>
                                             <td>
-                                                {item.quantity}
-                                            </td>
-                                            <td>
-                                                {item.quantityLimit}
+                                                {item.shopLocation}
                                             </td>
                                             <td>
                                                 {item.status}
                                             </td>
-                                            <td>
-                                                {item.DLC}
-                                            </td>
                                             <td>   
                                                  <Link
-                                                        to={`/stocks/supply/${item._id}`}
+                                                        to={`/my-franchise-requests/${item._id}`}
                                                         className="text-decoration-none text-black text-center"
                                                     >
-                                                <Button className='text-dark'>Ajouter</Button>
-                                                </Link>
-                                            </td>
-                                            <td>
-                                                <Link
-                                                    to={`/stocks/extract/${item._id}`}
-                                                    className="text-decoration-none text-black text-center"
-                                                    >
-                                                    <Button className='text-dark'> Retirer</Button>
+                                                <Button className='text-dark'>Consulter</Button>
                                                 </Link>
                                             </td>
                                         </tr>
@@ -96,7 +78,8 @@ const StocksListScreen = () => {
                     </Table>
                 </Col>
             </Row>
+
         </Container>
     );
 };
-export default StocksListScreen;
+export default FranchiseRequestsListScreen;
