@@ -62,22 +62,13 @@ const FranchiseRequestsListScreen = () => {
                                             <td>
                                                 {item.status}
                                             </td>
-
                                             <td>   
-                                                 {/* <Link
-                                                        to={`/stocks/supply/${item._id}`}
+                                                 <Link
+                                                        to={`/my-franchise-requests/${item._id}`}
                                                         className="text-decoration-none text-black text-center"
-                                                    > */}
-                                                <Button className='text-dark'>Consulter</Button>
-                                                {/* </Link> */}
-                                            </td>
-                                            <td>
-                                                {/* <Link
-                                                    to={`/stocks/extract/${item._id}`}
-                                                    className="text-decoration-none text-black text-center"
                                                     >
-                                                    <Button className='text-dark'> Retirer</Button>
-                                                </Link> */}
+                                                <Button className='text-dark'>Consulter</Button>
+                                                </Link>
                                             </td>
                                         </tr>
                                     );
