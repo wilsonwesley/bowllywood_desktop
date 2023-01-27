@@ -7,6 +7,7 @@ import Button from '../../components/Button';
 
 import { useContext, useState } from 'react';
 import { Col, Row, Container } from 'react-bootstrap';
+import { useParams } from 'react-router-dom';
 
 import './../../sass/styles.scss';
 
@@ -26,8 +27,7 @@ const StocksSupplyScreen = () => {
         }
     );
 
-    // let { id } = useParams();
-    let id = '635141dd6d2bc0f9d6b8f38c';
+    let { id } = useParams();
 
     const onSubmit = (values) => {
         console.log(values);

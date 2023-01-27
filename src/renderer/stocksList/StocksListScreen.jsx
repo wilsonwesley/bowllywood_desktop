@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { Col, Row, Container } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
+import { Link } from 'react-router-dom';
 
 
 const StocksListScreen = () => {
@@ -71,17 +72,22 @@ const StocksListScreen = () => {
                                             <td>
                                                 {item.DLC}
                                             </td>
+                                            <td>   
+                                                 <Link
+                                                        to={`/stocks/supply/${item._id}`}
+                                                        className="text-decoration-none text-black text-center"
+                                                    >
+                                                <Button className='text-dark'>Ajouter</Button>
+                                                </Link>
+                                            </td>
                                             <td>
-                                                    <Button className='text-dark'>
-                                                        Détail
-                                                        {/* <Link
-                                                            to={`stocks/${item._id}`}
-                                                            className="text-decoration-none text-black text-center"
-                                                        >
-                                                            <p>Detail</p>
-                                                        </Link> */}
-                                                    </Button>
-                                                </td>
+                                                <Link
+                                                    to={`/stocks/extract/${item._id}`}
+                                                    className="text-decoration-none text-black text-center"
+                                                    >
+                                                    <Button className='text-dark'> Retirer</Button>
+                                                </Link>
+                                            </td>
                                         </tr>
                                     );
                                 }
