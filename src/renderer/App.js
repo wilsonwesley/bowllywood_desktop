@@ -21,6 +21,11 @@ function App() {
             <Route path="/restaurants" element={<RestaurantsListScreen />} />
             <Route path="/stocks" element={<StocksListScreen />} />
             <Route path="/kitchenCalendar" element={<KitchenCalendar />} />
+            <Route path="/stocks/supply/:id" element={<StocksSupplyScreen />} />
+            <Route
+              path="/stocks/extract/:id"
+              element={<StocksExtractScreen />}
+            />
           </Route>
         </Routes>
       </Router>
