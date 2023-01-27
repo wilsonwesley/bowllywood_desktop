@@ -4,6 +4,9 @@ import AddFranchiseRequestScreen from "./addFranchiseRequest/AddFranchiseRequest
 import RestaurantsListScreen from "./restaurantsList/RestaurantsList";
 import StocksListScreen from "./stocksList/StocksListScreen";
 import KitchenCalendar from "./kitchenCalendar/KitchenCalendar";
+import StocksDetailScreen from "./stocksDetail/StocksDetailScreen";
+import StocksSupplyScreen from "./stocksSupply/StocksSupplyScreen";
+import StocksExtractScreen from "./stocksExtract/StocksExtractScreen";
 
 function App() {
   return (
@@ -13,6 +16,9 @@ function App() {
       {/* <RestaurantsListScreen /> */}
       {/* <StocksListScreen /> */}
       <KitchenCalendar />
+      {/* <StocksDetailScreen /> */}
+      {/* <StocksSupplyScreen /> */}
+      {/* <StocksExtractScreen /> */}
     </div>
   );
 }
