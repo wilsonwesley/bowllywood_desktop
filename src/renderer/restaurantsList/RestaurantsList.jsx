@@ -35,18 +35,14 @@ const RestaurantsListScreen = () => {
                             <Card border="dark"  className='text-center my-2'>
                                 <Card.Header>{item.city}</Card.Header>
                                 <Card.Body>
-                                    <Card.Title>{item.address}</Card.Title>
-                                    <Card.Text>
-                                        Horaire du jour: 10h 22h
-                                    </Card.Text>
+                                    <Card.Img variant="top" src="facade.webp" />
                                 </Card.Body>
                                 <Card.Footer>
-                                    <small className="text-muted">{item.phone}</small>
+                                    <small className="text-muted">{item.address}</small>
                                 </Card.Footer>
                             </Card>
                         </Col>
                     ))}
-
                 </Row>
         </Container>
     );
