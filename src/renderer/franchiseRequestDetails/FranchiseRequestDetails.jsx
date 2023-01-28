@@ -56,14 +56,14 @@ const FranchiseRequestDetailsScreen = () => {
                             </tbody>
                         </Table>
                         <div className='d-flex justify-content-center'>
-                            {/* <Button className='m-4'>
+                            <Button className='m-4'>
                                 <Link
-                                    to={`/my-franchise-requests/accepted/${id}`}
+                                    to={`/franchise-requests/accepted/${id}`}
                                     className="text-decoration-none text-center"
                                 >
                                     <p>Accepter</p>
                                 </Link>
-                            </Button> */}
+                            </Button>
                             <Button className='m-4 bg-danger'>
                                 <Link
                                     to={`/franchise-requests/refused/${id}`}
