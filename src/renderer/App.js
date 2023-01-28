@@ -4,7 +4,9 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AddFranchiseRequestScreen from "./addFranchiseRequest/AddFranchiseRequestScreen";
 import HomeScreen from "./Home/HomeScreen";
 import KitchenCalendar from "./kitchenCalendar/KitchenCalendar";
+import FranchiseRequestAcceptScreen from "./franchiseRequestAccept/FranchiseRequestAcceptScreen";
 import FranchiseRequestDetailsScreen from "./franchiseRequestDetails/FranchiseRequestDetails";
+import FranchiseRequestRefuseScreen from "./franchiseRequestsRefuse/FranchiseRequestRefuseScreen";
 import FranchiseRequestsList from "./franchiseRequestsList";
 import RestaurantsListScreen from "./restaurantsList/RestaurantsList";
 import StocksListScreen from "./stocksList/StocksListScreen";
@@ -24,7 +26,15 @@ function App() {
             <Route path="/restaurants" element={<RestaurantsListScreen />} />
             <Route path="/stocks" element={<StocksListScreen />} />
             <Route
-              path="/my-franchise-requests/:id"
+              path="/franchise-requests/accepted/:id"
+              element={<FranchiseRequestAcceptScreen />}
+            />
+            <Route
+              path="/franchise-requests/refused/:id"
+              element={<FranchiseRequestRefuseScreen />}
+            />
+            <Route
+              path="/franchise-requests/:id"
               element={<FranchiseRequestDetailsScreen />}
             />
             <Route path="/kitchenCalendar" element={<KitchenCalendar />} />
