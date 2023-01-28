@@ -1,6 +1,6 @@
 
 import { useParams, useNavigate  } from 'react-router-dom';
-import { refuseFranchiseRequest } from './../../services/franchiseRequests';
+import { refuseFranchiseRequest } from '../../services/franchiseRequests';
 import { useEffect, useState } from 'react';
 
 const FranchiseRequestRefuseScreen = () => {

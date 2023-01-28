@@ -5,7 +5,7 @@ import AddFranchiseRequestScreen from "./addFranchiseRequest/AddFranchiseRequest
 import HomeScreen from "./Home/HomeScreen";
 import KitchenCalendar from "./kitchenCalendar/KitchenCalendar";
 import FranchiseRequestDetailsScreen from "./franchiseRequestDetails/FranchiseRequestDetails";
-import FranchiseRequestRefuseScreen from "./franchiseRequestsRefused/FranchiseRequestRefuseScreen";
+import FranchiseRequestRefuseScreen from "./franchiseRequestsRefuse/FranchiseRequestRefuseScreen";
 import FranchiseRequestsList from "./franchiseRequestsList";
 import RestaurantsListScreen from "./restaurantsList/RestaurantsList";
 import StocksListScreen from "./stocksList/StocksListScreen";
