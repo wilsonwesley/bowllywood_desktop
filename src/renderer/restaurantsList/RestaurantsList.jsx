@@ -37,6 +37,9 @@ const RestaurantsListScreen = () => {
                                 <Card.Body>
                                     <Card.Img variant="top" src="facade.webp" />
                                 </Card.Body>
+                                <Card.Text>
+                                    {item.phone}
+                                </Card.Text>
                                 <Card.Footer>
                                     <small className="text-muted">{item.address}</small>
                                 </Card.Footer>
