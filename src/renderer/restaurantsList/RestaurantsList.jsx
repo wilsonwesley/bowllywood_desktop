@@ -2,7 +2,7 @@ import { getAllRestaurants } from './../../services/restaurants';
 import { useEffect, useState } from 'react';
 
 import { Col, Row, Container } from 'react-bootstrap';
-import Card from 'react-bootstrap/Card';
+import FlipCard from './../../components/Flipcard';
 
 const RestaurantsListScreen = () => {
 
@@ -28,25 +28,13 @@ const RestaurantsListScreen = () => {
                     />
                 </Col>
             </Row>
-
             <Row>
-                    {allRestaurants.map((item)=>(
-                        <Col key={item._id} xs={4} md={3}>
-                            <Card border="dark"  className='text-center my-2'>
-                                <Card.Header>{item.city}</Card.Header>
-                                <Card.Body>
-                                    <Card.Img variant="top" src="facade.webp" />
-                                </Card.Body>
-                                <Card.Text>
-                                    {item.phone}
-                                </Card.Text>
-                                <Card.Footer>
-                                    <small className="text-muted">{item.address}</small>
-                                </Card.Footer>
-                            </Card>
-                        </Col>
-                    ))}
-                </Row>
+                {allRestaurants.map((card) => (
+                    <Col xs={12} sm={6} md={4}>
+                    <FlipCard key={card.id} card={card} />
+                    </Col>
+                ))}
+            </Row>
         </Container>
     );
 };
