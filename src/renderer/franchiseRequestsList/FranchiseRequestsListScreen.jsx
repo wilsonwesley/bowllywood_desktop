@@ -64,7 +64,7 @@ const FranchiseRequestsListScreen = () => {
                                             </td>
                                             <td>   
                                                  <Link
-                                                        to={`/my-franchise-requests/${item._id}`}
+                                                        to={`/franchise-requests/${item._id}`}
                                                         className="text-decoration-none text-black text-center"
                                                     >
                                                 <Button className='text-dark'>Consulter</Button>

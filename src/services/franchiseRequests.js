@@ -12,8 +12,16 @@ export const getAllFranchiseRequests = () => {
   return axiosInstance.get("/franchiseRequests");
 };
 
+export const acceptFranchiseRequest = (id) => {
+  return axiosInstance.patch(`/franchiseRequests/accepted/${id}`);
+};
+
 export const editFranchiseRequest = (values, id) => {
   return axiosInstance.patch(`/franchiseRequests/edit/${id}`, values);
+};
+
+export const refuseFranchiseRequest = (id) => {
+  return axiosInstance.patch(`/franchiseRequests/refused/${id}`);
 };
 
 export const cancelFranchiseRequest = (id) => {

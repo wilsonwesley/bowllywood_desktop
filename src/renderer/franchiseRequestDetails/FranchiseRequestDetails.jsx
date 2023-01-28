@@ -58,20 +58,20 @@ const FranchiseRequestDetailsScreen = () => {
                         <div className='d-flex justify-content-center'>
                             {/* <Button className='m-4'>
                                 <Link
-                                    to={`/my-franchise-requests/edit/${id}`}
+                                    to={`/my-franchise-requests/accepted/${id}`}
                                     className="text-decoration-none text-center"
                                 >
                                     <p>Accepter</p>
                                 </Link>
                             </Button> */}
-                            {/* <Button className='m-4 bg-danger'>
+                            <Button className='m-4 bg-danger'>
                                 <Link
-                                    to={`/my-franchise-requests/cancel/${id}`}
+                                    to={`/franchise-requests/refused/${id}`}
                                     className="text-decoration-none text-center"
                                 >
                                     <p>Refuser</p>
                                 </Link>
-                            </Button> */}
+                            </Button>
                         </div>
                     </Col>
                 </Row>
