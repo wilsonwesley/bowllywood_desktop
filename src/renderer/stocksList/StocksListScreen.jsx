@@ -32,10 +32,20 @@ const StocksListScreen = () => {
                 </Col>
             </Row>
             <Row>
+                <Col className='text-center mb-4'>
+                    <Link
+                        to={`/stocks/create`}
+                        className="text-decoration-none text-black text-center"
+                        >
+                        <Button className='text-dark'> Créer un nouveau produit</Button>
+                    </Link>
+                </Col>
+            </Row>
+            <Row>
                 <Col>
                     <Table striped bordered hover>
                         <thead>
-                            <tr>
+                            <tr className='text-center'>
                                 <th>Ref</th>
                                 <th>Produit</th>
                                 <th>Saveur</th>
@@ -49,7 +59,7 @@ const StocksListScreen = () => {
                             {allStocks.map(
                                 (item) => {
                                     return (
-                                        <tr
+                                        <tr className='text-center'
                                             key={item._id}>
                                             <td>
                                                 {item.ref}
