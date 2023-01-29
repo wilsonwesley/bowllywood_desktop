@@ -15,3 +15,7 @@ export const supplyStock = (values, id) => {
 export const extractStock = (values, id) => {
   return axiosInstance.patch(`/stocks/extract/${id}`, values);
 };
+
+export const createStock = (values) => {
+  return axiosInstance.post("/stocks/create", values);
+};
