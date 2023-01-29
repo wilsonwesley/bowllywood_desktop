@@ -174,7 +174,8 @@ const StockCreateScreen = () => {
                         </Row>
                         <Row className='justify-content-center gap-4'>
                             <Col className="col-6 col-md-4 flex-center">
-                                <Form.Select
+                                <Form.Select 
+                                    className='form-control'
                                     name="type"
                                     value={values.type}
                                     onChange={handleChange}
@@ -191,7 +192,8 @@ const StockCreateScreen = () => {
                             
                             </Col>
                             <Col className="col-6 col-md-4 flex-center">
-                                <Form.Select
+                                <Form.Select 
+                                    className='form-control'
                                     name="supplier"
                                     value={values.supplier}
                                     onChange={handleChange}
