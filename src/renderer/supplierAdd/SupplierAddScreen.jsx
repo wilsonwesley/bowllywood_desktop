@@ -14,7 +14,7 @@ const validationSchema = yup.object({
     description: yup.string().required('Ce champ est obligatoire'),
     city: yup.string().required('Ce champ est obligatoire'),
     zipcode: yup.number().required('Ce champ est obligatoire'),
-    phone: yup.string().required('Ce champ est obligatoire'),
+    phone: yup.number().required('Ce champ est obligatoire'),
     email: yup
         .string()
         .email('La saisie est invalide.')
@@ -79,7 +79,7 @@ const SupplierAddScreen = () => {
                                     type="text"
                                     onChange={handleChange}
                                     onBlur={handleBlur}
-                                    value={values.phone}
+                                    value={values.name}
                                     placeholder="Ex: Bowllywood SAS"
                                     error={
                                         errors.name &&
@@ -181,7 +181,7 @@ const SupplierAddScreen = () => {
                                 <InputText
                                         name="phone"
                                         desc="N° téléphone *"
-                                        type="text"
+                                        type="number"
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                         value={values.phone}
