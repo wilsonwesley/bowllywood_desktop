@@ -16,6 +16,8 @@ import StocksExtractScreen from "./stocksExtract/StocksExtractScreen";
 import Template from "./../components/Template";
 import ReservationList from "./reservation/ReservationList";
 import StockCreateScreen from "./stockCreate/StockCreate";
+import SupplierAddScreen from "./supplierAdd/SupplierAddScreen";
+import SuppliersListScreen from "./supplierList/SupplierListScreen";
 
 function App() {
   return (
@@ -49,6 +51,8 @@ function App() {
               element={<FranchiseRequestsList />}
             />
             <Route path="/stocks/create" element={<StockCreateScreen />} />
+            <Route path="/suppliers/add" element={<SupplierAddScreen />} />
+            <Route path="/supplierList" element={<SuppliersListScreen />} />
           </Route>
         </Routes>
       </Router>

@@ -46,7 +46,13 @@ const items = [
     </SidebarItem>,
     <SidebarItem>
         <Link to="/login" className="text-black text-decoration-none flex-center">Connexion</Link>
-    </SidebarItem>
+    </SidebarItem>,
+    <SidebarItem>
+    <Link to="/supplierList" className='text-decoration-none text-black text-center'>
+        <i className="fa-solid fa-warehouse text-black flex-center"></i>
+        <p>Fournisseurs</p>
+    </Link>
+</SidebarItem>,
   ];
 
 const Template = () => {
