@@ -63,14 +63,6 @@ const SuppliersListScreen = () => {
                                                 <Button className='text-dark'>Consulter</Button>
                                             </Link>
                                         </Col>
-                                        <Col className='text-center mb-4'>
-                                            <Link
-                                                to={`/suppliers/delete/${item._id}`}
-                                                className="text-decoration-none text-black text-center"
-                                                >
-                                                <Button className='text-dark'>Supprimer</Button>
-                                            </Link>
-                                        </Col>
                                     </Row>
                                 </div>
                             </div>

@@ -47,15 +47,23 @@ const SupplierDetailsScreen = () => {
                         </div>
                     </div>
                     <div className='d-flex justify-content-center'>
-                            <Button className=''>
-                                <Link
-                                    to={`/supplierList`}
-                                    className="text-decoration-none text-center"
+                        <Col className='text-center mb-4'>
+                            <Link
+                                to={`/supplierList`}
+                                className="text-decoration-none text-black text-center"
                                 >
-                                    <p>Retour à la liste</p>
-                                </Link>
-                            </Button>
-                        </div>   
+                                <Button className='text-dark'>Retour à la liste</Button>
+                            </Link>
+                        </Col>
+                        <Col className='text-center mb-4'>
+                            <Link
+                                to={`/suppliers/delete/${id}`}
+                                className="text-decoration-none text-black text-center"
+                                >
+                                <Button className='text-dark'>Supprimer</Button>
+                            </Link>
+                        </Col>
+                    </div>   
                         
                     </Col>
                 </Row>   
