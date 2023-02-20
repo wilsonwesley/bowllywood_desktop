@@ -15,3 +15,7 @@ export const getSupplierDetail = (id) => {
 export const deleteSupplier = (id) => {
   return axiosInstance.delete(`/suppliers/delete/${id}`);
 };
+
+export const editSupplier = (values, id) => {
+  return axiosInstance.patch(`/suppliers/edit/${id}`, values);
+};

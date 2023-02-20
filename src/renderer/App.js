@@ -19,6 +19,7 @@ import StockCreateScreen from "./stockCreate/StockCreate";
 import SupplierAddScreen from "./supplierAdd/SupplierAddScreen";
 import SupplierDeleteScreen from "./supplierDelete/SupplierDeleteScreen";
 import SupplierDetailsScreen from "./supplierDetails/SupplierDetailsScreen";
+import SupplierEditScreen from "./supplierEdit/SupplierEditScreen";
 import SuppliersListScreen from "./supplierList/SupplierListScreen";
 
 function App() {
@@ -57,6 +58,10 @@ function App() {
             <Route
               path="/suppliers/delete/:id"
               element={<SupplierDeleteScreen />}
+            />
+            <Route
+              path="/suppliers/edit/:id"
+              element={<SupplierEditScreen />}
             />
             <Route path="/suppliers/:id" element={<SupplierDetailsScreen />} />
             <Route path="/supplierList" element={<SuppliersListScreen />} />

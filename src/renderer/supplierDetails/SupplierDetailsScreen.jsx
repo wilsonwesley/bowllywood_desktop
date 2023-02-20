@@ -57,6 +57,14 @@ const SupplierDetailsScreen = () => {
                         </Col>
                         <Col className='text-center mb-4'>
                             <Link
+                                to={`/suppliers/edit/${id}`}
+                                className="text-decoration-none text-black text-center"
+                                >
+                                <Button className='text-dark'>Modifier</Button>
+                            </Link>
+                        </Col>
+                        <Col className='text-center mb-4'>
+                            <Link
                                 to={`/suppliers/delete/${id}`}
                                 className="text-decoration-none text-black text-center"
                                 >
