@@ -54,10 +54,10 @@ const SuppliersListScreen = () => {
                                     <p class="card-text">{item.phone}</p>
                                     <p class="card-text">{item.website}</p>
                                     <p class="card-text"><small class="text-muted">{item.city} {item.zipcode}</small></p>
-                                    {/* <Row>
+                                    <Row>
                                         <Col className='text-center mb-4'>
                                             <Link
-                                                to={`/suppliers/add`}
+                                                 to={`/suppliers/${item._id}`}
                                                 className="text-decoration-none text-black text-center"
                                                 >
                                                 <Button className='text-dark'>Consulter</Button>
@@ -65,13 +65,13 @@ const SuppliersListScreen = () => {
                                         </Col>
                                         <Col className='text-center mb-4'>
                                             <Link
-                                                to={`/suppliers/add`}
+                                                to={`/suppliers/delete/${item._id}`}
                                                 className="text-decoration-none text-black text-center"
                                                 >
                                                 <Button className='text-dark'>Supprimer</Button>
                                             </Link>
                                         </Col>
-                                    </Row> */}
+                                    </Row>
                                 </div>
                             </div>
                         </div>

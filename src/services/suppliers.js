@@ -11,3 +11,7 @@ export const getAllSuppliers = () => {
 export const getSupplierDetail = (id) => {
   return axiosInstance.get(`/suppliers/${id}`);
 };
+
+export const deleteSupplier = (id) => {
+  return axiosInstance.delete(`/suppliers/delete/${id}`);
+};
