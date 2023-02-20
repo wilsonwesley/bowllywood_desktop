@@ -17,6 +17,7 @@ import Template from "./../components/Template";
 import ReservationList from "./reservation/ReservationList";
 import StockCreateScreen from "./stockCreate/StockCreate";
 import SupplierAddScreen from "./supplierAdd/SupplierAddScreen";
+import SupplierDetailsScreen from "./supplierDetails/SupplierDetailsScreen";
 import SuppliersListScreen from "./supplierList/SupplierListScreen";
 
 function App() {
@@ -52,6 +53,7 @@ function App() {
             />
             <Route path="/stocks/create" element={<StockCreateScreen />} />
             <Route path="/suppliers/add" element={<SupplierAddScreen />} />
+            <Route path="/suppliers/:id" element={<SupplierDetailsScreen />} />
             <Route path="/supplierList" element={<SuppliersListScreen />} />
           </Route>
         </Routes>

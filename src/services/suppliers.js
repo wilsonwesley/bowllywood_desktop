@@ -7,3 +7,7 @@ export const addSupplier = (values) => {
 export const getAllSuppliers = () => {
   return axiosInstance.get("/suppliers");
 };
+
+export const getSupplierDetail = (id) => {
+  return axiosInstance.get(`/suppliers/${id}`);
+};
