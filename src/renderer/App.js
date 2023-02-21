@@ -19,6 +19,7 @@ import StocksExtractScreen from "./stocksExtract/StocksExtractScreen";
 import Template from "./../components/Template";
 import ReservationList from "./reservation/ReservationList";
 import StockCreateScreen from "./stockCreate/StockCreateScreen";
+import StockDeleteScreen from "./stockDelete/StockDeleteScreen";
 import SupplierAddScreen from "./supplierAdd/SupplierAddScreen";
 import SupplierDeleteScreen from "./supplierDelete/SupplierDeleteScreen";
 import SupplierDetailsScreen from "./supplierDetails/SupplierDetailsScreen";
@@ -66,6 +67,7 @@ function App() {
               path="/franchiseRequestsList"
               element={<FranchiseRequestsList />}
             />
+            <Route path="/stocks/delete/:id" element={<StockDeleteScreen />} />
             <Route path="/stocks/create" element={<StockCreateScreen />} />
             <Route path="/suppliers/add" element={<SupplierAddScreen />} />
             <Route
