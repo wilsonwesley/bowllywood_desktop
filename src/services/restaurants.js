@@ -12,6 +12,10 @@ export const getRestaurantDetail = (id) => {
   return axiosInstance.get(`/restaurants/${id}`);
 };
 
+export const archiveRestaurant = (id) => {
+  return axiosInstance.patch(`/restaurants/delete/${id}`);
+};
+
 export const editRestaurant = (values, id) => {
   return axiosInstance.patch(`/restaurants/edit/${id}`, values);
 };

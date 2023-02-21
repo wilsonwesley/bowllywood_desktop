@@ -9,6 +9,7 @@ import FranchiseRequestDetailsScreen from "./franchiseRequestDetails/FranchiseRe
 import FranchiseRequestRefuseScreen from "./franchiseRequestsRefuse/FranchiseRequestRefuseScreen";
 import FranchiseRequestsList from "./franchiseRequestsList";
 import RestaurantAddScreen from "./restaurantAdd/RestaurantAddScreen";
+import RestaurantArchiveScreen from "./restaurantArchive/RestaurantArchiveScreen";
 import RestaurantEditScreen from "./restaurantEdit/RestaurantEditScreen";
 import RestaurantsListScreen from "./restaurantsList/RestaurantsList";
 import StocksListScreen from "./stocksList/StocksListScreen";
@@ -32,6 +33,10 @@ function App() {
           <Route path="/" element={<Template />}>
             <Route path="/" element={<HomeScreen />} />
 
+            <Route
+              path="/restaurants/delete/:id"
+              element={<RestaurantArchiveScreen />}
+            />
             <Route
               path="/restaurants/edit/:id"
               element={<RestaurantEditScreen />}
