@@ -82,20 +82,24 @@ const StocksListScreen = () => {
                                             <td>
                                                 {item.DLC}
                                             </td>
-                                            <td>   
-                                                 <Link
-                                                        to={`/stocks/supply/${item._id}`}
-                                                        className="text-decoration-none text-black text-center"
-                                                    >
-                                                <Button className='text-dark'>Ajouter</Button>
-                                                </Link>
-                                            </td>
                                             <td>
+                                                <Link
+                                                    to={`/stocks/supply/${item._id}`}
+                                                    className="text-decoration-none text-black text-center"
+                                                    >
+                                                    <Button className='text-light'>Ajouter</Button>
+                                                </Link>
                                                 <Link
                                                     to={`/stocks/extract/${item._id}`}
                                                     className="text-decoration-none text-black text-center"
                                                     >
-                                                    <Button className='text-dark'> Retirer</Button>
+                                                    <Button className='text-light my-2'> Retirer</Button>
+                                                </Link>
+                                                <Link
+                                                    to={`/stocks/delete/${item._id}`}
+                                                    className="text-decoration-none text-black text-center"
+                                                    >
+                                                    <Button className='text-light bg-danger'>Suprimer</Button>
                                                 </Link>
                                             </td>
                                         </tr>
