@@ -259,10 +259,10 @@ const RestaurantAddScreen = () => {
                                     type="text"
                                     onChange={handleChange}
                                     onBlur={handleBlur}
-                                    value={values.country}
+                                    value={values.sundayOpeningTime}
                                     placeholder="Ex: Fermé"
                                     error={
-                                        errors.country && touched.country && errors.country
+                                        errors.sundayOpeningTime && touched.sundayOpeningTime && errors.sundayOpeningTime
                                     }
                                 />
                             </Col>
@@ -273,10 +273,10 @@ const RestaurantAddScreen = () => {
                                     type="text"
                                     onChange={handleChange}
                                     onBlur={handleBlur}
-                                    value={values.country}
+                                    value={values.sundayClosingTime}
                                     placeholder="Ex: Fermé"
                                     error={
-                                        errors.country && touched.country && errors.country
+                                        errors.sundayClosingTime && touched.sundayClosingTime && errors.sundayClosingTime
                                     }
                                 />
                             </Col>
@@ -290,10 +290,10 @@ const RestaurantAddScreen = () => {
                                     type="text"
                                     onChange={handleChange}
                                     onBlur={handleBlur}
-                                    value={values.country}
+                                    value={values.mondayOpeningTime}
                                     placeholder="Ex: 10h"
                                     error={
-                                        errors.country && touched.country && errors.country
+                                        errors.mondayOpeningTime && touched.mondayOpeningTime && errors.mondayOpeningTime
                                     }
                                 />
                             </Col>
@@ -304,10 +304,10 @@ const RestaurantAddScreen = () => {
                                     type="text"
                                     onChange={handleChange}
                                     onBlur={handleBlur}
-                                    value={values.country}
+                                    value={values.mondayClosingTime}
                                     placeholder="Ex: 23h"
                                     error={
-                                        errors.country && touched.country && errors.country
+                                        errors.mondayClosingTime && touched.mondayClosingTime && errors.mondayClosingTime
                                     }
                                 />
                             </Col>
@@ -321,10 +321,10 @@ const RestaurantAddScreen = () => {
                                     type="text"
                                     onChange={handleChange}
                                     onBlur={handleBlur}
-                                    value={values.country}
+                                    value={values.tuesdayOpeningTime}
                                     placeholder="Ex: 10h"
                                     error={
-                                        errors.country && touched.country && errors.country
+                                        errors.tuesdayOpeningTime && touched.tuesdayOpeningTime && errors.tuesdayOpeningTime
                                     }
                                 />
                             </Col>
@@ -335,10 +335,10 @@ const RestaurantAddScreen = () => {
                                     type="text"
                                     onChange={handleChange}
                                     onBlur={handleBlur}
-                                    value={values.country}
+                                    value={values.tuesdayClosingTime}
                                     placeholder="Ex: 23h"
                                     error={
-                                        errors.country && touched.country && errors.country
+                                        errors.tuesdayClosingTime && touched.tuesdayClosingTime && errors.tuesdayClosingTime
                                     }
                                 />
                             </Col>
@@ -352,10 +352,10 @@ const RestaurantAddScreen = () => {
                                     type="text"
                                     onChange={handleChange}
                                     onBlur={handleBlur}
-                                    value={values.country}
+                                    value={values.wednesdayOpeningTime}
                                     placeholder="Ex: 10h"
                                     error={
-                                        errors.country && touched.country && errors.country
+                                        errors.wednesdayOpeningTime && touched.wednesdayOpeningTime && errors.wednesdayOpeningTime
                                     }
                                 />
                             </Col>
@@ -366,10 +366,10 @@ const RestaurantAddScreen = () => {
                                     type="text"
                                     onChange={handleChange}
                                     onBlur={handleBlur}
-                                    value={values.country}
+                                    value={values.wednesdayClosingTime}
                                     placeholder="Ex: 23h"
                                     error={
-                                        errors.country && touched.country && errors.country
+                                        errors.wednesdayClosingTime && touched.wednesdayClosingTime && errors.wednesdayClosingTime
                                     }
                                 />
                             </Col>
@@ -383,10 +383,10 @@ const RestaurantAddScreen = () => {
                                     type="text"
                                     onChange={handleChange}
                                     onBlur={handleBlur}
-                                    value={values.country}
+                                    value={values.thursdayOpeningTime}
                                     placeholder="Ex: 10h"
                                     error={
-                                        errors.country && touched.country && errors.country
+                                        errors.thursdayOpeningTime && touched.thursdayOpeningTime && errors.thursdayOpeningTime
                                     }
                                 />
                             </Col>
@@ -397,10 +397,10 @@ const RestaurantAddScreen = () => {
                                     type="text"
                                     onChange={handleChange}
                                     onBlur={handleBlur}
-                                    value={values.country}
+                                    value={values.thursdayClosingTime}
                                     placeholder="Ex: 23h"
                                     error={
-                                        errors.country && touched.country && errors.country
+                                        errors.thursdayClosingTime && touched.thursdayClosingTime && errors.thursdayClosingTime
                                     }
                                 />
                             </Col>
@@ -414,10 +414,10 @@ const RestaurantAddScreen = () => {
                                     type="text"
                                     onChange={handleChange}
                                     onBlur={handleBlur}
-                                    value={values.country}
+                                    value={values.fridayOpeningTime}
                                     placeholder="Ex: 10h"
                                     error={
-                                        errors.country && touched.country && errors.country
+                                        errors.fridayOpeningTime && touched.fridayOpeningTime && errors.fridayOpeningTime
                                     }
                                 />
                             </Col>
@@ -428,10 +428,10 @@ const RestaurantAddScreen = () => {
                                     type="text"
                                     onChange={handleChange}
                                     onBlur={handleBlur}
-                                    value={values.country}
+                                    value={values.fridayClosingTime}
                                     placeholder="Ex: 23h"
                                     error={
-                                        errors.country && touched.country && errors.country
+                                        errors.fridayClosingTime && touched.fridayClosingTime && errors.fridayClosingTime
                                     }
                                 />
                             </Col>
@@ -445,10 +445,10 @@ const RestaurantAddScreen = () => {
                                     type="text"
                                     onChange={handleChange}
                                     onBlur={handleBlur}
-                                    value={values.country}
+                                    value={values.saturdayOpeningTime}
                                     placeholder="Ex: 10h"
                                     error={
-                                        errors.country && touched.country && errors.country
+                                        errors.saturdayOpeningTime && touched.saturdayOpeningTime && errors.saturdayOpeningTime
                                     }
                                 />
                             </Col>
@@ -459,10 +459,10 @@ const RestaurantAddScreen = () => {
                                     type="text"
                                     onChange={handleChange}
                                     onBlur={handleBlur}
-                                    value={values.country}
+                                    value={values.saturdayClosingTime}
                                     placeholder="Ex: 23h"
                                     error={
-                                        errors.country && touched.country && errors.country
+                                        errors.saturdayClosingTime && touched.saturdayClosingTime && errors.saturdayClosingTime
                                     }
                                 />
                             </Col>
