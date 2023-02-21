@@ -18,7 +18,7 @@ import StocksSupplyScreen from "./stocksSupply/StocksSupplyScreen";
 import StocksExtractScreen from "./stocksExtract/StocksExtractScreen";
 import Template from "./../components/Template";
 import ReservationList from "./reservation/ReservationList";
-import StockCreateScreen from "./stockCreate/StockCreate";
+import StockCreateScreen from "./stockCreate/StockCreateScreen";
 import SupplierAddScreen from "./supplierAdd/SupplierAddScreen";
 import SupplierDeleteScreen from "./supplierDelete/SupplierDeleteScreen";
 import SupplierDetailsScreen from "./supplierDetails/SupplierDetailsScreen";
