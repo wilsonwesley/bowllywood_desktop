@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 
 import { Col, Row, Container } from 'react-bootstrap';
 import FlipCard from './../../components/Flipcard';
+import { Link } from 'react-router-dom';
+import Button from '../../components/Button';
 
 const RestaurantsListScreen = () => {
 
@@ -26,6 +28,16 @@ const RestaurantsListScreen = () => {
                         src="bowllywood.png"
                         alt="Logo du restaurant de bowls nommé Bowllywood"
                     />
+                </Col>
+            </Row>
+            <Row>
+                <Col className='text-center mb-4'>
+                    <Link
+                        to={`/restaurants/add`}
+                        className="text-decoration-none text-black text-center"
+                        >
+                        <Button className='text-dark'> Ajouter un nouveau restaurant</Button>
+                    </Link>
                 </Col>
             </Row>
             <Row>

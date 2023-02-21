@@ -8,6 +8,9 @@ import FranchiseRequestAcceptScreen from "./franchiseRequestAccept/FranchiseRequ
 import FranchiseRequestDetailsScreen from "./franchiseRequestDetails/FranchiseRequestDetails";
 import FranchiseRequestRefuseScreen from "./franchiseRequestsRefuse/FranchiseRequestRefuseScreen";
 import FranchiseRequestsList from "./franchiseRequestsList";
+import RestaurantAddScreen from "./restaurantAdd/RestaurantAddScreen";
+import RestaurantArchiveScreen from "./restaurantArchive/RestaurantArchiveScreen";
+import RestaurantEditScreen from "./restaurantEdit/RestaurantEditScreen";
 import RestaurantsListScreen from "./restaurantsList/RestaurantsList";
 import StocksListScreen from "./stocksList/StocksListScreen";
 import StocksDetailScreen from "./stocksDetail/StocksDetailScreen";
@@ -29,6 +32,16 @@ function App() {
         <Routes>
           <Route path="/" element={<Template />}>
             <Route path="/" element={<HomeScreen />} />
+
+            <Route
+              path="/restaurants/delete/:id"
+              element={<RestaurantArchiveScreen />}
+            />
+            <Route
+              path="/restaurants/edit/:id"
+              element={<RestaurantEditScreen />}
+            />
+            <Route path="/restaurants/add" element={<RestaurantAddScreen />} />
             <Route path="/restaurants" element={<RestaurantsListScreen />} />
             <Route path="/stocks" element={<StocksListScreen />} />
             <Route
