@@ -6,8 +6,11 @@ import { AuthContext } from '../../contexts/AuthContext';
 import InputText from '../../components/Input';
 import Button from '../../components/Button';
 
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Col, Row, Container, Form } from 'react-bootstrap';
+
+// import { getAllSuppliers } from './../../services/suppliers';
+
 
 import './../../sass/styles.scss';
 
@@ -26,6 +29,19 @@ const validationSchema = yup.object({
 });
 
 const StockCreateScreen = () => {
+
+    // const [allSuppliers, setAllSuppliers] = useState([]);
+    // useEffect(() => {
+    //     getAllSuppliers()
+    //         .then((res) => {
+    //             setAllSuppliers(res.data);
+    //             console.log(res.data)
+    //         })
+    //         .catch((err) => {
+    //             console.log(err);
+    //         });
+    // }, []);
+
     const authContext = useContext(AuthContext);
     // const userID = authContext.auth.userID;
     const userID = '632471120361eb66b468a627';
@@ -204,14 +220,17 @@ const StockCreateScreen = () => {
                                         errors.supplier
                                     }
                                 >
-                                        <option value="FournisseurA">FournisseurA</option>
-                                        <option value="FournisseurB">FournisseurB</option>
+                                    <option value="FournisseurA">FournisseurA</option>
+                                    <option value="FournisseurB">FournisseurB</option>
+                                     {/* {allSuppliers.map((item)=>(
+                                         <option key={item._id} value={item._id}>{item.name}</option>
+                                    ))} */}
                                 </Form.Select>
                             </Col>
                             </Row>
                             <Row>
                             <Col className='col-12 flex-center my-2'>
-                                <Button type="submit">Envoyer ma demande</Button>
+                                <Button type="submit">Ajouter le produit</Button>
                             </Col>
                         </Row>
                     </form>
