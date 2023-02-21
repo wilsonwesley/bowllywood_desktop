@@ -219,7 +219,7 @@ const RestaurantEditScreen = () => {
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                     value={values.email}
-                                    placeholder="Ex:founisseur@founisseur.fr"
+                                    placeholder="Ex:restaurant@restaurant.fr"
                                     error={
                                         errors.email &&
                                         touched.email &&
