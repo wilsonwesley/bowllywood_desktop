@@ -1,6 +1,8 @@
 import { useState } from "react";
 import cn from "classnames";
 import './Flipcard.scss';
+import { Link } from "react-router-dom";
+import { Button } from "react-bootstrap";
 
 function FlipCard({ card }) {
 
@@ -39,6 +41,12 @@ function FlipCard({ card }) {
                     <p className="card-text fs-1 fw-bold">Vendredi de {card.fridayOpeningTime} a {card.fridayClosingTime}</p>
                     <p className="card-text fs-1 fw-bold">Samedi de {card.saturdayOpeningTime} a {card.saturdayClosingTime}</p>
                     <p className="card-text fs-1 fw-bold">{card.sundayOpeningTime} le dimanche</p>
+                    <Link
+                         to={`/restaurants/edit/${card._id}`}
+                        className="text-decoration-none text-black text-center"
+                        >
+                        <Button className='text-dark'>Modifier</Button>
+                    </Link>
                 </div>
             </div>
         </div>
