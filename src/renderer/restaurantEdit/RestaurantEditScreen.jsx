@@ -6,7 +6,7 @@ import { editRestaurant, getRestaurantDetail } from '../../services/restaurants'
 import InputText from '../../components/Input';
 import Button from '../../components/Button';
 
-import { Col, Row, Container, FloatingLabel, Form } from 'react-bootstrap';
+import { Col, Row, Container } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
