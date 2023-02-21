@@ -9,7 +9,7 @@ import Button from '../../components/Button';
 import { useContext, useEffect, useState } from 'react';
 import { Col, Row, Container, Form } from 'react-bootstrap';
 
-// import { getAllSuppliers } from './../../services/suppliers';
+import { getAllSuppliers } from './../../services/suppliers';
 
 
 import './../../sass/styles.scss';
@@ -30,23 +30,24 @@ const validationSchema = yup.object({
 
 const StockCreateScreen = () => {
 
-    // const [allSuppliers, setAllSuppliers] = useState([]);
-    // useEffect(() => {
-    //     getAllSuppliers()
-    //         .then((res) => {
-    //             setAllSuppliers(res.data);
-    //             console.log(res.data)
-    //         })
-    //         .catch((err) => {
-    //             console.log(err);
-    //         });
-    // }, []);
+    const [allSuppliers, setAllSuppliers] = useState([]);
+    useEffect(() => {
+        getAllSuppliers()
+            .then((res) => {
+                setAllSuppliers(res.data);
+                console.log(res.data)
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }, []);
 
     const authContext = useContext(AuthContext);
     // const userID = authContext.auth.userID;
     const userID = '632471120361eb66b468a627';
 
     const onSubmit = (values) => {
+        console.log(values);
         createStock(values)
             .then(() => {
                 alert('Ajout d\'ingrédient réussi');
@@ -96,7 +97,7 @@ const StockCreateScreen = () => {
                                     type="text"
                                     onChange={handleChange}
                                     onBlur={handleBlur}
-                                    value={values.phone}
+                                    value={values.ref}
                                     placeholder="Ex: 9A9"
                                     error={
                                         errors.ref &&
@@ -202,6 +203,7 @@ const StockCreateScreen = () => {
                                         errors.type
                                     }
                                 >
+                                        <option value="">Selectionner un type</option>
                                         <option value="RAW">Brut</option>
                                         <option value="TRANS">Transformé</option>
                                 </Form.Select>
@@ -220,15 +222,14 @@ const StockCreateScreen = () => {
                                         errors.supplier
                                     }
                                 >
-                                    <option value="FournisseurA">FournisseurA</option>
-                                    <option value="FournisseurB">FournisseurB</option>
-                                     {/* {allSuppliers.map((item)=>(
-                                         <option key={item._id} value={item._id}>{item.name}</option>
-                                    ))} */}
+                                    <option value="">Selectionner un fournisseur</option>
+                                    {allSuppliers.map((item)=>(
+                                        <option key={item._id} value={item._id}>{item.name}</option>
+                                    ))}
                                 </Form.Select>
                             </Col>
-                            </Row>
-                            <Row>
+                        </Row>
+                        <Row>
                             <Col className='col-12 flex-center my-2'>
                                 <Button type="submit">Ajouter le produit</Button>
                             </Col>
