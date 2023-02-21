@@ -1,26 +1,32 @@
 import "./App.scss";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import AddFranchiseRequestScreen from "./addFranchiseRequest/AddFranchiseRequestScreen";
+// import AddFranchiseRequestScreen from "./addFranchiseRequest/AddFranchiseRequestScreen";
 import HomeScreen from "./Home/HomeScreen";
 import KitchenCalendar from "./kitchenCalendar/KitchenCalendar";
 import FranchiseRequestDetailsScreen from "./franchiseRequestDetails/FranchiseRequestDetails";
 import FranchiseRequestsList from "./franchiseRequestsList";
 import RestaurantsListScreen from "./restaurantsList/RestaurantsList";
 import StocksListScreen from "./stocksList/StocksListScreen";
-import StocksDetailScreen from "./stocksDetail/StocksDetailScreen";
+// import StocksDetailScreen from "./stocksDetail/StocksDetailScreen";
 import StocksSupplyScreen from "./stocksSupply/StocksSupplyScreen";
 import StocksExtractScreen from "./stocksExtract/StocksExtractScreen";
 import Template from "./../components/Template";
 import ReservationList from "./reservation/ReservationList";
+import ReservationDetail from "./reservation/ReservationDetail";
+import ReservationForm from "./reservation/ReservationForm";
 
 function App() {
   return (
     <div>
       <Router>
         <Routes>
+          <Route path="/" element={<HomeScreen />} />
           <Route path="/" element={<Template />}>
-            <Route path="/" element={<HomeScreen />} />
+            <Route path="/reservations" element={<ReservationList />} />
+            <Route path="/reservations/form" element={<ReservationForm />} />
+            <Route path="/reservations/form/:id" element={<ReservationForm action='EDIT' />} />
+            <Route path="/reservations/:id" element={<ReservationDetail />} />
             <Route path="/restaurants" element={<RestaurantsListScreen />} />
             <Route path="/stocks" element={<StocksListScreen />} />
             <Route

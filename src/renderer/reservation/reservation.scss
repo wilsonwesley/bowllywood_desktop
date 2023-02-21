@@ -1,19 +1,59 @@
 @import '../../sass/styles.scss';
 
-.reservationCtnr {
-    // background-image: url('');
-    background-repeat: no-repeat;
+.resListCtnr {
+    background-image: url('../../assets/img/resservBgSm.png');
     background-position: bottom right;
+    background-repeat: no-repeat;
+    row-gap: 4.2em !important;
+    min-height: 100vh;
 
-	span {
-		font-size: 0.8em;
-	}
+    .thinHeader {
+    	padding: 0;
+    }
 
 	p {
-		font-size: 1em;
+		margin: 0;
+		font-family: $ibm-font;
 	}
 
-	i {
-		font-size: 1em;
+	.inheritText {font-size: inherit;}
+	.mediumText {font-size: 0.85rem}
+	.smallText {font-size: 0.75rem}
+
+	.resStatistic {
+		column-gap: 5rem;
+
+		span.headerNbr {
+			font-size: 1.8rem;
+		}
+	}
+
+	.resContent {
+		p:not(p.addText) {
+			font-size: 1.3rem;
+		}
+
+		.resList i {
+			font-size: 1.6rem;
+			cursor: pointer;
+		}
+
+		.resListItem {
+			// overwrite
+			border: none;
+			border-radius: 0;
+			border-bottom: 1px solid $dark-grey;
+			background-color: transparent !important;
+
+			p {
+				line-height: 1em;
+			}
+		}
+
+		a {
+			text-decoration: none;
+		}
+
+		.addIcon {font-size: 4.5rem}
 	}
 }

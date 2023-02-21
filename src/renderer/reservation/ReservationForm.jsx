@@ -5,7 +5,6 @@ import { getOneReservation } from '../../services/reservation';
 function ReservationDetail () {
 
 	const [ reservation, setReservation ] = useState({});
-	const resId = '63d3ae6f01b5cc9f6252d8da';
 
 	// si ID est vide, le back renvoie tous les élément de la collection. 
 	// Gérer si est vide. msg d'erreur.
@@ -47,7 +46,7 @@ function ReservationDetail () {
 */
 
 
- 		<p>ReservationDetail</p>
+ 		<p>ReservationForm</p>
 	)
 }
 

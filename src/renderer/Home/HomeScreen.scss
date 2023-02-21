@@ -5,14 +5,6 @@
   background-position: bottom right;
   background-repeat: no-repeat;
 
-  h1 {
-    font-size: 14pt;
-
-    + p {
-      font-size: 0.8em;
-    }
-  }
-
   // overwrite
   .list-group-item {
     background-color: transparent !important;
@@ -20,11 +12,16 @@
 }
 
 .homeListGroup {
-  h2 {
-    font-weight: bold;
-    font-size: 1.6em;
-    border-bottom: 3px solid $dark-grey;
-    width: fit-content;
+  a {
+    text-decoration: none;
+    color: $dark-grey;
+
+    h2 {
+      font-weight: bold;
+      font-size: 1.6em;
+      border-bottom: 3px solid $dark-grey;
+      width: fit-content;
+    }
   }
 
   p {
