@@ -3,7 +3,8 @@ import * as yup from 'yup';
 
 import { addSupplier } from '../../services/suppliers';
 import InputText from '../../components/Input';
-import Button from '../../components/Button';
+// import Button from '../../components/Button';
+import Button from 'react-bootstrap/Button';
 
 import { Col, Row, Container, Form, FloatingLabel } from 'react-bootstrap';
 
@@ -268,7 +269,7 @@ const SupplierAddScreen = () => {
                         </Row>
                         <Row>
                             <Col className='col-12 flex-center my-2'>
-                                <Button type="submit">Ajouter</Button>
+                                <Button type="submit" className="text-dark">Ajouter</Button>
                             </Col>
                         </Row>
                     </form>
