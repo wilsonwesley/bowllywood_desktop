@@ -19,3 +19,7 @@ export const extractStock = (values, id) => {
 export const createStock = (values) => {
   return axiosInstance.post("/stocks/create", values);
 };
+
+export const deleteStock = (id) => {
+  return axiosInstance.delete(`/stocks/delete/${id}`);
+};

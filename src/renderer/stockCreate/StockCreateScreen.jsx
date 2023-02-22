@@ -6,8 +6,11 @@ import { AuthContext } from '../../contexts/AuthContext';
 import InputText from '../../components/Input';
 import Button from '../../components/Button';
 
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Col, Row, Container, Form } from 'react-bootstrap';
+
+import { getAllSuppliers } from './../../services/suppliers';
+
 
 import './../../sass/styles.scss';
 
@@ -20,17 +23,32 @@ const validationSchema = yup.object({
     sheepmentDate: yup.date().required('Ce champ est obligatoire'),
     supplier: yup.string().required('Ce champ est obligatoire'),
     DLC: yup.date().required('Ce champ est obligatoire'),
+    category: yup.string().required('Ce champ est obligatoire'),
     restaurantID: yup.string(),
     createdBy: yup.string(),
     lastUpdateBy: yup.string(),
 });
 
 const StockCreateScreen = () => {
+
+    const [allSuppliers, setAllSuppliers] = useState([]);
+    useEffect(() => {
+        getAllSuppliers()
+            .then((res) => {
+                setAllSuppliers(res.data);
+                console.log(res.data)
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }, []);
+
     const authContext = useContext(AuthContext);
     // const userID = authContext.auth.userID;
     const userID = '632471120361eb66b468a627';
 
     const onSubmit = (values) => {
+        console.log(values);
         createStock(values)
             .then(() => {
                 alert('Ajout d\'ingrédient réussi');
@@ -51,6 +69,7 @@ const StockCreateScreen = () => {
                 sheepmentDate: '',
                 supplier: '',
                 DLC: '',
+                category: '',
                 restaurantID: '6392031336349a73320f2b1c',
                 createdBy: userID,
                 lastUpdateBy: userID,
@@ -80,7 +99,7 @@ const StockCreateScreen = () => {
                                     type="text"
                                     onChange={handleChange}
                                     onBlur={handleBlur}
-                                    value={values.phone}
+                                    value={values.ref}
                                     placeholder="Ex: 9A9"
                                     error={
                                         errors.ref &&
@@ -186,6 +205,7 @@ const StockCreateScreen = () => {
                                         errors.type
                                     }
                                 >
+                                        <option value="">Selectionner un type</option>
                                         <option value="RAW">Brut</option>
                                         <option value="TRANS">Transformé</option>
                                 </Form.Select>
@@ -204,14 +224,38 @@ const StockCreateScreen = () => {
                                         errors.supplier
                                     }
                                 >
-                                        <option value="FournisseurA">FournisseurA</option>
-                                        <option value="FournisseurB">FournisseurB</option>
+                                    <option value="">Selectionner un fournisseur</option>
+                                    {allSuppliers.map((item)=>(
+                                        <option key={item._id} value={item._id}>{item.name}</option>
+                                    ))}
                                 </Form.Select>
                             </Col>
-                            </Row>
-                            <Row>
+                        </Row>
+                        <Row className='justify-content-center gap-4'>
+                            <Col className="col-6 col-md-4 flex-center mt-3">
+                                <Form.Select 
+                                    className='form-control'
+                                    name="category"
+                                    value={values.category}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    error={
+                                        errors.category &&
+                                        touched.category &&
+                                        errors.category
+                                    }
+                                >
+                                        <option value="SALE">Selectionner une saveur</option>
+                                        <option value="SUCRE">SALÉ</option>
+                                        <option value="SUCRE">SUCRÉ</option>
+                                        <option value="SUCRESALE">SUCRÉ SALÉ</option>
+                                </Form.Select>
+                            
+                            </Col>
+                        </Row>
+                        <Row>
                             <Col className='col-12 flex-center my-2'>
-                                <Button type="submit">Envoyer ma demande</Button>
+                                <Button type="submit">Ajouter le produit</Button>
                             </Col>
                         </Row>
                     </form>
