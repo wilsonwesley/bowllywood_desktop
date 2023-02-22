@@ -23,6 +23,7 @@ const validationSchema = yup.object({
     sheepmentDate: yup.date().required('Ce champ est obligatoire'),
     supplier: yup.string().required('Ce champ est obligatoire'),
     DLC: yup.date().required('Ce champ est obligatoire'),
+    category: yup.string().required('Ce champ est obligatoire'),
     restaurantID: yup.string(),
     createdBy: yup.string(),
     lastUpdateBy: yup.string(),
@@ -68,6 +69,7 @@ const StockCreateScreen = () => {
                 sheepmentDate: '',
                 supplier: '',
                 DLC: '',
+                category: '',
                 restaurantID: '6392031336349a73320f2b1c',
                 createdBy: userID,
                 lastUpdateBy: userID,
@@ -227,6 +229,28 @@ const StockCreateScreen = () => {
                                         <option key={item._id} value={item._id}>{item.name}</option>
                                     ))}
                                 </Form.Select>
+                            </Col>
+                        </Row>
+                        <Row className='justify-content-center gap-4'>
+                            <Col className="col-6 col-md-4 flex-center mt-3">
+                                <Form.Select 
+                                    className='form-control'
+                                    name="category"
+                                    value={values.category}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    error={
+                                        errors.category &&
+                                        touched.category &&
+                                        errors.category
+                                    }
+                                >
+                                        <option value="SALE">Selectionner une saveur</option>
+                                        <option value="SUCRE">SALÉ</option>
+                                        <option value="SUCRE">SUCRÉ</option>
+                                        <option value="SUCRESALE">SUCRÉ SALÉ</option>
+                                </Form.Select>
+                            
                             </Col>
                         </Row>
                         <Row>
