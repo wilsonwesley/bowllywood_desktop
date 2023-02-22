@@ -1,16 +1,16 @@
-import { getAllFranchiseRequests } from './../../services/franchiseRequests';
+import { getAllAcceptedFranchiseRequests } from './../../services/franchiseRequests';
 import { useEffect, useState } from 'react';
 
 import { Col, Row, Container, Table, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
-const FranchiseRequestsListScreen = () => {
+const FranchiseRequestsAcceptedListScreen = () => {
 
-    const [allFranchiseRequests, setAllFranchiseRequests] = useState([]);
+    const [allAcceptedFranchiseRequests, setAllAcceptedFranchiseRequests] = useState([]);
     useEffect(() => {
-        getAllFranchiseRequests()
+        getAllAcceptedFranchiseRequests()
             .then((res) => {
-                setAllFranchiseRequests(res.data);
+                setAllAcceptedFranchiseRequests(res.data);
                 console.log(res.data)
             })
             .catch((err) => {
@@ -28,16 +28,7 @@ const FranchiseRequestsListScreen = () => {
                     />
                 </Col>
             </Row>
-            <Row>
-                <Col className='text-center mb-4'>
-                    <Link
-                        to={`/franchise-requests/accepted`}
-                        className="text-decoration-none text-black text-center"
-                        >
-                        <Button className='text-dark'>Liste des franchisés</Button>
-                    </Link>
-                </Col>
-            </Row>
+
             <Row>
                 <Col>
                     <Table striped bordered hover>
@@ -51,7 +42,7 @@ const FranchiseRequestsListScreen = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {allFranchiseRequests.map(
+                            {allAcceptedFranchiseRequests.map(
                                 (item) => {
                                     return (
                                         <tr className='text-center'
@@ -91,4 +82,4 @@ const FranchiseRequestsListScreen = () => {
         </Container>
     );
 };
-export default FranchiseRequestsListScreen;
+export default FranchiseRequestsAcceptedListScreen;
