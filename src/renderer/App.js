@@ -5,6 +5,7 @@ import AddFranchiseRequestScreen from "./addFranchiseRequest/AddFranchiseRequest
 import HomeScreen from "./Home/HomeScreen";
 import KitchenCalendar from "./kitchenCalendar/KitchenCalendar";
 import FranchiseRequestAcceptScreen from "./franchiseRequestAccept/FranchiseRequestAcceptScreen";
+import FranchiseRequestsAcceptedListScreen from "./franchiseRequestAcceptedList/FranchiseRequestAcceptedListScreen";
 import FranchiseRequestDetailsScreen from "./franchiseRequestDetails/FranchiseRequestDetails";
 import FranchiseRequestRefuseScreen from "./franchiseRequestsRefuse/FranchiseRequestRefuseScreen";
 import FranchiseRequestsList from "./franchiseRequestsList";
@@ -52,6 +53,10 @@ function App() {
             <Route
               path="/franchise-requests/refused/:id"
               element={<FranchiseRequestRefuseScreen />}
+            />
+            <Route
+              path="/franchise-requests/accepted"
+              element={<FranchiseRequestsAcceptedListScreen />}
             />
             <Route
               path="/franchise-requests/:id"

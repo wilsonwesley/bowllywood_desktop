@@ -12,6 +12,10 @@ export const getAllFranchiseRequests = () => {
   return axiosInstance.get("/franchiseRequests");
 };
 
+export const getAllAcceptedFranchiseRequests = () => {
+  return axiosInstance.get("/franchiseRequests/accepted");
+};
+
 export const acceptFranchiseRequest = (id) => {
   return axiosInstance.patch(`/franchiseRequests/accepted/${id}`);
 };
