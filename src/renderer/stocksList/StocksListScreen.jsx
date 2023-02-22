@@ -87,19 +87,19 @@ const StocksListScreen = () => {
                                                     to={`/stocks/supply/${item._id}`}
                                                     className="text-decoration-none text-black text-center"
                                                     >
-                                                    <Button className='text-light'>Ajouter</Button>
+                                                    <Button className='text-dark'>Ajouter</Button>
                                                 </Link>
                                                 <Link
                                                     to={`/stocks/extract/${item._id}`}
                                                     className="text-decoration-none text-black text-center"
                                                     >
-                                                    <Button className='text-light my-2'> Retirer</Button>
+                                                    <Button className='text-dark my-2'> Retirer</Button>
                                                 </Link>
                                                 <Link
                                                     to={`/stocks/delete/${item._id}`}
                                                     className="text-decoration-none text-black text-center"
                                                     >
-                                                    <Button className='text-light btn-danger'>Suprimer</Button>
+                                                    <Button className='text-dark bg-danger'>Suprimer</Button>
                                                 </Link>
                                             </td>
                                         </tr>

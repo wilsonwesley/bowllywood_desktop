@@ -3,7 +3,8 @@ import { useEffect, useState } from 'react';
 
 import { Col, Row, Container, Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import Button from '../../components/Button';
+// import Button from '../../components/Button';
+import Button from 'react-bootstrap/Button';
 
 const SuppliersListScreen = () => {
 
@@ -35,7 +36,7 @@ const SuppliersListScreen = () => {
                         to={`/suppliers/add`}
                         className="text-decoration-none text-black text-center"
                         >
-                        <Button className='text-dark'> Ajouter un nouveau fournisseur</Button>
+                        <Button className='text-dark'> Ajouter un fournisseur</Button>
                     </Link>
                 </Col>
             </Row>

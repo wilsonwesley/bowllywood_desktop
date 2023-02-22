@@ -45,7 +45,7 @@ function FlipCard({ card }) {
                          to={`/restaurants/edit/${card._id}`}
                         className="text-decoration-none text-black text-center"
                         >
-                        <Button className='text-light'>Modifier</Button>
+                        <Button className='text-dark'>Modifier</Button>
                     </Link>
                     <Link
                          to={`/restaurants/delete/${card._id}`}
