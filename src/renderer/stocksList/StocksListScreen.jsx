@@ -99,7 +99,7 @@ const StocksListScreen = () => {
                                                     to={`/stocks/delete/${item._id}`}
                                                     className="text-decoration-none text-black text-center"
                                                     >
-                                                    <Button className='text-light bg-danger'>Suprimer</Button>
+                                                    <Button className='text-light btn-danger'>Suprimer</Button>
                                                 </Link>
                                             </td>
                                         </tr>
