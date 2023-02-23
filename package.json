@@ -20,9 +20,11 @@
     "react": "^17.0.2",
     "react-bootstrap": "^2.7.0",
     "react-dom": "^17.0.2",
+    "react-loader-spinner": "^5.3.4",
     "react-responsive-sidebar": "^0.1.16",
     "react-router-dom": "^6.8.0",
     "react-scripts": "^5.0.1",
+    "react-toastify": "^9.1.1",
     "sass": "^1.57.1",
     "web-vitals": "^2.1.4",
     "yup": "^0.32.11"

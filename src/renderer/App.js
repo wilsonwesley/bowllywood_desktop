@@ -23,10 +23,10 @@ function App() {
         <Routes>
           <Route path="/" element={<HomeScreen />} />
           <Route path="/" element={<Template />}>
-            <Route path="/reservations" element={<ReservationList />} />
             <Route path="/reservations/form" element={<ReservationForm />} />
             <Route path="/reservations/form/:id" element={<ReservationForm action='EDIT' />} />
             <Route path="/reservations/:id" element={<ReservationDetail />} />
+            <Route path="/reservations" element={<ReservationList />} />
             <Route path="/restaurants" element={<RestaurantsListScreen />} />
             <Route path="/stocks" element={<StocksListScreen />} />
             <Route

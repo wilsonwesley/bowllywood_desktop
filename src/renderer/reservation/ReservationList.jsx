@@ -1,20 +1,18 @@
-/*
-Laisser en dure les calculs de réservations et jurstifier pourquoi. Construire une idée de comment ça aurait pu être.
-Premier jour de la semaine en français
-*/
-
 import './reservation.scss';
 import { useState, useEffect } from 'react';
-import { getAllReservations } from '../../services/reservation'
-import ThinHeader from '../../components/ThinHeader';
-import ReservationListStat from '../../components/ReservationListStat';
+import { getAllReservations } from '../../services/reservation';
 import { Row, Col, ListGroup, ListGroupItem } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import ThinHeader from '../../components/ThinHeader';
+import ReservationListStat from '../../components/ReservationListStat';
+import LoadingSpinner from '../../components/LoadingSpinner';
 
+let dateObj, resDate, resTime;
 function ReservationList () {
 
-	const [reservations, setReservations] = useState([]);
-	const [sortIcon, setSortIcon] = useState('down');
+	const [reservations, setReservations] = useState([]),
+		  [sortIcon, setSortIcon] = useState('down'),
+		  [isLoaded, setIsLoaded] = useState(false);
 
 	useEffect(()=>{
 
@@ -29,6 +27,8 @@ function ReservationList () {
 
 		}).catch((err)=>{
 			console.log('GET ALL RESERV : ', err)
+		}).finally(()=>{
+			setIsLoaded(true)
 		})
 
 	}, [])
@@ -66,6 +66,31 @@ function ReservationList () {
 		return `${dateObj.getHours()}h${ (minutes !== 0) ? minutes : ''}`;
 	}
 
+	const formatStatus = (statusCode) => {
+		let status, statusColor;
+		switch (statusCode) {
+			// kept
+			case 'KEPT':
+				status = 'Maintenu';
+				statusColor = 'positiveColor';
+				break;
+			// cancelled
+			case 'CLD':
+				status = 'Annulé';
+				statusColor = 'negativeColor';
+				break;
+			// closed
+			case 'CLS':
+				status = 'Terminé';
+				statusColor = 'warningColor';
+				break;
+			default:
+				status = 'Indéfini';
+				statusColor = '';
+		}
+		return {status, statusColor};
+	}
+
 	// Get the first day of the week
 	var currDate;
 	if (!currDate) 
@@ -81,9 +106,53 @@ function ReservationList () {
 		currDate = getFullDate(currDate, 'DATS');
 	}
 
-	let status, statusColor, dateObj, resDate, resTime;
+	const ReservationsRender = () => {
+		if (reservations.length > 0)
+		{
+			return (reservations.map((reserv) => {
+				let {status, statusColor} = formatStatus(reserv.status);
+
+				dateObj = reserv.reservDate;
+				if (dateObj.includes('Z')) {
+					dateObj = dateObj.split('Z')[0];
+				}
+				resDate = getFullDate(dateObj);
+				resTime = getFullTime(dateObj);
+
+				return (
+				<ListGroupItem key={reserv._id} action={true} active={true} href={`/reservations/${reserv._id}`} className="resListItem px-0">
+					<Row className="d-flex justify-content-between m-0 pt-2 w-100">
+						<Col className="p-0">
+							<span className="mediumText">{reserv.seatNr} Personnes</span>
+							<p>{reserv.reservName}</p>
+						</Col>
+						<Col md={7} xl={5} className="p-0">
+							<p>
+								{resDate}
+								<span className="mediumText mx-2"> à </span>
+								{resTime}
+							</p>
+							<span className={/*mediumText*/` ${statusColor}`}>{status}</span>
+						</Col>
+					</Row>
+				</ListGroupItem>
+				)
+			})
+			)
+		}
+		else
+		{
+			// devrait être remplacé par la gestion des erreurs.
+			return(
+				<div className="d-flex align-items-center justify-content-center">
+					<span>Aucune réservation n'a été trouvée.</span>
+				</div>
+			)
+		}
+	}
+
 	return (
-	<div className="resListCtnr d-flex flex-column px-5 py-4">
+	<div className="resCtnr d-flex flex-column px-5 py-4">
 
 		<ThinHeader subTitle="Gérer les réservations" />
 		
@@ -93,14 +162,14 @@ function ReservationList () {
 			<ReservationListStat number="67" title="Occupation de la salle" isPercent="true"/>
 		</Row>
 
-		<Row>
+		<Row className="resListContent">
 			<Col>
-				<Row className="mb-3">
+				<Row className="mb-3 align-items-center">
 					<p className="d-inline">Liste des réservations</p>
 					<span className=" mx-2"> – </span> 
 					<span>semaine du {currDate}</span>
 				</Row>
-				<Row className="resContent flex-column-reverse flex-md-row justify-content-between px-4" >
+				<Row className="flex-column-reverse flex-md-row justify-content-between px-4" >
 					<Col md={8} xxl={7} className="resList">
 						<div className="d-flex justify-content-end mb-3">
 							{/*<div>
@@ -112,55 +181,13 @@ function ReservationList () {
 
 						<ListGroup className="pl-5">
 						{
-							reservations.map((reserv) => {
+							(isLoaded)
+							? <ReservationsRender />
+							: <div className="d-flex align-items-center justify-content-center">
+								<LoadingSpinner />
+								<span className="ml-3">Chargement des réservations</span>
+							  </div>
 
-								switch (reserv.status) {
-									// kept
-									case 'KEPT':
-										status = 'Maintenu';
-										statusColor = 'positiveColor';
-										break;
-									// cancelled
-									case 'CLD':
-										status = 'Annulé';
-										statusColor = 'negativeColor';
-										break;
-									// closed
-									case 'CLS':
-										status = 'Terminé';
-										statusColor = 'warningColor';
-										break;
-									default:
-										status = 'Indéfini';
-										statusColor = '';
-								}
-
-								dateObj = reserv.reservDate;
-								if (dateObj.includes('Z')) {
-									dateObj = dateObj.split('Z')[0];
-								}
-								resDate = getFullDate(dateObj);
-								resTime = getFullTime(dateObj);
-
-								return (
-								<ListGroupItem key={reserv._id} action={true} active={true} href={`/reservations/${reserv._id}`} className="resListItem px-0">
-									<Row className="d-flex justify-content-between m-0 pt-2 w-100">
-										<Col className="p-0">
-											<span className="mediumText">{reserv.seatNr} Personnes</span>
-											<p>{reserv.reservName}</p>
-										</Col>
-										<Col md={7} xl={5} className="p-0">
-											<p>
-												{resDate}
-												<span className="mediumText mx-2"> à </span>
-												{resTime}
-											</p>
-											<span className={`mediumText ${statusColor}`}>{status}</span>
-										</Col>
-									</Row>
-								</ListGroupItem>
-								)
-							})
 						}
 						</ListGroup>
 					</Col>

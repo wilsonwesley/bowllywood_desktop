@@ -1,8 +1,8 @@
 const IconNavigation = ({iconArr}) => {
 
-	const IconElement = ({key, icon, text, route}) => {
+	const IconElement = ({keyNb, icon, text, route}) => {
 		return (
-			<div key={key} className="d-flex flex-column align-items-center ">
+			<div key={keyNb} className="d-flex flex-column align-items-center ">
 				<i className={icon}></i>
 				<p className="mb-0 mt-2">{text}</p>
 			</div>
@@ -15,7 +15,7 @@ const IconNavigation = ({iconArr}) => {
 		<div className="homeNavigation d-flex">
 			{
 				iconArr.map((iconItem, index)=>{
-					return <IconElement key={index} icon={iconItem.icon} text={iconItem.text} />
+					return <IconElement key={index} icon={iconItem.icon} text={iconItem.text} route={iconItem.route}/>
 				})
 			}
 		</div>

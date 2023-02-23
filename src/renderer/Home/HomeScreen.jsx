@@ -65,17 +65,17 @@ function HomeScreen() {
 	{
 		icon: 'fa-solid fa-house',
 		text: 'Accueil',
-		route: ''
+		route: '/'
 	},
 	{
 		icon: 'fa-solid fa-user',
 		text: 'Profil',
-		route: ''
+		route: '/'
 	},
 	{
 		icon: 'fa-solid fa-right-from-bracket',
 		text: 'Déconnexion',
-		route: ''
+		route: '/'
 	},
 	]
 
