@@ -39,6 +39,17 @@
 	}
 }
 
+.resDetailTop, .resFormTop {
+	h2 {
+		font-size: 1.7rem;
+	    font-weight: 400;
+	    
+	    +p {
+	    	line-height: 1;
+	    }
+	}
+}
+
 /************* reservation list file **************/
 .resStatistic {
 	column-gap: 5rem;
@@ -77,15 +88,6 @@
 /************* reservation details file **************/
 .resDetailTop {
 	column-gap: 2rem;
-
-	h2 {
-		font-size: 1.7rem;
-	    font-weight: 400;
-	    
-	    +p {
-	    	line-height: 1;
-	    }
-	}
 
 	// overwrite
 	.fa-square-xmark {

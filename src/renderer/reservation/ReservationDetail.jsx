@@ -119,7 +119,7 @@ function ReservationDetail () {
 		{
 			cancelReservation(id).then((res) => {
 				formatStatus(res.data.status);
-
+				setIsEditable(false)
 				/*toast.info('La réservation a été annulée.', {
 					position: "bottom-center",
 					autoClose: 2500,

@@ -35,8 +35,8 @@ const validationSchema = yup.object({
 
 	seatNr: yup
 		.number()
-		.moreThan(15, 'Veuillez appeler le restauraut pour réserver plus de 15 places.')
-		.negative('Saisie incorrecte.')
+		.moreThan(0, 'Renseignez au moins une place.')
+		.lessThan(16, 'Veuillez appeler le restauraut pour réserver plus de 15 places.')
 		.required('Ce champ est obligatoire'),
 
 	status: yup
@@ -58,6 +58,7 @@ const validationSchema = yup.object({
 function ReservationDetail ({ action='ADD' }) {
 
 	const [ reservation, setReservation ] = useState({}),
+		  [ returnedError, setReturnedError ] = useState(false),
 		  [ isLoaded, setIsLoaded ] = useState(false),
 		  [ resDate, setResDate ] = useState(''),
 		  [ resTime, setResTime ] = useState('');
@@ -82,26 +83,12 @@ function ReservationDetail ({ action='ADD' }) {
 		{
 			getOneReservation(resID).then((res)=>{
 
-				let date = res.data.reservDate;
-				if (date.includes('Z')) {
-					date = date.split('Z')[0];
-				}
-
-				if (typeof date != 'object') {
-					date = new Date(date);
-				}
-
-				/// yyyy-MM-dd 
-				setResDate(date.oLocaleDateString("fr-FR", 
-				{
-					year: 'numeric',
-			    	month: 'numeric',
-			    	day: 'numeric'
-				}))
-
-				// setResTime(time)
-
+				let dateTime = res.data.reservDate;
+				const [date, time] = dateTime.split('T', 2)
+				setResDate(date)
+				setResTime(time.slice(0, 5))
 				setReservation(res.data)
+
 			}).catch((err)=>{
 				console.log('GET ONE RESERVATION : ', err);
 				// choisir si redirection quelque soit l'erreur, puisque c'est on click qu'on va dessus.
@@ -110,37 +97,46 @@ function ReservationDetail ({ action='ADD' }) {
 		}
 	}, [isEdit, resID])
 
-    const onSubmit = (resID, values) => {
+    const onSubmit = (values) => {
+
+    	// format date & time
+    	let dateTime = `${values.resDate}T${values.resTime}`
+    	values.reservDate = new Date(dateTime)
+    	delete values.resDate;
+    	delete values.resTime;
+
+    	if (!values.userID) delete values.userID;
+
     	if (isEdit) {
+    		// debugger
     		editReservation(resID, values).then((res) => {
-				// navigate(`/reservations/${res.data._id}`, { replace: true })
-    			console.log(res)
+				navigate(`/reservations/${res.data._id}`, { replace: true })
             }).catch((err) => {
-            	console.log(err)
+            	setReturnedError(err.response.data)
             })
     	} else {
 	        createReservation(values).then((res) => {
-				// navigate(`/reservations/${res.data._id}`, { replace: true })
-	        	console.log(res)
+				navigate(`/reservations/${res.data._id}`, { replace: true })
             }).catch((err) => {
-            	console.log(err)
+            	setReturnedError(err.response.data)
             })
     	}
     };
 
-    const { values, errors, handleChange, /*handleSubmit, handleBlur, touched, setFieldValue*/ } =
+    const { values, errors, handleChange, setFieldValue, handleSubmit/*, setErrors, handleBlur*/ } =
     useFormik(
     {
-    	initialValues: {
-    		reservName: '',
-			reservPhone: '',
-			resDate: '',
-			resTime: '',
-			seatNr: 0,
-			status: 'KEPT',
-			userID: '',
-			type: 'INDOOR'
-    	},
+		enableReinitialize: true,
+		initialValues: {
+			reservName: reservation.reservName ?? '',
+			reservPhone: reservation.reservPhone ?? '',
+			resDate: resDate ?? '',
+			resTime: resTime ?? '',
+			seatNr: reservation.seatNr ?? 1,
+			status: reservation.status ?? 'KEPT',
+			userID: reservation.userID ?? '',
+			type: reservation.type ?? 'INDOOR'
+		},
         validationSchema,
         onSubmit
     });
@@ -150,17 +146,37 @@ function ReservationDetail ({ action='ADD' }) {
 
 			<ThinHeader subTitle="Gérer les réservations" />
 
-			<Row className="resFormTop pl-5 ml-1">
-				<Col md={7} className="pl-2 pr-0">
+			{
+				(returnedError) 
+				? <Row className="justify-content-center">
+					<Col md={6}>
+						<p className="negativeColor text-center">{returnedError}</p>
+					</Col>
+				</Row>
+				: ''
+			}
+			<form onSubmit={handleSubmit} className="resFormTop  pl-5 ml-1">
+				{
+					(!isEdit)
+					? <Col xs={12} className="pl-4 mb-4">
+						<h2 className="m-0">Ajout d'une réservation</h2>
+					</Col>
+					: <Col xs={12} className="pl-2 mb-4">
+						<p>Modication de la réservation de</p>
+						<h2 className="m-0">M&#183;Mme {reservation.reservName}</h2>
+					</Col>
+				}
+
+				<Col md={7} className="d-flex flex-column pl-2 pr-0">
 					<Input 
 						name="reservName"
                         desc="Nom du client"
                         type="text"
                         onChange={handleChange}
-                        value={reservation.reservName ?? values.reservName}
+                        value={values.reservName}
                         placeholder="Hertat"
                         error={
-                            errors.reservName
+                        	errors.reservName
                         }
 					/>
 
@@ -169,21 +185,21 @@ function ReservationDetail ({ action='ADD' }) {
                         desc="Numéro de téléphone"
                         type="text"
                         onChange={handleChange}
-                        value={reservation.reservPhone ?? values.reservPhone}
-                        placeholder="0625489875"
+                        value={values.reservPhone}
+                        placeholder="ex: 0625489875"
                         error={
                             errors.reservPhone
                         }
 					/>
 
 					<Input 
-						name="reservDate"
+						name="resDate"
                         desc="Date de la réservation"
                         type="date"
                         onChange={handleChange}
-                        value={resDate ?? values.resDate}
+                        value={values.resDate}
                         error={
-                            errors.reservDate
+                            errors.resDate
                         }
 					/>
 
@@ -192,7 +208,7 @@ function ReservationDetail ({ action='ADD' }) {
                         desc="Heure de la réservation"
                         type="time"
                         onChange={handleChange}
-                        value={resTime ?? values.resTime}
+                        value={values.resTime}
                         error={
                             errors.resTime
                         }
@@ -202,9 +218,17 @@ function ReservationDetail ({ action='ADD' }) {
 						name="seatNr"
                         desc="Nombre de personnes"
                         type="number"
-                        onChange={handleChange}
-                        value={reservation.seatNr ?? values.seatNr}
-                        placeholder="19h30"
+                        onChange={(value)=>{
+							if (value.target.value < 1) {
+								value.target.value = 0;
+							}
+							else if (value.target.value > 15) {
+								value.target.value = 16;
+							}
+							setFieldValue('seatNr', value.target.value)
+						}}
+                        value={values.seatNr}
+                        placeholder="ex: 5"
                         error={
                             errors.seatNr
                         }
@@ -212,10 +236,10 @@ function ReservationDetail ({ action='ADD' }) {
 				</Col>
 				<Col xs={7} className="px-0 mt-4">
 					<div className="d-flex justify-content-end">
-						<Button type="submit">{(isEdit) ? 'Modifier' : 'Ajouter la réservation' }</Button>
+						<Button type="submit">{(resID, isEdit) ? 'Modifier' : 'Ajouter la réservation' }</Button>
  					</div>
 				</Col>
-			</Row>
+			</form>
 		</div>
 	)
 }

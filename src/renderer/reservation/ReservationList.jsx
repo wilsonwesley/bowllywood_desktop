@@ -11,7 +11,7 @@ let dateObj, resDate, resTime;
 function ReservationList () {
 
 	const [reservations, setReservations] = useState([]),
-		  [sortIcon, setSortIcon] = useState('down'),
+		  [sortIcon, setSortIcon] = useState('up'),
 		  [isLoaded, setIsLoaded] = useState(false);
 
 	useEffect(()=>{
@@ -21,7 +21,7 @@ function ReservationList () {
 			// place items depending of the date
 			// descendent mode
 			res.data.sort((first, second)=>{
-				return (first.reservDate > second.reservDate) ? 1 : -1;
+				return (first.reservDate < second.reservDate) ? 1 : -1;
 			})
 			setReservations(res.data)
 
