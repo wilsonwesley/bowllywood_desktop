@@ -1,0 +1,108 @@
+@import '../../sass/styles.scss';
+
+/************* common style of reservation view files **************/
+.resCtnr {
+    background-image: url('../../assets/img/resservBgSm.png');
+    background-position: bottom right;
+    background-repeat: no-repeat;
+    row-gap: 4.2em !important;
+    min-height: 100vh;
+
+    .thinHeader {
+    	padding: 0;
+    }
+
+	p {
+		margin: 0;
+		font-family: $ibm-font;
+	}
+
+	.inheritText {font-size: inherit;}
+	.largeText {font-size: 1.3rem}
+	.mediumText {font-size: 0.85rem}
+	.smallText {font-size: 0.75rem}
+
+	i {
+		font-size: 1.7rem;
+		cursor: pointer;
+	}
+
+	.resListContent, .resDetailTop {
+		p:not(p.addText) {
+			font-size: 1.3rem;
+		}
+	}
+
+	i.disabled {
+		color: $pale-grey ;
+		cursor: default;
+	}
+}
+
+.resDetailTop, .resFormTop {
+	h2 {
+		font-size: 1.7rem;
+	    font-weight: 400;
+	    
+	    +p {
+	    	line-height: 1;
+	    }
+	}
+}
+
+/************* reservation list file **************/
+.resStatistic {
+	column-gap: 5rem;
+
+	span.headerNbr {
+		font-size: 1.8rem;
+	}
+}
+
+.resListContent {
+
+	.resList i {
+		font-size: 1.6rem;
+		cursor: pointer;
+	}
+
+	.resListItem {
+		// overwrite
+		border: none;
+		border-radius: 0;
+		border-bottom: 1px solid $dark-grey;
+		background-color: transparent !important;
+
+		p {
+			line-height: 1em;
+		}
+	}
+
+	a {
+		text-decoration: none;
+	}
+
+	.addIcon {font-size: 4.5rem}
+}
+
+/************* reservation details file **************/
+.resDetailTop {
+	column-gap: 2rem;
+
+	// overwrite
+	.fa-square-xmark {
+		line-height: .85;
+	}
+}
+
+.resDetailContent {
+	border-left: 2px solid $dark-grey;
+
+	p {
+		font-size: 1.6em
+	}
+
+	.detailNumbers {
+		line-height: 1.4;
+	}
+}

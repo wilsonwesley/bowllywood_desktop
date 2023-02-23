@@ -1,4 +1,4 @@
-@import './../sass/variables.scss';
+@import './../sass/styles.scss';
 
 .inputCtnr{
     label {
@@ -9,6 +9,7 @@
     }
 
     input {
+        border: none;
         border-bottom: solid 2px $pale-grey;
         transition: border .2s ease-out;
         outline-width: 0;

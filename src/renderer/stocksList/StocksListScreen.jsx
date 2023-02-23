@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { Col, Row, Container } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
+import { Link } from 'react-router-dom';
 
 
 const StocksListScreen = () => {
@@ -31,10 +32,20 @@ const StocksListScreen = () => {
                 </Col>
             </Row>
             <Row>
+                <Col className='text-center mb-4'>
+                    <Link
+                        to={`/stocks/create`}
+                        className="text-decoration-none text-black text-center"
+                        >
+                        <Button className='text-dark'> Créer un nouveau produit</Button>
+                    </Link>
+                </Col>
+            </Row>
+            <Row>
                 <Col>
                     <Table striped bordered hover>
                         <thead>
-                            <tr>
+                            <tr className='text-center'>
                                 <th>Ref</th>
                                 <th>Produit</th>
                                 <th>Saveur</th>
@@ -48,7 +59,7 @@ const StocksListScreen = () => {
                             {allStocks.map(
                                 (item) => {
                                     return (
-                                        <tr
+                                        <tr className='text-center'
                                             key={item._id}>
                                             <td>
                                                 {item.ref}
@@ -72,16 +83,25 @@ const StocksListScreen = () => {
                                                 {item.DLC}
                                             </td>
                                             <td>
-                                                    <Button className='text-dark'>
-                                                        Détail
-                                                        {/* <Link
-                                                            to={`stocks/${item._id}`}
-                                                            className="text-decoration-none text-black text-center"
-                                                        >
-                                                            <p>Detail</p>
-                                                        </Link> */}
-                                                    </Button>
-                                                </td>
+                                                <Link
+                                                    to={`/stocks/supply/${item._id}`}
+                                                    className="text-decoration-none text-black text-center"
+                                                    >
+                                                    <Button className='text-dark'>Ajouter</Button>
+                                                </Link>
+                                                <Link
+                                                    to={`/stocks/extract/${item._id}`}
+                                                    className="text-decoration-none text-black text-center"
+                                                    >
+                                                    <Button className='text-dark my-2'> Retirer</Button>
+                                                </Link>
+                                                <Link
+                                                    to={`/stocks/delete/${item._id}`}
+                                                    className="text-decoration-none text-black text-center"
+                                                    >
+                                                    <Button className='text-dark bg-danger'>Suprimer</Button>
+                                                </Link>
+                                            </td>
                                         </tr>
                                     );
                                 }

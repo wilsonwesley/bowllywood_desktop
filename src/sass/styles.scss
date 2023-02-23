@@ -1,16 +1,9 @@
 // @import '~bootstrap/scss/bootstrap.scss';
 @import './variables.scss';
-@import './../components/Button.scss';
 
 .container{
 	max-width: 100%;
 }
-
-// debug class //
-.bb {border: red 2px solid;}
-
-// base style //
-.no-border {border: none;}
 
 .flex-center {
 	display: flex;
@@ -28,9 +21,13 @@
 }
 
 .growIcon {
-		transform: scale(4, 4);    
+	transform: scale(4, 4);    
 }
 
 .dark-green {
 	background-color: $dark-green;
 }
+
+.positiveColor {color: $positive}
+.negativeColor {color: $negative}
+.warningColor {color: $warning}
