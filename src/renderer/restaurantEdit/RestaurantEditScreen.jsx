@@ -4,9 +4,8 @@ import * as yup from 'yup';
 import { editRestaurant, getRestaurantDetail } from '../../services/restaurants';
 
 import InputText from '../../components/Input';
-import Button from '../../components/Button';
 
-import { Col, Row, Container } from 'react-bootstrap';
+import { Col, Row, Container, Button } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
@@ -500,7 +499,7 @@ const RestaurantEditScreen = () => {
                         
                         <Row>
                             <Col className='col-12 flex-center my-2'>
-                                <Button type="submit">Modifier</Button>
+                                <Button type="submit" className="text-dark">Modifier</Button>
                             </Col>
                         </Row>
                     </form>

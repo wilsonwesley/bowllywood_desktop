@@ -78,7 +78,16 @@ const FranchiseRequestsAcceptedListScreen = () => {
                     </Table>
                 </Col>
             </Row>
-
+            <Row>
+                <Col className='text-center mb-4'>
+                    <Link
+                        to={`/franchiseRequestsList`}
+                        className="text-decoration-none text-black text-center"
+                        >
+                        <Button className='text-dark'>Retour à la liste</Button>
+                    </Link>
+                </Col>
+            </Row>
         </Container>
     );
 };
