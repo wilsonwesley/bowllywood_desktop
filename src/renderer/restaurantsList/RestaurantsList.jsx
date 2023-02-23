@@ -1,10 +1,9 @@
 import { getAllRestaurants } from './../../services/restaurants';
 import { useEffect, useState } from 'react';
 
-import { Col, Row, Container } from 'react-bootstrap';
+import { Col, Row, Container, Button } from 'react-bootstrap';
 import FlipCard from './../../components/Flipcard';
 import { Link } from 'react-router-dom';
-import Button from '../../components/Button';
 
 const RestaurantsListScreen = () => {
 
@@ -36,7 +35,7 @@ const RestaurantsListScreen = () => {
                         to={`/restaurants/add`}
                         className="text-decoration-none text-black text-center"
                         >
-                        <Button className='text-dark'> Ajouter un nouveau restaurant</Button>
+                        <Button className='text-dark'> Ajouter un restaurant</Button>
                     </Link>
                 </Col>
             </Row>
