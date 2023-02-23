@@ -1,6 +1,5 @@
 import axios from "axios";
 
-export const axiosInstance = axios.create({
   baseURL: "https://bowllywood.onrender.com/",
   // baseURL: "http://localhost:5000/",
   // baseURL: 'http://localhost:3000/'
@@ -25,7 +24,6 @@ axiosInstance.interceptors.response.use(
     if (!response.headers.Authorization) {
       const authHeaders = JSON.parse(localStorage.getItem("userTokens"));
       response.headers.Authorization = localStorage.getItem("userTokens");
-      // console.log(authHeaders);
     }
     return response;
   },

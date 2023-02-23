@@ -14,7 +14,7 @@ import RestaurantArchiveScreen from "./restaurantArchive/RestaurantArchiveScreen
 import RestaurantEditScreen from "./restaurantEdit/RestaurantEditScreen";
 import RestaurantsListScreen from "./restaurantsList/RestaurantsList";
 import StocksListScreen from "./stocksList/StocksListScreen";
-// import StocksDetailScreen from "./stocksDetail/StocksDetailScreen";
+import LoginScreen from "./login/LoginScreen"
 import StocksSupplyScreen from "./stocksSupply/StocksSupplyScreen";
 import StocksExtractScreen from "./stocksExtract/StocksExtractScreen";
 import Template from "./../components/Template";
@@ -95,8 +95,6 @@ function App() {
           </Route>
         </Routes>
       </Router>
-
-      {/* <StocksDetailScreen /> */}
     </div>
   );
 }
