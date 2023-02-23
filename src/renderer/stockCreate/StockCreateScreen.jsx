@@ -4,10 +4,9 @@ import * as yup from 'yup';
 import { createStock } from '../../services/stocks';
 import { AuthContext } from '../../contexts/AuthContext';
 import InputText from '../../components/Input';
-import Button from '../../components/Button';
 
 import { useContext, useEffect, useState } from 'react';
-import { Col, Row, Container, Form } from 'react-bootstrap';
+import { Col, Row, Container, Form, Button } from 'react-bootstrap';
 
 import { getAllSuppliers } from './../../services/suppliers';
 
@@ -255,7 +254,7 @@ const StockCreateScreen = () => {
                         </Row>
                         <Row>
                             <Col className='col-12 flex-center my-2'>
-                                <Button type="submit">Ajouter le produit</Button>
+                                <Button type="submit" className="text-dark">Ajouter le produit</Button>
                             </Col>
                         </Row>
                     </form>
