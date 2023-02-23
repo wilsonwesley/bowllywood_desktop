@@ -3,8 +3,12 @@ import './../sass/styles.scss';
 import React from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import { Sidebar, SidebarItem } from 'react-responsive-sidebar';
+import GoBackButton from './GoBackButton'
 
 const items = [
+    <SidebarItem>
+        <GoBackButton />
+    </SidebarItem>,
     <SidebarItem>
         <Link to="/" className='text-decoration-none text-black text-center'>
             <i className="fa-solid fa-house text-black flex-center"></i>

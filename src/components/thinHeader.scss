@@ -1,0 +1,9 @@
+@import '../sass/styles.scss';
+
+.thinHeaderTitle {
+    font-size: 12pt;
+    color: $dark-grey;
+    + p {
+        font-size: 0.8em;
+    }
+}

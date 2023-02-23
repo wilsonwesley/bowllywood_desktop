@@ -21,9 +21,13 @@
 }
 
 .growIcon {
-		transform: scale(4, 4);    
+	transform: scale(4, 4);    
 }
 
 .dark-green {
 	background-color: $dark-green;
 }
+
+.positiveColor {color: $positive}
+.negativeColor {color: $negative}
+.warningColor {color: $warning}
