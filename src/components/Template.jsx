@@ -9,7 +9,6 @@ import { AuthContext } from '../contexts/AuthContext';
 const Template = () => {
 
     const authContext = useContext(AuthContext);
-console.log('Le context', authContext);
     const handleLogout = () => {
         // Supprimer les données utilisateur du localStorage
         localStorage.removeItem('userTokens');
