@@ -6,7 +6,7 @@ import InputText from '../../components/Input';
 import { Col, Row, Container, Button } from 'react-bootstrap';
 import './LoginScreen.scss';
 import { loginUser } from '../../services/users';
-// import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthContext';
 
 const loginSchema = yup.object().shape({
@@ -23,9 +23,9 @@ const loginSchema = yup.object().shape({
 function LoginScreen() {
     
     const [loginSuccess, setLoginSuccess] = useState(false);
-    // const navigate = useNavigate();
-    // const location = useLocation();
-    // const redirectSource = location.state?.from?.pathname || '/';
+    const navigate = useNavigate();
+    const location = useLocation();
+    const redirectSource = location.state?.from?.pathname || '/kitchenCalendar';
     const [errorMessage, setErrorMessage] = useState('');
     const authContext = useContext(AuthContext);
     return (
@@ -40,7 +40,7 @@ function LoginScreen() {
                         JSON.stringify(response.data)
                     );
                     authContext.setAuth(JSON.stringify(response.data));
-                    //navigate(redirectSource, { replace: true });
+                    navigate(redirectSource, { replace: true });
                     console.log(`test ${response.data}`);
                 } catch (err) {
                     if (!err.response) {
