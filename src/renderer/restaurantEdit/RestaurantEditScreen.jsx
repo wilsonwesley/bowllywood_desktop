@@ -315,7 +315,7 @@ const RestaurantEditScreen = () => {
                                 <InputText
                                     name="mondayOpeningTime"
                                     desc="Lundi ouverture *"
-                                    type="text"
+                                    type="time"
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                     value={values.mondayOpeningTime}
@@ -329,7 +329,7 @@ const RestaurantEditScreen = () => {
                             <InputText
                                     name="mondayClosingTime"
                                     desc="Lundi fermeture *"
-                                    type="text"
+                                    type="time"
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                     value={values.mondayClosingTime}
@@ -346,7 +346,7 @@ const RestaurantEditScreen = () => {
                                 <InputText
                                     name="tuesdayOpeningTime"
                                     desc="Mardi ouverture *"
-                                    type="text"
+                                    type="time"
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                     value={values.tuesdayOpeningTime}
@@ -360,7 +360,7 @@ const RestaurantEditScreen = () => {
                             <InputText
                                     name="tuesdayClosingTime"
                                     desc="Mardi fermeture *"
-                                    type="text"
+                                    type="time"
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                     value={values.tuesdayClosingTime}
@@ -377,7 +377,7 @@ const RestaurantEditScreen = () => {
                                 <InputText
                                     name="wednesdayOpeningTime"
                                     desc="Mercredi ouverture *"
-                                    type="text"
+                                    type="time"
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                     value={values.wednesdayOpeningTime}
@@ -391,7 +391,7 @@ const RestaurantEditScreen = () => {
                             <InputText
                                     name="wednesdayClosingTime"
                                     desc="Mercredi fermeture *"
-                                    type="text"
+                                    type="time"
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                     value={values.wednesdayClosingTime}
@@ -408,7 +408,7 @@ const RestaurantEditScreen = () => {
                                 <InputText
                                     name="thursdayOpeningTime"
                                     desc="Jeudi ouverture *"
-                                    type="text"
+                                    type="time"
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                     value={values.thursdayOpeningTime}
@@ -422,7 +422,7 @@ const RestaurantEditScreen = () => {
                             <InputText
                                     name="thursdayClosingTime"
                                     desc="Jeudi fermeture *"
-                                    type="text"
+                                    type="time"
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                     value={values.thursdayClosingTime}
@@ -439,7 +439,7 @@ const RestaurantEditScreen = () => {
                                 <InputText
                                     name="fridayOpeningTime"
                                     desc="Vendredi ouverture *"
-                                    type="text"
+                                    type="time"
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                     value={values.fridayOpeningTime}
@@ -453,7 +453,7 @@ const RestaurantEditScreen = () => {
                             <InputText
                                     name="fridayClosingTime"
                                     desc="Vendredi fermeture *"
-                                    type="text"
+                                    type="time"
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                     value={values.fridayClosingTime}
@@ -470,7 +470,7 @@ const RestaurantEditScreen = () => {
                                 <InputText
                                     name="saturdayOpeningTime"
                                     desc="Samedi ouverture *"
-                                    type="text"
+                                    type="time"
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                     value={values.saturdayOpeningTime}
@@ -484,7 +484,7 @@ const RestaurantEditScreen = () => {
                             <InputText
                                     name="saturdayClosingTime"
                                     desc="Samedi fermeture *"
-                                    type="text"
+                                    type="time"
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                     value={values.saturdayClosingTime}
