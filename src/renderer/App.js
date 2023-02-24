@@ -14,7 +14,7 @@ import RestaurantArchiveScreen from "./restaurantArchive/RestaurantArchiveScreen
 import RestaurantEditScreen from "./restaurantEdit/RestaurantEditScreen";
 import RestaurantsListScreen from "./restaurantsList/RestaurantsList";
 import StocksListScreen from "./stocksList/StocksListScreen";
-import LoginScreen from "./login/LoginScreen"
+import LoginScreen from "./login/LoginScreen";
 import StocksSupplyScreen from "./stocksSupply/StocksSupplyScreen";
 import StocksExtractScreen from "./stocksExtract/StocksExtractScreen";
 import Template from "./../components/Template";
@@ -28,16 +28,20 @@ import SupplierDeleteScreen from "./supplierDelete/SupplierDeleteScreen";
 import SupplierDetailsScreen from "./supplierDetails/SupplierDetailsScreen";
 import SupplierEditScreen from "./supplierEdit/SupplierEditScreen";
 import SuppliersListScreen from "./supplierList/SupplierListScreen";
+import { AuthProvider } from "../providers/AuthProvider";
 
 function App() {
   return (
-    <div>
+    <AuthProvider>
       <Router>
         <Routes>
           <Route path="/" element={<HomeScreen />} />
           <Route path="/" element={<Template />}>
             <Route path="/reservations/form" element={<ReservationForm />} />
-            <Route path="/reservations/form/:id" element={<ReservationForm action='EDIT' />} />
+            <Route
+              path="/reservations/form/:id"
+              element={<ReservationForm action="EDIT" />}
+            />
             <Route path="/reservations/:id" element={<ReservationDetail />} />
             <Route path="/reservations" element={<ReservationList />} />
             <Route path="/" element={<HomeScreen />} />
@@ -70,6 +74,7 @@ function App() {
               element={<FranchiseRequestDetailsScreen />}
             />
             <Route path="/kitchenCalendar" element={<KitchenCalendar />} />
+            <Route path="/login" element={<LoginScreen />} />
             <Route path="/stocks/supply/:id" element={<StocksSupplyScreen />} />
             <Route
               path="/stocks/extract/:id"
@@ -95,7 +100,7 @@ function App() {
           </Route>
         </Routes>
       </Router>
-    </div>
+    </AuthProvider>
   );
 }
 
