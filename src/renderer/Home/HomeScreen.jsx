@@ -63,14 +63,9 @@ function HomeScreen() {
 
 	const navList = [
 	{
-		icon: 'fa-solid fa-house',
-		text: 'Accueil',
-		route: '/'
-	},
-	{
 		icon: 'fa-solid fa-user',
 		text: 'Profil',
-		route: '/'
+		route: '/profile'
 	},
 	{
 		icon: 'fa-solid fa-right-from-bracket',

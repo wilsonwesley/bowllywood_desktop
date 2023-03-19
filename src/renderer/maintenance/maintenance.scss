@@ -1,0 +1,35 @@
+@import '../../sass/styles.scss';
+
+.maintCntr {
+    background-image: url('../../assets/img/homeBg_cut.png');
+    background-position: bottom right;
+    background-position: 100% 100%;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    row-gap: 4.2em !important;
+    min-height: 100vh;
+
+    .textCntr {
+    	row-gap: 1em;
+    	width: 40em;
+
+	    h2 {font-size: 1.7em}
+
+    	.homeLink {
+		    i {
+		    	font-size: 1.3em;
+		    	color: #3D3D3D;
+		    }
+		    
+		    span {
+		    	font-size: 1.1em;
+		    	border-bottom: 1px solid #3D3D3D;
+		    }
+    	}
+
+	    + span {
+	    	font-size: .8em;
+	    	font-style: italic;
+	    }
+    }
+}
