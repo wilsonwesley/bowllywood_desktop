@@ -1,5 +1,3 @@
-import { Col } from 'react-bootstrap';
-
 const ReservationListStat = ({number, title, subNumber, subTitle, isPercent}) => {
 
 	var fontColor = '';

@@ -12,7 +12,7 @@
  * @param  {string || int} 	errCode     'MAINT' for redirection to the maintenance page OR type of the catched err
  * @param  {string} 		subjectName Name to concatenate into the message string
  */
-const ErrorHandler = ({errType, errCode=null, subjectName=null}) => {
+const ErrorHandler = ({errType, errCode=null, catchedMsg=null, subjectName=null}) => {
 
 	// const [errMEssage, setErrMessage] = useState('');
 

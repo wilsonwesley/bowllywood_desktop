@@ -4,6 +4,7 @@
 .resCtnr {
     background-image: url('../../assets/img/resservBgSm.png');
     background-position: bottom right;
+    background-attachment: fixed;
     background-repeat: no-repeat;
     row-gap: 4.2em !important;
     min-height: 100vh;
@@ -39,7 +40,7 @@
 	}
 }
 
-.resDetailTop, .resFormTop {
+.resDetailTop, .resForm {
 	h2 {
 		font-size: 1.7rem;
 	    font-weight: 400;
@@ -104,5 +105,12 @@
 
 	.detailNumbers {
 		line-height: 1.4;
+	}
+}
+
+/************* reservation form file **************/
+.resForm {
+	.btnCtnr {
+		column-gap: 2em;
 	}
 }

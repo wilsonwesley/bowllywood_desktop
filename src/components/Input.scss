@@ -18,4 +18,9 @@
         &:hover {border-color: $dark-grey;}
         &:focus {border-color: $dark-grey;}
     }
+
+    .error {
+        font-size: .8em;
+        color: $negative;
+    }
 }
