@@ -1,9 +1,9 @@
 @import '../../sass/styles.scss';
 
-.maintCntr {
-    background-image: url('../../assets/img/resservBg.png');
+.errorCntr {
+    background-image: url('https://bowllywood-8llo.onrender.com/images/sweetBg.png');
     background-position: bottom right;
-    background-position: 100% 100%;
+    background-size: 28%;
     background-attachment: fixed;
     background-repeat: no-repeat;
     row-gap: 4.2em !important;
@@ -20,7 +20,7 @@
 		    	font-size: 1.3em;
 		    	color: #3D3D3D;
 		    }
-		    
+
 		    span {
 		    	font-size: 1.1em;
 		    	border-bottom: 1px solid #3D3D3D;

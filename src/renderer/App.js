@@ -29,7 +29,7 @@ import SupplierDetailsScreen from "./supplierDetails/SupplierDetailsScreen";
 import SupplierEditScreen from "./supplierEdit/SupplierEditScreen";
 import SuppliersListScreen from "./supplierList/SupplierListScreen";
 import Maintenance from "./maintenance/Maintenance";
-import ErrorSCreen from "./errorSCreen/ErrorSCreen";
+import ErrorScreen from "./errorScreen/ErrorScreen";
 
 function App() {
   return (
@@ -95,7 +95,7 @@ function App() {
             <Route path="/suppliers/:id" element={<SupplierDetailsScreen />} />
             <Route path="/supplierList" element={<SuppliersListScreen />} />
             <Route path="/profile" element={<Maintenance />} />
-            <Route path="/erreur" element={<ErrorSCreen />} />
+            <Route path="*" element={<ErrorScreen errCode={404} errText="La page demandée n'existe pas. Veuillez recommencer ou retourner sur la pge d'accueil." />}/>
           </Route>
         </Routes>
       </Router>
