@@ -6,33 +6,36 @@ import { Link } from 'react-router-dom';
 import ThinHeader from '../../components/ThinHeader';
 import ReservationListStat from '../../components/ReservationListStat';
 import LoadingSpinner from '../../components/LoadingSpinner';
+import useErrorHandler from '../../conf/ErrorHandler';
 
 let dateObj, resDate, resTime;
 function ReservationList () {
 
 	const [reservations, setReservations] = useState([]),
 		  [sortIcon, setSortIcon] = useState('up'),
+		  [isError, setIsError] = useState(false),
 		  [isLoaded, setIsLoaded] = useState(false);
 
+	const handleError = useErrorHandler('TOAST', 'err.code', `Liste des réservations : {err.message}`)
 	useEffect(()=>{
-
+		
 		getAllReservations().then((res)=>{
-
 			// place items depending of the date
 			// descendent mode
 			res.data.sort((first, second)=>{
 				return (first.reservDate < second.reservDate) ? 1 : -1;
 			})
 			setReservations(res.data)
-
+			
 		}).catch((err)=>{
-			console.log('GET ALL RESERV : ', err)
+			// console.log('GET ALL RESERV : ', err)
+			setIsError(true)
+			handleError('TOAST', err.code, `Liste des réservations : ${err.message}`)
 		}).finally(()=>{
 			setIsLoaded(true)
 		})
-
 	}, [])
-
+		
 	const sortList = () => {
 		let newIcon = (sortIcon === 'down') ? 'up' : 'down';
 		setSortIcon(newIcon)
@@ -200,9 +203,10 @@ function ReservationList () {
 				</Row>
 			</Col>
 		</Row>
-
+		{/* <SimplePopup /> */}
 	</div>
 	)
 }
 
 export default ReservationList;
+// <Button bsType="button" onClick={() => { Popup.onClose() /*.close()*/ }} >Ok pour moi !</Button>

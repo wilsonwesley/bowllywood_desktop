@@ -1,5 +1,7 @@
 import "./App.scss";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { ToastContainer } from 'react-toastify';
+import Popup from 'react-popup';
 
 // import AddFranchiseRequestScreen from "./addFranchiseRequest/AddFranchiseRequestScreen";
 import HomeScreen from "./Home/HomeScreen";
@@ -99,6 +101,18 @@ function App() {
           </Route>
         </Routes>
       </Router>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored" />
+      <Popup />
     </div>
   );
 }

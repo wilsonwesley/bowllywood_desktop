@@ -1,51 +1,91 @@
-// import { Toast, Popup} from 'react';
-// import { redirection } from 'react-router-dom';
+import {useState, useEffect} from 'react';
+import {useNavigate} from 'react-router-dom';
+import {toast} from 'react-toastify';
+import SimplePopup from '../components/SimplePopup';
+import 'react-toastify/dist/ReactToastify.css';
 
-// définir l'élément à afficher. si redirection : pas de message à trouver ni à recevoir
-// définir la string à diffuser avec concatécation etc. vérif type et subjectName
+// {errType, errCode, catchedMsg, subjectName='élément'}
+function useErrorHandler(errType, errCode, catchedMsg, subjectName='élément') {
+	const [errTitle, setErrTitle] = useState(''),
+		  [errMessage, setErrMessage] = useState('');
+	
+	const navigate = useNavigate();
 
-/**
- * Define the type and the message of the error.
- * If redirection, redirect to a page corresponding to the given errCode (404, 401, or 'MAINT' for maintenance page)
- * 
- * @param  {string} 		errType     'POPUP', 'TOAST', 'REDIRECT', 
- * @param  {string || int} 	errCode     'MAINT' for redirection to the maintenance page OR type of the catched err
- * @param  {string} 		subjectName Name to concatenate into the message string
- */
-const ErrorHandler = ({errType, errCode=null, catchedMsg=null, subjectName=null}) => {
+	useEffect(()=>{
+		// define error message to display
+		// const serverCodeRx = new RegExp('/^(5[0-9]{2})$/s'); // matches 500, 501, etc...
+		const get_default_message = (errCode, subjectName) => {
+			let returnMsg = '' ;
 
-	// const [errMEssage, setErrMessage] = useState('');
+			// check passed elements 
+			subjectName = (typeof subjectName !== 'string') ? 'élément' : subjectName ;
+			subjectName = subjectName.toLowerCase();
 
-	/*const codeMessages = [
-		001 = 'Le service technique est sur la touche !'
-		404 = 'n\'a été trouvé.'
-		401 = 'Vous n\'avez pas les droits pour accéder à cette inforamtion.'
-		500 = 'Une erreur interne au serveur est apparue.'
-	] */
-	const defineMessage = (errCode, subjectName) => {
+			// define message
+			switch (errCode)
+			{
+				case 400:
+					returnMsg = `Impossible de traiter la requête. Veuillez vérifier les informations fournies.`
+					break;
+				case 404:
+					returnMsg = `Aucun.e ${subjectName} n'a été trouvé.e lors de la recherche.`
+					break;
+				case 401:
+					returnMsg = `Vous devez être connecté pour accéder à cette page. Vous n'avez pas les droits ou avez été déconnecté.`
+					break;
+				case 403:
+					returnMsg = `Vous n'avez pas les droits pour accéder à ces informations.`
+					break;
+				// case 500:
+				default:
+					// [EVOLUTION] : send the error to the service for analysis.
+					returnMsg = `Une erreur technique est survenue. Veuillez recommencer plus tard.`
+					break;
+			}
 
+			return returnMsg;
+		}
 		
-		// codeMessages[errCode]
+		setErrTitle(`Erreur ${errCode}`)
+		if (catchedMsg) {
+			setErrMessage(catchedMsg)
+		} else {
+			setErrMessage(get_default_message(errCode, subjectName))
+		}
 
-	}
+		// return object or redirect to page
+		switch (errType)
+		{
+			case 'REDIRECT':
+				// It's recommended to use redirect in loaders and actions rather than useNavigate in your components when the redirect is in response to data.
+				// return redirect('/');
+				navigate('/error', {
+					replace: true, // remove track history
+					state: {
+						errTitle,
+						errMessage 
+					}
+				})
+				break;
+			case 'POPUP':
+				return SimplePopup(errTitle, errMessage)
+			case 'TOAST':
+				toast.error(`${errTitle} : ${errMessage}`, {
+					position: "bottom-center",
+					autoClose: 5000*2,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					// theme: "light",
+				});
+				break;
+		}
+	}, [])
 
-	switch (errType)
-	{
-		case 'REDIRECT':
-			// redirect to page depending of the errCode
-			break;
-		case 'TOAST':
-			defineMessage(errCode, subjectName)
-			// redirect to page depending of the errCode
-			break;
-		case 'POPUP':
-			// redirect to page depending of the errCode
-			break;
-		default:
-			// statements_def
-			break;
-	}
+	return errType;
 
 }
 
-export default ErrorHandler;
+export default useErrorHandler;
