@@ -1,6 +1,8 @@
 import axios from "axios";
 
-  baseURL: "https://bowllywood.onrender.com/",
+export const axiosInstance = axios.create({
+  baseURL: "https://bowllywood-8llo.onrender.com",
+  // baseURL: "https://bowllywood.onrender.com/",
   // baseURL: "http://localhost:5000/",
   // baseURL: 'http://localhost:3000/'
 });
