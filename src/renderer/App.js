@@ -36,7 +36,7 @@ function App() {
     <AuthProvider>
       <Router>
         <Routes>
-          <Route path="/" element={<HomeScreen />} />
+          <Route path="/" element={<LoginScreen />} />
           <Route path="/" element={<Template />}>
             <Route path="/reservations/form" element={<ReservationForm />} />
             <Route
