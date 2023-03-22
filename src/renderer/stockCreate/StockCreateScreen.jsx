@@ -1,5 +1,6 @@
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import jwt_decode from "jwt-decode";
 
 import { createStock } from '../../services/stocks';
 import { AuthContext } from '../../contexts/AuthContext';
@@ -42,9 +43,15 @@ const StockCreateScreen = () => {
             });
     }, []);
 
-    const authContext = useContext(AuthContext);
+    // const authContext = useContext(AuthContext);
+    // console.log('Context:', authContext.auth);
     // const userID = authContext.auth.userID;
-    const userID = '632471120361eb66b468a627';
+    // const userID = '632471120361eb66b468a627';
+
+    const authHeaders = JSON.parse(localStorage.getItem('userTokens'));
+    const token =   authHeaders['token'];
+    const decoded = jwt_decode(token);
+    const userID = decoded.id
 
     const onSubmit = (values) => {
         console.log(values);

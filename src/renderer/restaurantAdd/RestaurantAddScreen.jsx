@@ -286,7 +286,7 @@ const RestaurantAddScreen = () => {
                                 <InputText
                                     name="mondayOpeningTime"
                                     desc="Lundi ouverture *"
-                                    type="text"
+                                    type="time"
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                     value={values.mondayOpeningTime}
@@ -300,7 +300,7 @@ const RestaurantAddScreen = () => {
                             <InputText
                                     name="mondayClosingTime"
                                     desc="Lundi fermeture *"
-                                    type="text"
+                                    type="time"
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                     value={values.mondayClosingTime}
@@ -317,7 +317,7 @@ const RestaurantAddScreen = () => {
                                 <InputText
                                     name="tuesdayOpeningTime"
                                     desc="Mardi ouverture *"
-                                    type="text"
+                                    type="time"
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                     value={values.tuesdayOpeningTime}
@@ -331,7 +331,7 @@ const RestaurantAddScreen = () => {
                             <InputText
                                     name="tuesdayClosingTime"
                                     desc="Mardi fermeture *"
-                                    type="text"
+                                    type="time"
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                     value={values.tuesdayClosingTime}
@@ -348,7 +348,7 @@ const RestaurantAddScreen = () => {
                                 <InputText
                                     name="wednesdayOpeningTime"
                                     desc="Mercredi ouverture *"
-                                    type="text"
+                                    type="time"
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                     value={values.wednesdayOpeningTime}
@@ -362,7 +362,7 @@ const RestaurantAddScreen = () => {
                             <InputText
                                     name="wednesdayClosingTime"
                                     desc="Mercredi fermeture *"
-                                    type="text"
+                                    type="time"
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                     value={values.wednesdayClosingTime}
@@ -379,7 +379,7 @@ const RestaurantAddScreen = () => {
                                 <InputText
                                     name="thursdayOpeningTime"
                                     desc="Jeudi ouverture *"
-                                    type="text"
+                                    type="time"
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                     value={values.thursdayOpeningTime}
@@ -393,7 +393,7 @@ const RestaurantAddScreen = () => {
                             <InputText
                                     name="thursdayClosingTime"
                                     desc="Jeudi fermeture *"
-                                    type="text"
+                                    type="time"
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                     value={values.thursdayClosingTime}
@@ -410,7 +410,7 @@ const RestaurantAddScreen = () => {
                                 <InputText
                                     name="fridayOpeningTime"
                                     desc="Vendredi ouverture *"
-                                    type="text"
+                                    type="time"
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                     value={values.fridayOpeningTime}
@@ -424,7 +424,7 @@ const RestaurantAddScreen = () => {
                             <InputText
                                     name="fridayClosingTime"
                                     desc="Vendredi fermeture *"
-                                    type="text"
+                                    type="time"
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                     value={values.fridayClosingTime}
@@ -441,7 +441,7 @@ const RestaurantAddScreen = () => {
                                 <InputText
                                     name="saturdayOpeningTime"
                                     desc="Samedi ouverture *"
-                                    type="text"
+                                    type="time"
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                     value={values.saturdayOpeningTime}
@@ -455,7 +455,7 @@ const RestaurantAddScreen = () => {
                             <InputText
                                     name="saturdayClosingTime"
                                     desc="Samedi fermeture *"
-                                    type="text"
+                                    type="time"
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                     value={values.saturdayClosingTime}
