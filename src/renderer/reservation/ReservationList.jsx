@@ -6,19 +6,16 @@ import { Link } from 'react-router-dom';
 import ThinHeader from '../../components/ThinHeader';
 import ReservationListStat from '../../components/ReservationListStat';
 import LoadingSpinner from '../../components/LoadingSpinner';
-import useErrorHandler from '../../conf/ErrorHandler';
+import {errorHandler} from '../../conf/ErrorHandler';
 
 let dateObj, resDate, resTime;
 function ReservationList () {
 
 	const [reservations, setReservations] = useState([]),
 		  [sortIcon, setSortIcon] = useState('up'),
-		  [isError, setIsError] = useState(false),
 		  [isLoaded, setIsLoaded] = useState(false);
 
-	const handleError = useErrorHandler('TOAST', 'err.code', `Liste des réservations : {err.message}`)
-	useEffect(()=>{
-		
+	useEffect(()=>{	
 		getAllReservations().then((res)=>{
 			// place items depending of the date
 			// descendent mode
@@ -29,8 +26,7 @@ function ReservationList () {
 			
 		}).catch((err)=>{
 			// console.log('GET ALL RESERV : ', err)
-			setIsError(true)
-			handleError('TOAST', err.code, `Liste des réservations : ${err.message}`)
+			errorHandler('TOAST', err.code, err.message)
 		}).finally(()=>{
 			setIsLoaded(true)
 		})
@@ -40,7 +36,7 @@ function ReservationList () {
 		let newIcon = (sortIcon === 'down') ? 'up' : 'down';
 		setSortIcon(newIcon)
 
-		reservations.sort((first, second)=>{
+		reservations.sort(()=>{
 			return -1;
 		});
 	}
