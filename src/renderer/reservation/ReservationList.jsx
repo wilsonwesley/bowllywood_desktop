@@ -7,6 +7,7 @@ import ThinHeader from '../../components/ThinHeader';
 import ReservationListStat from '../../components/ReservationListStat';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import {errorHandler} from '../../conf/ErrorHandler';
+import {useNavigate} from 'react-router-dom';
 
 let dateObj, resDate, resTime;
 function ReservationList () {
@@ -14,6 +15,8 @@ function ReservationList () {
 	const [reservations, setReservations] = useState([]),
 		  [sortIcon, setSortIcon] = useState('up'),
 		  [isLoaded, setIsLoaded] = useState(false);
+
+	const navigate = useNavigate()
 
 	useEffect(()=>{	
 		getAllReservations().then((res)=>{
@@ -26,7 +29,10 @@ function ReservationList () {
 			
 		}).catch((err)=>{
 			// console.log('GET ALL RESERV : ', err)
-			errorHandler('TOAST', err.code, err.message)
+			debugger
+			// errorHandler('REDIRECT', err.request.status, err.request.statusText)
+			navigate('/')
+
 		}).finally(()=>{
 			setIsLoaded(true)
 		})
