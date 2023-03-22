@@ -2,11 +2,13 @@ import { useContext, useState } from 'react';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import InputText from '../../components/Input';
-import Button from '../../components/Button';
-import { Col, Row, Container } from 'react-bootstrap';
+// import Button from '../../components/Button';
+import { Col, Row, Container, Button } from 'react-bootstrap';
 import './LoginScreen.scss';
 import { loginUser } from '../../services/users';
-// import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../contexts/AuthContext';
+import jwt_decode from "jwt-decode";
 
 const loginSchema = yup.object().shape({
     email: yup
@@ -22,11 +24,12 @@ const loginSchema = yup.object().shape({
 function LoginScreen() {
     
     const [loginSuccess, setLoginSuccess] = useState(false);
-    // const navigate = useNavigate();
-    // const location = useLocation();
-    // const redirectSource = location.state?.from?.pathname || '/';
+    const navigate = useNavigate();
+    const location = useLocation();
+    const redirectSource = location.state?.from?.pathname || '/supplierList';
     const [errorMessage, setErrorMessage] = useState('');
-    
+    const authContext = useContext(AuthContext);
+
     return (
         <Formik
             validationSchema={loginSchema}
@@ -38,7 +41,16 @@ function LoginScreen() {
                         'userTokens',
                         JSON.stringify(response.data)
                     );
-                    //navigate(redirectSource, { replace: true });
+                    const decodedToken = jwt_decode(response.data.token);
+                    const userID = decodedToken.id;
+                    const userROLE = decodedToken.roleID;
+                    let userInfos = {
+                        userId: userID,
+                        role: userROLE,
+                    };
+                    authContext.setAuth(userInfos);
+                                
+                    navigate(redirectSource, { replace: true });
                     console.log(`test ${response.data}`);
                 } catch (err) {
                     if (!err.response) {
@@ -129,7 +141,9 @@ function LoginScreen() {
                                         />
                                     </Col>
                                 </Row>
-                                <Button type="submit">Connexion</Button>
+                                <div className="d-flex justify-content-center">
+                                    <Button type="submit" className="text-dark">Connexion</Button>
+                                </div>
                             </form>
                         </Col>
                     </Row>
