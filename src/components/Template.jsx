@@ -1,17 +1,10 @@
 import "./../sass/styles.scss";
 
-<<<<<<< HEAD
-import React from 'react';
-import { Link, Outlet } from 'react-router-dom';
-import { Sidebar, SidebarItem } from 'react-responsive-sidebar';
-import GoBackButton from './GoBackButton';
-=======
 import React, { useContext, useEffect, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 import { Sidebar, SidebarItem } from "react-responsive-sidebar";
 import GoBackButton from "./GoBackButton";
 import { AuthContext } from "../contexts/AuthContext";
->>>>>>> dev
 
 const Template = () => {
   const authContext = useContext(AuthContext);
@@ -34,19 +27,6 @@ const Template = () => {
     </SidebarItem>,
   ];
 
-<<<<<<< HEAD
-const Template = () => {
-    return (
-        <>
-        <Sidebar content={items} background="#91D5A3" width={200} >
-            <div className='main-content'>
-                <Outlet />
-                <div className='col-12 footer'></div>
-            </div>
-        </Sidebar>
-        </>
-    );
-=======
   const [itemsLogged, setItemsLogged] = useState([]);
   useEffect(() => {
     let data;
@@ -225,7 +205,6 @@ const Template = () => {
       </div>
     </Sidebar>
   );
->>>>>>> dev
 };
 
 export default Template;

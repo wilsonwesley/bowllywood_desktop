@@ -1,13 +1,8 @@
 import axios from "axios";
 
 export const axiosInstance = axios.create({
-<<<<<<< HEAD
   // baseURL: "https://bowllywood-8llo.onrender.com"
   baseURL: "http://localhost:5000/"
-=======
-  baseURL: "https://bowllywood-8llo.onrender.com/",
-  // baseURL: "http://localhost:5000/",
->>>>>>> dev
 });
 
 axiosInstance.interceptors.request.use(

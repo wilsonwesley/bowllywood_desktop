@@ -37,6 +37,7 @@ import { AuthProvider } from "../providers/AuthProvider";
 
 function App() {
   return (
+    <>
     <AuthProvider>
       <Router>
         <Routes>
@@ -122,6 +123,8 @@ function App() {
         theme="colored" />
       <Popup />
     </AuthProvider>
+    </>
+
   );
 }
 

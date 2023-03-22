@@ -15,14 +15,16 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     if (checkStorage() && !auth) {
       const tokens = checkStorage();
-      const decodedToken = jwt_decode(JSON.parse(tokens).token);
-      const userID = decodedToken.id;
-      const userROLE = decodedToken.roleID;
-      let userInfos = {
-        userId: userID,
-        role: userROLE,
-      };
-      setAuth(userInfos);
+      if (tokens) {
+        const decodedToken = jwt_decode(JSON.parse(tokens).token);
+        const userID = decodedToken.id;
+        const userROLE = decodedToken.roleID;
+        let userInfos = {
+          userId: userID,
+          role: userROLE,
+        };
+        setAuth(userInfos);
+      }
     }
   }, [auth]);
 
