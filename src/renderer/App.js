@@ -18,7 +18,6 @@ import LoginScreen from "./login/LoginScreen";
 import StocksSupplyScreen from "./stocksSupply/StocksSupplyScreen";
 import StocksExtractScreen from "./stocksExtract/StocksExtractScreen";
 import Template from "./../components/Template";
-import RegisterScreen from "./register";
 import ReservationList from "./reservation/ReservationList";
 import ReservationDetail from "./reservation/ReservationDetail";
 import ReservationForm from "./reservation/ReservationForm";
@@ -76,8 +75,6 @@ function App() {
             />
             <Route path="/kitchenCalendar" element={<KitchenCalendar />} />
             <Route path="/login" element={<LoginScreen />} />
-            <Route path="/register" element={<RegisterScreen />} />
-
             <Route path="/stocks/supply/:id" element={<StocksSupplyScreen />} />
             <Route
               path="/stocks/extract/:id"
