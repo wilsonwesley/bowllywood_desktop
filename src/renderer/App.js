@@ -45,7 +45,7 @@ function App() {
             />
             <Route path="/reservations/:id" element={<ReservationDetail />} />
             <Route path="/reservations" element={<ReservationList />} />
-            <Route path="/" element={<HomeScreen />} />
+            <Route path="/home" element={<HomeScreen />} />
 
             <Route
               path="/restaurants/delete/:id"

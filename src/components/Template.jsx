@@ -30,10 +30,12 @@ const Template = () => {
   const [itemsLogged, setItemsLogged] = useState([]);
   useEffect(() => {
     let data;
-    if ( authContext?.auth?.role === "ROLE_ADMIN" || authContext?.auth?.role === "ROLE_SUPERADMIN" )  {
+    if ( authContext?.auth?.role === "ROLE_ADMIN" 
+      || authContext?.auth?.role === "ROLE_SUPERADMIN" 
+      || authContext?.auth?.role === "ROLE_CEO")  {
       data = [
         <SidebarItem>
-          <Link to="/" className="text-decoration-none text-black text-center">
+          <Link to="/home" className="text-decoration-none text-black text-center">
             <i className="fa-solid fa-house text-black flex-center"></i>
             <p className="text-black">Accueil</p>
           </Link>
@@ -113,10 +115,10 @@ const Template = () => {
         </SidebarItem>,
       ];
       setItemsLogged(data);
-    } else {
+    } else if (authContext?.auth?.role === "ROLE_MANAGER" ) {
       data = [
         <SidebarItem>
-          <Link to="/" className="text-decoration-none text-black text-center">
+          <Link to="/home" className="text-decoration-none text-black text-center">
             <i className="fa-solid fa-house text-black flex-center"></i>
             <p className="text-black">Accueil</p>
           </Link>
@@ -159,15 +161,6 @@ const Template = () => {
         </SidebarItem>,
         <SidebarItem>
           <Link
-            to="/franchiseRequestsList"
-            className="text-decoration-none text-black text-center"
-          >
-            <i className="fa-solid fa-user-plus text-black flex-center"></i>
-            <p>Adhésion</p>
-          </Link>
-        </SidebarItem>,
-        <SidebarItem>
-          <Link
             to="/supplierList"
             className="text-decoration-none text-black text-center"
           >
@@ -187,6 +180,63 @@ const Template = () => {
         </SidebarItem>,
       ];
       setItemsLogged(data);
+    } else if (authContext?.auth?.role === "ROLE_WAITER"
+      || authContext?.auth?.role === "ROLE_COOK" ) {
+        data = [
+          <SidebarItem>
+            <Link to="/home" className="text-decoration-none text-black text-center">
+              <i className="fa-solid fa-house text-black flex-center"></i>
+              <p className="text-black">Accueil</p>
+            </Link>
+          </SidebarItem>,
+          <SidebarItem>
+            <Link
+              to="/profile"
+              className="text-decoration-none text-black text-center"
+            >
+              <i className="fa-solid fa-user text-black flex-center"></i>
+              <p className="text-black">Profile</p>
+            </Link>
+          </SidebarItem>,
+          <SidebarItem>
+            <Link
+              to="/restaurants"
+              className="text-decoration-none text-black text-center"
+            >
+              <i className="fa-solid fa-shop text-black flex-center"></i>
+              <p>Restaurants</p>
+            </Link>
+          </SidebarItem>,
+          <SidebarItem>
+            <Link
+              to="/stocks"
+              className="text-decoration-none text-black text-center"
+            >
+              <i className="fa-solid fa-box-open text-black flex-center"></i>
+              <p className="text-black">Inventaire</p>
+            </Link>
+          </SidebarItem>,
+          <SidebarItem>
+            <Link
+              to="/kitchenCalendar"
+              className="text-decoration-none text-black text-center"
+            >
+              <i className="fa-solid fa-calendar-days text-black flex-center"></i>
+              <p>Agenda</p>
+            </Link>
+          </SidebarItem>,
+          <SidebarItem>
+            <Link
+              to="/"
+              className="text-decoration-none text-black text-center"
+              onClick={handleLogout}
+            >
+              <i className="fa-solid fa-user-times text-black flex-center"></i>
+              <p>Déconnexion</p>
+            </Link>
+          </SidebarItem>,
+        ];
+        setItemsLogged(data);
     }
     return () => {
       setItemsLogged([]);
