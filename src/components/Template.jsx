@@ -30,7 +30,7 @@ const Template = () => {
   const [itemsLogged, setItemsLogged] = useState([]);
   useEffect(() => {
     let data;
-    if ( authContext?.auth?.role === "ROLE_ADMIN") {
+    if ( authContext?.auth?.role === "ROLE_ADMIN" || authContext?.auth?.role === "ROLE_SUPERADMIN" )  {
       data = [
         <SidebarItem>
           <Link to="/" className="text-decoration-none text-black text-center">
