@@ -3,9 +3,12 @@ import {toast} from 'react-toastify';
 import simplePopup from '../components/SimplePopup';
 import 'react-toastify/dist/ReactToastify.css';
 
-export function errorHandler(errType, errCode, catchedMsg, subjectName='élément') {
+export function errorHandler(errType, errorCatched, navigate, subjectName) {
 	let errTitle, errMessage;
-	
+
+	let errCode = errorCatched.response.status ?? errorCatched.code,
+		catchedMsg = errorCatched.response.data.message;
+
 	// define error message to display
 	const get_default_message = (errCode, subjectName) => {
 		let returnMsg = '' ;
@@ -51,7 +54,14 @@ export function errorHandler(errType, errCode, catchedMsg, subjectName='élémen
 	switch (errType)
 	{
 		case 'REDIRECT':
-			return (<Navigate to='/' />)
+			return navigate('/erreur',
+			{
+				replace: true, 
+				state: {
+					code: errCode, 
+					message: errMessage
+				} 
+			})
 		case 'POPUP':
 			return simplePopup(errTitle, errMessage)
 		case 'TOAST':

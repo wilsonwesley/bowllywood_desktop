@@ -1,13 +1,14 @@
 import './errorScreen.scss';
 import ThinHeader from '../../components/ThinHeader';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const ErrorScreen = ({errCode='', errText}) => {
 
-	if (!errText)
-	{
-		errText = 'Une erreur inconnue est survenue. Veuillez recommencer ou retourner à la page d\'accueil.';
-	}
+	const location = useLocation();
+	const {code, message} = location?.state;
+
+	if (!errText) errText = message ?? 'Une erreur inconnue est survenue. Veuillez recommencer ou retourner à la page d\'accueil.';
+	if (code) errCode = code;
 
 	return (
 		<div className="errorCntr d-flex flex-column justify-content-between px-5 py-4">	
