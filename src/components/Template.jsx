@@ -113,6 +113,15 @@ const Template = () => {
             <p>Inscription</p>
           </Link>
         </SidebarItem>,
+        <SidebarItem>
+        <Link
+          to="/userList"
+          className="text-decoration-none text-black text-center"
+        >
+          <i className="fa-solid fa-users text-black flex-center"></i>
+          <p>Utilisateurs</p>
+        </Link>
+      </SidebarItem>,
       ];
       setItemsLogged(data);
     } else if (authContext?.auth?.role === "ROLE_MANAGER" ) {
