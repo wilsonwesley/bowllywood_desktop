@@ -1,8 +1,7 @@
 import { getAllUsers } from './../../services/users';
 import { useEffect, useState } from 'react';
 
-import { Col, Row, Container, Button, Table } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Col, Row, Container  } from 'react-bootstrap';
 import DataTable from 'react-data-table-component';
 
 const UserListScreen = () => {
@@ -19,27 +18,55 @@ const UserListScreen = () => {
             });
     }, []);
 
+    const tableCustomStyles = {
+        headRow: {
+          style: {
+            color:'#223336',
+            backgroundColor: '#D8D8D8'
+          },
+        },
+        rows: {
+          style: {
+            color: "#DAFBE2",
+            backgroundColor: "#DAFBE2"
+          },
+          stripedStyle: {
+            color: "#91D5A3",
+            backgroundColor: "#91D5A3"
+          }
+        }
+      }
+
     const columns = [
         {
             name: 'Prénom',
             selector: row => row.firstName,
+            sortable: true,
+            center: true,
         },
         {
             name: 'Nom',
             selector: row => row.lastName,
+            sortable: true,
+            center: true,
         },
         {
             name: 'Role',
             selector: row => row.role,
+            sortable: true,
+            center: true,
         },
         {
             name: 'Email',
             selector: row => row.email,
+            sortable: true,
+            center: true,
         },
     ];
-    
-let usersDatas = [];
-let singleUserDatas = {};
+
+    const usersDatas = [];
+    let singleUserDatas = {};
+
     {allUsers.map((item) => (
             singleUserDatas = 
             {
@@ -52,85 +79,25 @@ let singleUserDatas = {};
     ))} 
 
     return (
+        <Container>
+            <Row>
+                <Col className='col-12 flex-center'>
+                    <img
+                        src="bowllywood.png"
+                        alt="Logo du restaurant de bowls nommé Bowllywood"
+                    />
+                </Col>
+            </Row>
         <DataTable
             columns={columns}
             data={usersDatas}
-        />
+            pagination
+            striped
+            customStyles={tableCustomStyles}
+            highlightOnHover
+            pointerOnHover
+            />
+        </Container>
     );
-
-    // return (
-    //     <Container>
-    //         <Row>
-    //             <Col className='col-12 flex-center'>
-    //                 <img
-    //                     src="bowllywood.png"
-    //                     alt="Logo du restaurant de bowls nommé Bowllywood"
-    //                 />
-    //             </Col>
-    //         </Row>
-    //         {/* <Row>
-    //             <Col className='text-center mb-4'>
-    //                 <Link
-    //                     to={`/restaurants/add`}
-    //                     className="text-decoration-none text-black text-center"
-    //                     >
-    //                     <Button className='text-dark'> Ajouter un restaurant</Button>
-    //                 </Link>
-    //             </Col>
-    //         </Row> */}
-    //         <Row>
-    //             {/* {allUsers.map((card) => (
-    //                 <Col xs={12} sm={6} md={4}>lala
-    //                 <FlipCard key={card.id} card={card} />
-    //                 </Col>
-    //             ))} */}
-               
-
-    //            <Col>
-    //                 <Table striped bordered hover>
-    //                     <thead>
-    //                         <tr className='text-center'>
-    //                             <th>Prénom</th>
-    //                             <th>Nom</th>
-    //                             <th>Role</th>
-    //                             <th>Adresse email</th>
-    //                         </tr>
-    //                     </thead>
-    //                     <tbody>
-    //                         {allUsers.map(
-    //                             (item) => {
-    //                                 return (
-    //                                     <tr className='text-center'
-    //                                         key={item._id}>
-    //                                             <td>
-    //                                             {item.firstName}
-    //                                         </td>
-    //                                         <td>
-    //                                             {item.lastName}
-    //                                         </td>
-    //                                         <td>
-    //                                             {item.userRole}
-    //                                         </td>
-    //                                         <td>
-    //                                             {item.email}
-    //                                         </td>
-    //                                         <td>   
-    //                                              <Link
-    //                                                     to={`/franchise-requests/${item._id}`}
-    //                                                     className="text-decoration-none text-black text-center"
-    //                                                 >
-    //                                             <Button className='text-dark'>Consulter</Button>
-    //                                             </Link>
-    //                                         </td>
-    //                                     </tr>
-    //                                 );
-    //                             }
-    //                         )}
-    //                     </tbody>
-    //                 </Table>
-    //             </Col>
-    //         </Row>
-    //     </Container>
-    // );
 };
 export default UserListScreen;

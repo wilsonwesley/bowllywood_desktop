@@ -96,16 +96,6 @@ const Template = () => {
         </SidebarItem>,
         <SidebarItem>
           <Link
-            to="/"
-            className="text-decoration-none text-black text-center"
-            onClick={handleLogout}
-          >
-            <i className="fa-solid fa-user-times text-black flex-center"></i>
-            <p>Déconnexion</p>
-          </Link>
-        </SidebarItem>,
-        <SidebarItem>
-          <Link
             to="/register"
             className="text-decoration-none text-black text-center"
           >
@@ -122,6 +112,16 @@ const Template = () => {
           <p>Utilisateurs</p>
         </Link>
       </SidebarItem>,
+      <SidebarItem>
+      <Link
+        to="/"
+        className="text-decoration-none text-black text-center"
+        onClick={handleLogout}
+      >
+        <i className="fa-solid fa-user-times text-black flex-center"></i>
+        <p>Déconnexion</p>
+      </Link>
+    </SidebarItem>,
       ];
       setItemsLogged(data);
     } else if (authContext?.auth?.role === "ROLE_MANAGER" ) {
