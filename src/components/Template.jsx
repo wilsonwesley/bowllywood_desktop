@@ -1,6 +1,6 @@
 import './../sass/styles.scss';
 
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import { Sidebar, SidebarItem } from 'react-responsive-sidebar';
 import GoBackButton from './GoBackButton'
