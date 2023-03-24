@@ -1,5 +1,7 @@
 import "./App.scss";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { ToastContainer } from 'react-toastify';
+import Popup from 'react-popup';
 
 // import AddFranchiseRequestScreen from "./addFranchiseRequest/AddFranchiseRequestScreen";
 import HomeScreen from "./Home/HomeScreen";
@@ -18,7 +20,6 @@ import LoginScreen from "./login/LoginScreen";
 import StocksSupplyScreen from "./stocksSupply/StocksSupplyScreen";
 import StocksExtractScreen from "./stocksExtract/StocksExtractScreen";
 import Template from "./../components/Template";
-import RegisterScreen from "./register";
 import ReservationList from "./reservation/ReservationList";
 import ReservationDetail from "./reservation/ReservationDetail";
 import ReservationForm from "./reservation/ReservationForm";
@@ -29,11 +30,15 @@ import SupplierDeleteScreen from "./supplierDelete/SupplierDeleteScreen";
 import SupplierDetailsScreen from "./supplierDetails/SupplierDetailsScreen";
 import SupplierEditScreen from "./supplierEdit/SupplierEditScreen";
 import SuppliersListScreen from "./supplierList/SupplierListScreen";
+import Maintenance from "./maintenance/Maintenance";
+import ErrorScreen from "./errorScreen/ErrorScreen";
 import UserListScreen from "./userList/UserListScreen";
+
 import { AuthProvider } from "../providers/AuthProvider";
 
 function App() {
   return (
+    <>
     <AuthProvider>
       <Router>
         <Routes>
@@ -77,8 +82,6 @@ function App() {
             />
             <Route path="/kitchenCalendar" element={<KitchenCalendar />} />
             <Route path="/login" element={<LoginScreen />} />
-            <Route path="/register" element={<RegisterScreen />} />
-
             <Route path="/stocks/supply/:id" element={<StocksSupplyScreen />} />
             <Route
               path="/stocks/extract/:id"
@@ -101,11 +104,27 @@ function App() {
             />
             <Route path="/suppliers/:id" element={<SupplierDetailsScreen />} />
             <Route path="/supplierList" element={<SuppliersListScreen />} />
+            <Route path="/profile" element={<Maintenance />} />
+            <Route path="/erreur" element={<ErrorScreen />}/>
             <Route path="/userList" element={<UserListScreen />} />
+            <Route path="*" element={<ErrorScreen errCode={404} errText="La page demandée n'existe pas. Veuillez recommencer ou retourner sur la page d'accueil." />}/>
           </Route>
         </Routes>
       </Router>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored" />
+      <Popup />
     </AuthProvider>
+    </>
   );
 }
 

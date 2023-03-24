@@ -1,19 +1,28 @@
-import './reservation.scss';
-// import ErrorHandler from '../../conf/ErrorHandler';
-import ThinHeader from '../../components/ThinHeader';
-import LoadingSpinner from '../../components/LoadingSpinner';
+/*
+Time Picker avec par défaut time grisé/
+*/
 
-import { useState, useEffect/*, useContext*/ } from 'react';
+
+// import ErrorHandler from '../../conf/ErrorHandler';
+import './reservation.scss';
+// routines
 import { getOneReservation, editReservation, createReservation } from '../../services/reservation';
-import { useParams } from 'react-router-dom';
-import { Row, Col } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
-// import { AuthContext } from '../../contexts/AuthContext';
-// form
-import { useFormik } from 'formik';
+import { useState, useEffect/*, useContext*/ } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+// dateTime
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import { LocalizationProvider } from 'localize-react';
+// front
 import * as yup from 'yup';
+import { useFormik } from 'formik';
+import { Row, Col } from 'react-bootstrap';
+import ThinHeader from '../../components/ThinHeader';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
+
+// regex for format : 2023-03-05T18:40
+const regex = new RegExp(/^([0-9]{4})-([0-9]{2})-([0-9]{2})[T]([0-9]{2})[:]([0-9]{2})/gm);
 
 // .min(new Date(), 'Vous ne pouvez pas sélectionner une date antérieure à aujourd\'hui.')
 const validationSchema = yup.object({
@@ -59,7 +68,6 @@ function ReservationDetail ({ action='ADD' }) {
 
 	const [ reservation, setReservation ] = useState({}),
 		  [ returnedError, setReturnedError ] = useState(false),
-		  [ isLoaded, setIsLoaded ] = useState(false),
 		  [ resDate, setResDate ] = useState(''),
 		  [ resTime, setResTime ] = useState('');
 
@@ -68,46 +76,61 @@ function ReservationDetail ({ action='ADD' }) {
 
     // const authContext = useContext(AuthContext),
     // userID = authContext.auth.userID;
-	
-	let isEdit = false,
+
+	let editMode = false,
 		resID = '';
 
 	if (action === 'EDIT') {
+		editMode = true;
 		resID = id;
-		isEdit = true;
 	}
 
 	// get reservation informations if it is edit mode
 	useEffect(()=>{
-		if (isEdit && resID !== '')
+		if (editMode && resID !== '')
 		{
 			getOneReservation(resID).then((res)=>{
 
+				// default date & time
 				let dateTime = res.data.reservDate;
-				const [date, time] = dateTime.split('T', 2)
-				setResDate(date)
-				setResTime(time.slice(0, 5))
+    			if (regex.test(dateTime)) {
+    				const [date, time] = dateTime.split('T', 2)
+					setResDate(date)
+					setResTime(time.slice(0, 5))
+    			}
 				setReservation(res.data)
 
 			}).catch((err)=>{
 				console.log('GET ONE RESERVATION : ', err);
+				setReturnedError('La réservation n\'a pas été trouvée.')
+				// navigate('reservations/create', {replace: true})
 				// choisir si redirection quelque soit l'erreur, puisque c'est on click qu'on va dessus.
 				// ErrorHandler('REDIRECT', err.status) 
 			})
 		}
-	}, [isEdit, resID])
+		else 
+		{
+			// default date & time
+			let nowDate = new Date();
+			let date = nowDate.toLocaleDateString('en-CA'), // dd/MM/yyyy
+				time = nowDate.toLocaleTimeString('fr').slice(0, 5);; // HH:mm
+
+			setResDate(date);
+			setResTime(time);
+		}
+	}, [editMode, resID])
 
     const onSubmit = (values) => {
 
     	// format date & time
     	let dateTime = `${values.resDate}T${values.resTime}`
-    	values.reservDate = new Date(dateTime)
-    	delete values.resDate;
-    	delete values.resTime;
+	    values.reservDate = new Date(dateTime)
+	   	delete values.resDate;
+	   	delete values.resTime;
 
     	if (!values.userID) delete values.userID;
 
-    	if (isEdit) {
+    	if (editMode) {
     		// debugger
     		editReservation(resID, values).then((res) => {
 				navigate(`/reservations/${res.data._id}`, { replace: true })
@@ -123,7 +146,7 @@ function ReservationDetail ({ action='ADD' }) {
     	}
     };
 
-    const { values, errors, handleChange, setFieldValue, handleSubmit/*, setErrors, handleBlur*/ } =
+    const { values, errors, handleChange, setFieldValue, handleReset, handleSubmit } =
     useFormik(
     {
 		enableReinitialize: true,
@@ -155,9 +178,9 @@ function ReservationDetail ({ action='ADD' }) {
 				</Row>
 				: ''
 			}
-			<form onSubmit={handleSubmit} className="resFormTop  pl-5 ml-1">
+			<form onSubmit={handleSubmit} className="resForm  pl-5 ml-1">
 				{
-					(!isEdit)
+					(!editMode)
 					? <Col xs={12} className="pl-4 mb-4">
 						<h2 className="m-0">Ajout d'une réservation</h2>
 					</Col>
@@ -175,9 +198,7 @@ function ReservationDetail ({ action='ADD' }) {
                         onChange={handleChange}
                         value={values.reservName}
                         placeholder="Hertat"
-                        error={
-                        	errors.reservName
-                        }
+                        error={errors.reservName}
 					/>
 
 					<Input 
@@ -187,9 +208,7 @@ function ReservationDetail ({ action='ADD' }) {
                         onChange={handleChange}
                         value={values.reservPhone}
                         placeholder="ex: 0625489875"
-                        error={
-                            errors.reservPhone
-                        }
+                        error={errors.reservPhone}
 					/>
 
 					<Input 
@@ -198,9 +217,7 @@ function ReservationDetail ({ action='ADD' }) {
                         type="date"
                         onChange={handleChange}
                         value={values.resDate}
-                        error={
-                            errors.resDate
-                        }
+                        error={errors.resDate}
 					/>
 
 					<Input 
@@ -209,9 +226,7 @@ function ReservationDetail ({ action='ADD' }) {
                         type="time"
                         onChange={handleChange}
                         value={values.resTime}
-                        error={
-                            errors.resTime
-                        }
+                        error={errors.resTime}
 					/>
 
 					<Input 
@@ -219,24 +234,24 @@ function ReservationDetail ({ action='ADD' }) {
                         desc="Nombre de personnes"
                         type="number"
                         onChange={(value)=>{
-							if (value.target.value < 1) {
-								value.target.value = 0;
+                        	let targetVal = value.target.value;
+							if (targetVal < 1) {
+								targetVal = 0;
 							}
-							else if (value.target.value > 15) {
-								value.target.value = 16;
+							else if (targetVal > 15) {
+								targetVal = 16;
 							}
-							setFieldValue('seatNr', value.target.value)
+							setFieldValue('seatNr', targetVal)
 						}}
                         value={values.seatNr}
                         placeholder="ex: 5"
-                        error={
-                            errors.seatNr
-                        }
+                        error={errors.seatNr}
 					/>
 				</Col>
 				<Col xs={7} className="px-0 mt-4">
-					<div className="d-flex justify-content-end">
-						<Button type="submit">{(resID, isEdit) ? 'Modifier' : 'Ajouter la réservation' }</Button>
+					<div className="d-flex btnCtnr justify-content-end">
+						<Button type="button" bsType="secondary" onClick={handleReset}>Réinitialiser la saisie</Button>
+						<Button type="submit">{(resID, editMode) ? 'Modifier' : 'Ajouter la réservation' }</Button>
  					</div>
 				</Col>
 			</form>

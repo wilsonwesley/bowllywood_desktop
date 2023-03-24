@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import ThinHeader from '../../components/ThinHeader';
 import ReservationListStat from '../../components/ReservationListStat';
 import LoadingSpinner from '../../components/LoadingSpinner';
+import {errorHandler} from '../../utils/errorHandler';
 
 let dateObj, resDate, resTime;
 function ReservationList () {
@@ -14,30 +15,28 @@ function ReservationList () {
 		  [sortIcon, setSortIcon] = useState('up'),
 		  [isLoaded, setIsLoaded] = useState(false);
 
-	useEffect(()=>{
-
+	useEffect(()=>{	
 		getAllReservations().then((res)=>{
-
 			// place items depending of the date
 			// descendent mode
 			res.data.sort((first, second)=>{
 				return (first.reservDate < second.reservDate) ? 1 : -1;
 			})
 			setReservations(res.data)
-
+			
 		}).catch((err)=>{
-			console.log('GET ALL RESERV : ', err)
+			// console.log('GET ALL RESERV : ', err)
+			errorHandler('TOAST', err)
 		}).finally(()=>{
 			setIsLoaded(true)
 		})
-
 	}, [])
-
+		
 	const sortList = () => {
 		let newIcon = (sortIcon === 'down') ? 'up' : 'down';
 		setSortIcon(newIcon)
 
-		reservations.sort((first, second)=>{
+		reservations.sort(()=>{
 			return -1;
 		});
 	}
@@ -200,9 +199,10 @@ function ReservationList () {
 				</Row>
 			</Col>
 		</Row>
-
+		{/* <SimplePopup /> */}
 	</div>
 	)
 }
 
 export default ReservationList;
+// <Button bsType="button" onClick={() => { Popup.onClose() /*.close()*/ }} >Ok pour moi !</Button>

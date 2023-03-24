@@ -1,17 +1,20 @@
-import './reservation.scss';
 // import ErrorHandler from '../../conf/ErrorHandler';
-import ThinHeader from '../../components/ThinHeader';
+import './reservation.scss';
+// routines
 import { useState, useEffect } from 'react';
 import { getOneReservation, cancelReservation } from '../../services/reservation';
 import { useParams } from 'react-router-dom';
-import { Row, Col } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import ThinHeader from '../../components/ThinHeader';
+// front
+import LoadingSpinner from '../../components/LoadingSpinner';
+import { Row, Col } from 'react-bootstrap';
 // import { ToastContainer, toast } from 'react-toastify';
 
 function ReservationDetail () {
 
 	const [ reservation, setReservation ] = useState({}),
-		  [ loading, setLoading ] = useState(true),
+		  [ loaded, setLoaded ] = useState(false),
 		  [ isEditable, setIsEditable ] = useState(true),
 		  [ status, setStatus ] = useState(''),
 		  [ statusColor, setStatusColor ] = useState(''),
@@ -21,8 +24,7 @@ function ReservationDetail () {
 	const { id } = useParams();
 	const resID = id;
 
-	const navigate = useNavigate(),
-		  currDate = new Date('now');
+	const navigate = useNavigate();
 
 	useEffect(()=>{
 		if (resID)
@@ -53,6 +55,7 @@ function ReservationDetail () {
 
 				// the reservation can be edited or cancelled if it isn't closed
 				// or if the reservation date is lower than the current date
+				let currDate = new Date('now');
 				setIsEditable(res.data.status === 'KEPT' || (res.data.status === 'CLD' && res.data.reservDate < currDate))
 
 			}).catch((err)=>{
@@ -60,7 +63,7 @@ function ReservationDetail () {
 				// choisir si redirection quelque soit l'erreur, puisque c'est on click qu'on va dessus.
 				// ErrorHandler('REDIRECT', err.status) 
 			}).finally(() => {
-				setLoading(false);
+				setLoaded(true);
 			})
 		}
 	}, [resID])
@@ -106,8 +109,6 @@ function ReservationDetail () {
 	}
 
 	const navigateForm = (reservationID) => {
-		let status = reservation.status;
-
 		if (isEditable)
 			navigate(`/reservations/form/${id}`, { replace: true })
 		else
@@ -178,20 +179,24 @@ function ReservationDetail () {
 
 			<Row className="offset-md-2">
 				<Col xs={12} className="resDetailContent py-5 pl-5 mt-4">
-					<div className="mb-4">
-						<p className={`largeText ${statusColor}`}>{status}</p>
-						<p >{resDate}<span className="largeText px-4"> à </span>{resTime}</p>
-					</div>
-					<div className="detailNumbers">
-						<p>
-							<span className="font-weight-bold mr-2">{reservation.seatNr}</span> 
-							<span className="largeText">Personnes</span>
-						</p>
-						<p>
-							<span className="font-weight-bold mr-2">2</span> 
-							<span className="largeText">tables</span>
-						</p>
-					</div>
+					{
+						(loaded) 
+						? <> <div className="mb-4">
+							<p className={`largeText ${statusColor}`}>{status}</p>
+							<p >{resDate}<span className="largeText px-4"> à </span>{resTime}</p>
+						</div>
+						<div className="detailNumbers">
+							<p>
+								<span className="font-weight-bold mr-2">{reservation.seatNr}</span> 
+								<span className="largeText">Personnes</span>
+							</p>
+							<p>
+								<span className="font-weight-bold mr-2">2</span> 
+								<span className="largeText">tables</span>
+							</p>
+						</div></>
+						: <LoadingSpinner />
+					}
 				</Col>
 			</Row>
 		</div>

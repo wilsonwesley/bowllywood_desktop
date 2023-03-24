@@ -1,10 +1,8 @@
 import axios from "axios";
 
 export const axiosInstance = axios.create({
-  baseURL: "https://bowllywood-8llo.onrender.com",
-  // baseURL: "https://bowllywood.onrender.com/",
-  // baseURL: "http://localhost:5000/",
-  // baseURL: 'http://localhost:3000/'
+  // baseURL: "https://bowllywood-8llo.onrender.com"
+  baseURL: "http://localhost:5000/"
 });
 
 axiosInstance.interceptors.request.use(
@@ -24,7 +22,7 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
   function (response) {
     if (!response.headers.Authorization) {
-      const authHeaders = JSON.parse(localStorage.getItem("userTokens"));
+      // const authHeaders = JSON.parse(localStorage.getItem("userTokens")); // jamais utilisé dans cette fn ?
       response.headers.Authorization = localStorage.getItem("userTokens");
     }
     return response;
