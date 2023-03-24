@@ -1,4 +1,3 @@
-import {Navigate} from 'react-router-dom';
 import {toast} from 'react-toastify';
 import simplePopup from '../components/SimplePopup';
 import 'react-toastify/dist/ReactToastify.css';
@@ -43,7 +42,7 @@ export function errorHandler(errType, errorCatched, navigate, subjectName) {
 		return returnMsg;
 	}
 	
-	if (catchedMsg && errCode != 'ERR_NETWORK') {
+	if (catchedMsg && errCode !== 'ERR_NETWORK') {
 		errMessage = catchedMsg
 	} else {
 		errMessage = get_default_message(errCode, subjectName)
@@ -76,5 +75,7 @@ export function errorHandler(errType, errorCatched, navigate, subjectName) {
 				theme: "light",
 			});
 			break;
+		default:
+			return false;
 	}
 }
