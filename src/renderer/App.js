@@ -29,6 +29,7 @@ import SupplierDeleteScreen from "./supplierDelete/SupplierDeleteScreen";
 import SupplierDetailsScreen from "./supplierDetails/SupplierDetailsScreen";
 import SupplierEditScreen from "./supplierEdit/SupplierEditScreen";
 import SuppliersListScreen from "./supplierList/SupplierListScreen";
+import UserListScreen from "./userList/UserListScreen";
 import { AuthProvider } from "../providers/AuthProvider";
 
 function App() {
@@ -100,6 +101,7 @@ function App() {
             />
             <Route path="/suppliers/:id" element={<SupplierDetailsScreen />} />
             <Route path="/supplierList" element={<SuppliersListScreen />} />
+            <Route path="/userList" element={<UserListScreen />} />
           </Route>
         </Routes>
       </Router>
