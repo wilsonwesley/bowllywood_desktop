@@ -4,9 +4,14 @@ import 'react-toastify/dist/ReactToastify.css';
 
 export function errorHandler(errType, errorCatched, navigate, subjectName) {
 	let errTitle, errMessage;
-
 	let errCode = errorCatched.response.status ?? errorCatched.code,
-		catchedMsg = errorCatched.response.data.message;
+		catchedMsg = errorCatched?.response?.data?.message ?? undefined;
+
+	if (typeof navigation === 'string' && !subjectName) 
+	{
+		subjectName = navigation;
+		navigation = null;
+	} 
 
 	// define error message to display
 	const get_default_message = (errCode, subjectName) => {
@@ -23,6 +28,7 @@ export function errorHandler(errType, errorCatched, navigate, subjectName) {
 				returnMsg = `Impossible de traiter la requête. Veuillez vérifier les informations fournies.`
 				break;
 			case 404:
+				subjectName = (typeof subjectName !== 'string') ? 'élément' : subjectName ;
 				returnMsg = `Aucun.e ${subjectName} n'a été trouvé.e lors de la recherche.`
 				break;
 			case 401:
@@ -32,7 +38,8 @@ export function errorHandler(errType, errorCatched, navigate, subjectName) {
 				returnMsg = `Vous n'avez pas les droits pour accéder à ces informations.`
 				break;
 			case 'ERR_NETWORK':
-				returnMsg = 'Une erreur réseau est survenue durant la requête, notre équipe technique est sur la touche !'
+				let networkErr = 'Une erreur réseau est survenue durant la requête, notre équipe technique est sur la touche !'
+				returnMsg = (subjectName) ? `${subjectName} : ${networkErr}` : networkErr;
 				break;
 			default:
 				// [EVOLUTION] : send the error to the service for analysis.
