@@ -34,7 +34,7 @@ const FranchiseRequestDetailsScreen = () => {
                         <Table striped bordered hover>
                             <thead>
                                 <tr className='text-center'>
-                                    <th>Date de création</th>
+                                    <th>Référence</th>
                                     <th>Montant estimé</th>
                                     <th>Financement envisagé</th>
                                     <th>Ville</th>
@@ -45,7 +45,11 @@ const FranchiseRequestDetailsScreen = () => {
                             </thead>
                             <tbody>   
                               <tr className='text-center'>
-                                <td>{franchiseRequestDetail.createdAt}</td>
+                                <td>
+                                    {
+                                        franchiseRequestDetail.city + '-' + franchiseRequestDetail._id.substr(13, 10) + '-' + franchiseRequestDetail.shopLocation
+                                    }
+                                </td>
                                 <td>{franchiseRequestDetail.estimatedAmount}</td>
                                 <td>{franchiseRequestDetail.hopedFinancing}</td>
                                 <td>{franchiseRequestDetail.city}</td>

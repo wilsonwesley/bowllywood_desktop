@@ -32,6 +32,8 @@ import SupplierEditScreen from "./supplierEdit/SupplierEditScreen";
 import SuppliersListScreen from "./supplierList/SupplierListScreen";
 import Maintenance from "./maintenance/Maintenance";
 import ErrorScreen from "./errorScreen/ErrorScreen";
+import UserListScreen from "./userList/UserListScreen";
+
 import { AuthProvider } from "../providers/AuthProvider";
 
 function App() {
@@ -40,7 +42,7 @@ function App() {
     <AuthProvider>
       <Router>
         <Routes>
-          <Route path="/" element={<HomeScreen />} />
+          <Route path="/" element={<LoginScreen />} />
           <Route path="/" element={<Template />}>
             <Route path="/reservations/form" element={<ReservationForm />} />
             <Route
@@ -49,7 +51,7 @@ function App() {
             />
             <Route path="/reservations/:id" element={<ReservationDetail />} />
             <Route path="/reservations" element={<ReservationList />} />
-            <Route path="/" element={<HomeScreen />} />
+            <Route path="/home" element={<HomeScreen />} />
 
             <Route
               path="/restaurants/delete/:id"
@@ -104,6 +106,7 @@ function App() {
             <Route path="/supplierList" element={<SuppliersListScreen />} />
             <Route path="/profile" element={<Maintenance />} />
             <Route path="/erreur" element={<ErrorScreen />}/>
+            <Route path="/userList" element={<UserListScreen />} />
             <Route path="*" element={<ErrorScreen errCode={404} errText="La page demandée n'existe pas. Veuillez recommencer ou retourner sur la page d'accueil." />}/>
           </Route>
         </Routes>

@@ -25,7 +25,9 @@ function LoginScreen() {
     const [loginSuccess, setLoginSuccess] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
-    const redirectSource = location.state?.from?.pathname || '/kitchenCalendar';
+
+    const redirectSource = location.state?.from?.pathname || '/home';
+
     const [errorMessage, setErrorMessage] = useState('');
     const authContext = useContext(AuthContext);
     return (

@@ -18,6 +18,7 @@ export const AuthProvider = ({ children }) => {
       const decodedToken = jwt_decode(JSON.parse(tokens).token);
       const userID = decodedToken.id;
       const userROLE = decodedToken.roleID;
+      console.log(userROLE);
       let userInfos = {
         userId: userID,
         role: userROLE,
