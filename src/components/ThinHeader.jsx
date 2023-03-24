@@ -1,13 +1,14 @@
 import { Col, Row, Container } from 'react-bootstrap';
+import './thinHeader.scss'
 
 const ThinHeader = ({subTitle}) => {
 
 	return (
-	<Container fluid>
+	<Container fluid className="thinHeader">
 		<Row>
 			<Col>
-				<h1 className='thinHeader-title m-0'>Bowllywood</h1>
-				<p style={{fontSize:"0.8em"}}>Bonjour {subTitle}</p>
+				<h1 className='thinHeaderTitle m-0'>Bowllywood</h1>
+				<p>{subTitle}</p>
 			</Col>
 		</Row>
 	</Container>

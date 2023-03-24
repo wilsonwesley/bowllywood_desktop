@@ -3,5 +3,13 @@
     // Hover to view descriptions of existing attributes.
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
-    "configurations": []
+    "configurations": [
+        {
+            // "command": "npm start",
+            "command": "yarn start wait-on http://127.0.0.1:3000/ ; electron .",
+            "name": "yarn dev",
+            "request": "launch",
+            "type": "node-terminal"
+        }
+    ]
 }

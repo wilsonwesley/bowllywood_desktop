@@ -1,0 +1,39 @@
+@import '../../sass/styles.scss';
+
+.homeScreen {
+  background-image: url('https://bowllywood-8llo.onrender.com/images/saltedBg.png');
+  background-position: bottom right;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+
+  // overwrite
+  .list-group-item {
+    background-color: transparent !important;
+  }
+}
+
+.homeListGroup {
+  a {
+    text-decoration: none;
+    color: $dark-grey;
+
+    h2 {
+      font-weight: bold;
+      font-size: 1.6em;
+      border-bottom: 3px solid $dark-grey;
+      width: fit-content;
+    }
+  }
+
+  p {
+    font-size: 0.9em;
+  }
+}
+
+.homeNavigation {
+  column-gap: 3.3em;
+
+  i {font-size: 1.3em}
+
+  p {font-size: 0.7em}
+}

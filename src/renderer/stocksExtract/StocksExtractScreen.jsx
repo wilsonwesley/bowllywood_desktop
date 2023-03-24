@@ -3,10 +3,9 @@ import * as yup from 'yup';
 import { extractStock } from '../../services/stocks';
 import { AuthContext } from '../../contexts/AuthContext';
 import InputText from '../../components/Input';
-import Button from '../../components/Button';
 
 import { useContext, useState } from 'react';
-import { Col, Row, Container } from 'react-bootstrap';
+import { Col, Row, Container,Button } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 
 import './../../sass/styles.scss';
@@ -83,7 +82,7 @@ const StocksExtractScreen = () => {
                        
                         <Row className='justify-content-center gap-4'>
                             <Col className='col-6 col-md-4 flex-center mb-5'>
-                                <Button type="submit">Retirer du stock</Button>
+                                <Button type="submit" className='text-dark'>Retirer du stock</Button>
                             </Col>
                         </Row>
                     </form>

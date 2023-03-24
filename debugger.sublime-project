@@ -1,0 +1,27 @@
+{
+	"folders":
+	[
+		{
+			"path": "D:\\User\\Documents\\laManu\\cda\\bowl\\bowl_web",
+		},
+		{
+			"path": "D:\\User\\Documents\\laManu\\cda\\bowl\\bowl_mobil",
+		},
+		{
+			"path": "D:\\User\\Documents\\laManu\\cda\\bowl\\bowl_desk",
+		}
+	],
+	"debugger_configurations":
+	[
+		{
+            "type": "node-terminal"
+            "request": "launch",
+            "name": "dev desk",
+            "skipFiles": [
+            	"<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}\\app.js"
+        	// "command": "yarn start wait-on http://127.0.0.1:3000/ ; electron .",
+    	}
+	],
+}
