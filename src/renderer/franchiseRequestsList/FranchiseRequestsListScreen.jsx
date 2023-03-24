@@ -43,7 +43,7 @@ const FranchiseRequestsListScreen = () => {
                     <Table striped bordered hover>
                         <thead>
                             <tr className='text-center'>
-                                <th>Date de création</th>
+                                <th>Référence</th>
                                 <th>Montant estimé</th>
                                 <th>Financement envisagé</th>
                                 <th>Ville d'implantation</th>
@@ -57,7 +57,9 @@ const FranchiseRequestsListScreen = () => {
                                         <tr className='text-center'
                                             key={item._id}>
                                             <td>
-                                                {item.createdAt}
+                                                {
+                                                item.city + '-' + item._id.substr(13, 10) + '-' + item.shopLocation
+                                                }
                                             </td>
                                             <td>
                                                 {item.estimatedAmount + ' €'}
