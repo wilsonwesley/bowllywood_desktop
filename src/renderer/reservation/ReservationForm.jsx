@@ -2,7 +2,6 @@
 Time Picker avec par défaut time grisé/
 */
 
-
 // import ErrorHandler from '../../conf/ErrorHandler';
 import './reservation.scss';
 // routines
@@ -131,7 +130,6 @@ function ReservationDetail ({ action='ADD' }) {
     	if (!values.userID) delete values.userID;
 
     	if (editMode) {
-    		// debugger
     		editReservation(resID, values).then((res) => {
 				navigate(`/reservations/${res.data._id}`, { replace: true })
             }).catch((err) => {

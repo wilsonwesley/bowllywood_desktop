@@ -1,6 +1,6 @@
 import './../sass/styles.scss';
 
-import React, { useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import { Sidebar, SidebarItem } from 'react-responsive-sidebar';
 import GoBackButton from './GoBackButton'
@@ -9,6 +9,7 @@ import { AuthContext } from '../contexts/AuthContext';
 const Template = () => {
 
     const authContext = useContext(AuthContext);
+
     const handleLogout = () => {
         // Supprimer les données utilisateur du localStorage
         localStorage.removeItem('userTokens');
