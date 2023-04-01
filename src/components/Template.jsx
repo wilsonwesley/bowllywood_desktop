@@ -1,4 +1,5 @@
 import './../sass/styles.scss';
+
 import React, { useContext, useEffect, useState } from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import { Sidebar, SidebarItem } from 'react-responsive-sidebar';
@@ -47,6 +48,9 @@ const Template = () => {
       || role === "ROLE_SUPERADMIN" 
       || role === "ROLE_CEO")  {
       data = [
+        <SidebarItem>
+            <GoBackButton />
+        </SidebarItem>,
         <SidebarItem>
           <Link to="/home" className="text-decoration-none text-black text-center">
             <i className="fa-solid fa-house text-black flex-center"></i>
@@ -141,6 +145,9 @@ const Template = () => {
     } else if (role === "ROLE_MANAGER" ) {
       data = [
         <SidebarItem>
+            <GoBackButton />
+        </SidebarItem>,
+        <SidebarItem>
           <Link to="/home" className="text-decoration-none text-black text-center">
             <i className="fa-solid fa-house text-black flex-center"></i>
             <p className="text-black">Accueil</p>
@@ -195,6 +202,9 @@ const Template = () => {
     } else if (role === "ROLE_WAITER"
       || role === "ROLE_COOK" ) {
         data = [
+        <SidebarItem>
+            <GoBackButton />
+        </SidebarItem>,
           <SidebarItem>
             <Link to="/home" className="text-decoration-none text-black text-center">
               <i className="fa-solid fa-house text-black flex-center"></i>
