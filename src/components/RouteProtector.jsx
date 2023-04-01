@@ -1,62 +1,51 @@
-import { useContext, useEffect } from "react";
-import {Navigate, Outlet, useLocation} from 'react-router-dom';
-import jwt_decode from "jwt-decode";
+import { useEffect, useState } from "react";
 // import { AuthContext } from "../contexts/AuthContext";
+import {Navigate, Outlet, useLocation, useNavigate} from 'react-router-dom';
+import jwt_decode from "jwt-decode";
+import { errorHandler } from '../utils/errorHandler';
 
 const RouteProtector = ({permittedRoles, children}) => {
-    const authContext = useContext(AuthContext),
-        [isAllowed, setIsAllowed] = useState(false),
-        [auth, setAuth] = useState({});
+    const [isAllowed, setIsAllowed] = useState(false),
+        [checked, setChecked] = useState(false),
+        location = useLocation(),
+        navigate = useNavigate();
 
-    const location = useLocation();
-
-    debugger
-
-    useEffect(() => {
-        const currentTokens = localStorage.getItem('userTokens')
-        if (currentTokens) {
-            const currentTokenObj = JSON.parse(currentTokens);
-            const decodedToken = jwt_decode(currentTokenObj.token);
-            setAuth(decodedToken)
-        }
-
-        // user only needs to be connected 
-        // OR need to be connected and have those roles 
-        if (currentTokens && permittedRoles.length == 0)
-        || (currentTokens && permittedRoles.includes(auth.roles)) {
-            setIsAllowed(true)
-        }
-
-    },[])
-
-    const RenderPage = (children) => (children) ? children : <Outlet />
-
-    const NavigatePage = (permittedRoles) => {
-        return (
-        (permittedRoles.length === 0) // means the user only needed to be connected.
-        ? <Navigate to="/login" state={{ from: location }} replace />
-        : <Navigate to="/erreur" state={{ code: 401, message: "Vous n'êtes pas autorisé à accéder à cette page." }} replace />;
-      )
+    if (permittedRoles === undefined) {
+        permittedRoles = [];
     }
 
-    return (isAllowed) ? <RenderPage children={children} /> : <NavigatePage permittedRoles={permittedRoles} />;
-}
-
-/*const RouteProtector = ({children}) => {
-    const authContext = useContext(AuthContext);
-    const location = useLocation();
-
     useEffect(() => {
-        const currentTokens = localStorage.getItem('userTokens')
+        try {
+            let user;
+            const currentTokens = localStorage.getItem('userTokens')
+            if (currentTokens) {
+                const currentTokenObj = JSON.parse(currentTokens);
+                user = jwt_decode(currentTokenObj.token);
+            }
 
-        if (currentTokens) {
-            authContext.setAuth(currentTokens);
+            // user only needs to be connected 
+            // OR need to be connected and have those roles 
+            if ((currentTokens && permittedRoles.length === 0) || (currentTokens && permittedRoles.includes(user?.roleID))) {
+                setIsAllowed(true)
+            }
+        } catch (err) {
+            errorHandler('REDIRECT', err, navigate)
+        } finally {
+            setChecked(true)
         }
-    },[])
+    }, [])
 
-    return (
-        authContext.auth ? children : <Navigate to="/login" state={{ from: location }} replace />
-    )
-}*/
+    const RenderPage = ({children, permittedRoles}) => {
+        if (isAllowed) {
+            return (children) ? children : <Outlet />
+        } else {
+            return (permittedRoles.length === 0) // means the user only needed to be connected.
+            ? <Navigate to="/login" state={{ from: location }} replace />
+            : <Navigate to="/erreur" state={{ code: 401, message: "Vous n'êtes pas autorisé à accéder à cette page." }} replace />
+        }
+    }
+
+    return (checked) ? <RenderPage children={children} permittedRoles={permittedRoles} /> : '';
+}
 
 export default RouteProtector;

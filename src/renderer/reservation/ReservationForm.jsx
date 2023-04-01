@@ -1,13 +1,9 @@
-/*
-Time Picker avec par défaut time grisé/
-*/
-
-// import ErrorHandler from '../../conf/ErrorHandler';
 import './reservation.scss';
 // routines
 import { getOneReservation, editReservation, createReservation } from '../../services/reservation';
 import { useState, useEffect/*, useContext*/ } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+// import { errorHandler } from '../../utils/errorHandler';
 // dateTime
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
@@ -104,7 +100,7 @@ function ReservationDetail ({ action='ADD' }) {
 				setReturnedError('La réservation n\'a pas été trouvée.')
 				// navigate('reservations/create', {replace: true})
 				// choisir si redirection quelque soit l'erreur, puisque c'est on click qu'on va dessus.
-				// ErrorHandler('REDIRECT', err.status) 
+				// errorHandler('REDIRECT', err.status) 
 			})
 		}
 		else 

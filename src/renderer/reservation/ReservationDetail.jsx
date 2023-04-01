@@ -1,4 +1,3 @@
-// import ErrorHandler from '../../conf/ErrorHandler';
 import './reservation.scss';
 // routines
 import { useState, useEffect } from 'react';
@@ -6,10 +5,10 @@ import { getOneReservation, cancelReservation } from '../../services/reservation
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import ThinHeader from '../../components/ThinHeader';
+// import {errorHandler} from '../../utils/errorHandler';
 // front
 import LoadingSpinner from '../../components/LoadingSpinner';
 import { Row, Col } from 'react-bootstrap';
-// import { ToastContainer, toast } from 'react-toastify';
 
 function ReservationDetail () {
 
@@ -61,7 +60,7 @@ function ReservationDetail () {
 			}).catch((err)=>{
 				console.log('GET ONE RESERVATION : ', err);
 				// choisir si redirection quelque soit l'erreur, puisque c'est on click qu'on va dessus.
-				// ErrorHandler('REDIRECT', err.status) 
+				// errorHandler('REDIRECT', err.status) 
 			}).finally(() => {
 				setLoaded(true);
 			})

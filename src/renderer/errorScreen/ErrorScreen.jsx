@@ -17,7 +17,7 @@ const ErrorScreen = ({errCode='', errText}) => {
 			<div className="textCntr flex-column flex-center align-self-center px-5">
 			  <h2 className="mauikea_font">Erreur {errCode}</h2>
 			  <p className="text-center">Pas de bowl ! {errText}</p>
-			  <Link to="/" className="homeLink flex-center text-decoration-none">
+			  <Link to="/Home" className="homeLink flex-center text-decoration-none">
 			    <i className="fa-solid fa-house mr-3" />
 			    <span>Retourner à la page d'accueil</span>
 			  </Link>

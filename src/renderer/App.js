@@ -33,7 +33,7 @@ import SuppliersListScreen from "./supplierList/SupplierListScreen";
 import Maintenance from "./maintenance/Maintenance";
 import ErrorScreen from "./errorScreen/ErrorScreen";
 import UserListScreen from "./userList/UserListScreen";
-import RouteProtector from './components/RouteProtector';
+import RouteProtector from '../components/RouteProtector';
 
 import { AuthProvider } from "../providers/AuthProvider";
 
@@ -45,8 +45,6 @@ function App() {
         <Routes>
           <Route path="/" element={<LoginScreen />} />
           <Route path="/" element={<Template />}>
-
-            {/* TEST ROUTE PROTECTOR */}
             <Route element={<RouteProtector permittedRoles={['ROLE_USER', 'ROLE_WAITER', 'ROLE_CEO']} />}>
               <Route path="/reservations/form" element={<ReservationForm />} />
               <Route path="/reservations/form/:id"element={<ReservationForm action="EDIT" />} />
@@ -58,15 +56,13 @@ function App() {
                 <ReservationList />
               </RouteProtector>
             } />
+
             <Route path="/my-reservations" element={
               <RouteProtector permittedRoles={['ROLE_USER']}>
                 <ReservationList />
               </RouteProtector>
             } />
-            {/* TEST ROUTE PROTECTOR */}
-
             <Route path="/home" element={<HomeScreen />} />
-
             <Route
               path="/restaurants/delete/:id"
               element={<RestaurantArchiveScreen />}
