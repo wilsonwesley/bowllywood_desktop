@@ -1,10 +1,5 @@
 import './../sass/styles.scss';
-
-<<<<<<< HEAD
-import React, { useState, useEffect, useContext } from 'react';
-=======
 import React, { useContext, useEffect, useState } from 'react';
->>>>>>> dev
 import { Link, Outlet } from 'react-router-dom';
 import { Sidebar, SidebarItem } from 'react-responsive-sidebar';
 import GoBackButton from './GoBackButton'
@@ -13,11 +8,6 @@ import jwt_decode from "jwt-decode";
 
 
 const Template = () => {
-
-<<<<<<< HEAD
-    const authContext = useContext(AuthContext);
-
-=======
   const checkStorage = () => {
     const currentTokens = localStorage.getItem("userTokens");
     if (currentTokens) {
@@ -31,9 +21,6 @@ const Template = () => {
   const tokens = checkStorage();
   const decodedToken = jwt_decode(JSON.parse(tokens).token);
   const role = decodedToken.roleID
-
-    
->>>>>>> dev
     const handleLogout = () => {
         // Supprimer les données utilisateur du localStorage
         localStorage.removeItem('userTokens');
