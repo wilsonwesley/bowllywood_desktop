@@ -1,15 +1,39 @@
 import './../sass/styles.scss';
 
+<<<<<<< HEAD
 import React, { useState, useEffect, useContext } from 'react';
+=======
+import React, { useContext, useEffect, useState } from 'react';
+>>>>>>> dev
 import { Link, Outlet } from 'react-router-dom';
 import { Sidebar, SidebarItem } from 'react-responsive-sidebar';
 import GoBackButton from './GoBackButton'
 import { AuthContext } from '../contexts/AuthContext';
+import jwt_decode from "jwt-decode";
+
 
 const Template = () => {
 
+<<<<<<< HEAD
     const authContext = useContext(AuthContext);
 
+=======
+  const checkStorage = () => {
+    const currentTokens = localStorage.getItem("userTokens");
+    if (currentTokens) {
+      return currentTokens;
+    } else {
+      return false;
+    }
+  };
+
+  const authContext = useContext(AuthContext);
+  const tokens = checkStorage();
+  const decodedToken = jwt_decode(JSON.parse(tokens).token);
+  const role = decodedToken.roleID
+
+    
+>>>>>>> dev
     const handleLogout = () => {
         // Supprimer les données utilisateur du localStorage
         localStorage.removeItem('userTokens');
@@ -32,9 +56,9 @@ const Template = () => {
   const [itemsLogged, setItemsLogged] = useState([]);
   useEffect(() => {
     let data;
-    if ( authContext?.auth?.role === "ROLE_ADMIN" 
-      || authContext?.auth?.role === "ROLE_SUPERADMIN" 
-      || authContext?.auth?.role === "ROLE_CEO")  {
+    if ( role === "ROLE_ADMIN" 
+      || role === "ROLE_SUPERADMIN" 
+      || role === "ROLE_CEO")  {
       data = [
         <SidebarItem>
           <Link to="/home" className="text-decoration-none text-black text-center">
@@ -127,7 +151,7 @@ const Template = () => {
       ];
 
       setItemsLogged(data);
-    } else if (authContext?.auth?.role === "ROLE_MANAGER" ) {
+    } else if (role === "ROLE_MANAGER" ) {
       data = [
         <SidebarItem>
           <Link to="/home" className="text-decoration-none text-black text-center">
@@ -181,8 +205,8 @@ const Template = () => {
         </SidebarItem>,
       ];
       setItemsLogged(data);
-    } else if (authContext?.auth?.role === "ROLE_WAITER"
-      || authContext?.auth?.role === "ROLE_COOK" ) {
+    } else if (role === "ROLE_WAITER"
+      || role === "ROLE_COOK" ) {
         data = [
           <SidebarItem>
             <Link to="/home" className="text-decoration-none text-black text-center">
