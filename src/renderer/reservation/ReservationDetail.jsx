@@ -4,8 +4,8 @@ import { useState, useEffect } from 'react';
 import { getOneReservation, cancelReservation } from '../../services/reservation';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { errorHandler } from '../../utils/errorHandler';
 import ThinHeader from '../../components/ThinHeader';
-// import {errorHandler} from '../../utils/errorHandler';
 // front
 import LoadingSpinner from '../../components/LoadingSpinner';
 import { Row, Col } from 'react-bootstrap';
@@ -58,14 +58,14 @@ function ReservationDetail () {
 				setIsEditable(res.data.status === 'KEPT' || (res.data.status === 'CLD' && res.data.reservDate < currDate))
 
 			}).catch((err)=>{
-				console.log('GET ONE RESERVATION : ', err);
+				// console.log('GET ONE RESERVATION : ', err);
 				// choisir si redirection quelque soit l'erreur, puisque c'est on click qu'on va dessus.
-				// errorHandler('REDIRECT', err.status) 
+				errorHandler('REDIRECT', err, navigate, 'réservation')
 			}).finally(() => {
 				setLoaded(true);
 			})
 		}
-	}, [resID])
+	}, [resID, navigate])
 
 	const formatPhone = (phoneNumber) => {
 

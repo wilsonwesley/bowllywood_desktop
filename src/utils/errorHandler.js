@@ -38,8 +38,8 @@ export function errorHandler(errType, errorCatched, navigate, subjectName) {
 				returnMsg = `Vous n'avez pas les droits pour accéder à ces informations.`
 				break;
 			case 'ERR_NETWORK':
-				let networkErr = 'Une erreur réseau est survenue durant la requête, notre équipe technique est sur la touche !'
-				returnMsg = (subjectName) ? `${subjectName} : ${networkErr}` : networkErr;
+				let networkErr = 'Une erreur réseau est survenue, êtes-vous encore connecté à internet ?'
+				returnMsg = (subjectName && subjectName !== 'élément') ? `${subjectName} : ${networkErr}` : networkErr;
 				break;
 			default:
 				// [EVOLUTION] : send the error to the service for analysis.

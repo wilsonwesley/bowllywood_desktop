@@ -5,6 +5,10 @@ export const createReservation = (values) => {
 }
 
 export const getAllReservations = () => {
+    return axiosInstance.get('/reservations/admin-list');
+}
+
+export const getUserReservations = () => {
     return axiosInstance.get('/reservations/');
 }
 

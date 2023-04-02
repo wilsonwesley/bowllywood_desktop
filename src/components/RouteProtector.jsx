@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-// import { AuthContext } from "../contexts/AuthContext";
 import {Navigate, Outlet, useLocation, useNavigate} from 'react-router-dom';
 import jwt_decode from "jwt-decode";
 import { errorHandler } from '../utils/errorHandler';
@@ -33,7 +32,7 @@ const RouteProtector = ({permittedRoles, children}) => {
         } finally {
             setChecked(true)
         }
-    }, [])
+    }, [navigate, permittedRoles])
 
     const RenderPage = ({children, permittedRoles}) => {
         if (isAllowed) {

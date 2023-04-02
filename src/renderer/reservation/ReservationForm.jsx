@@ -62,7 +62,6 @@ const validationSchema = yup.object({
 function ReservationDetail ({ action='ADD' }) {
 
 	const [ reservation, setReservation ] = useState({}),
-		  [ returnedError, setReturnedError ] = useState(false),
 		  [ resDate, setResDate ] = useState(''),
 		  [ resTime, setResTime ] = useState('');
 
@@ -97,7 +96,7 @@ function ReservationDetail ({ action='ADD' }) {
 
 			}).catch((err)=>{
 				console.log('GET ONE RESERVATION : ', err);
-				setReturnedError('La réservation n\'a pas été trouvée.')
+				// setReturnedError('La réservation n\'a pas été trouvée.')
 				// navigate('reservations/create', {replace: true})
 				// choisir si redirection quelque soit l'erreur, puisque c'est on click qu'on va dessus.
 				// errorHandler('REDIRECT', err.status) 
@@ -129,13 +128,13 @@ function ReservationDetail ({ action='ADD' }) {
     		editReservation(resID, values).then((res) => {
 				navigate(`/reservations/${res.data._id}`, { replace: true })
             }).catch((err) => {
-            	setReturnedError(err.response.data)
+            	// setReturnedError(err.response.data)
             })
     	} else {
 	        createReservation(values).then((res) => {
 				navigate(`/reservations/${res.data._id}`, { replace: true })
             }).catch((err) => {
-            	setReturnedError(err.response.data)
+            	// setReturnedError(err.response.data)
             })
     	}
     };
@@ -162,16 +161,6 @@ function ReservationDetail ({ action='ADD' }) {
 		<div className="resCtnr d-flex flex-column px-5 py-4">
 
 			<ThinHeader subTitle="Gérer les réservations" />
-
-			{
-				(returnedError) 
-				? <Row className="justify-content-center">
-					<Col md={6}>
-						<p className="negativeColor text-center">{returnedError}</p>
-					</Col>
-				</Row>
-				: ''
-			}
 			<form onSubmit={handleSubmit} className="resForm  pl-5 ml-1">
 				{
 					(!editMode)
