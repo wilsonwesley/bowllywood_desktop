@@ -107,7 +107,8 @@ function ReservationDetail () {
 		}
 	}
 
-	const navigateForm = (reservationID) => {
+	const navigateForm = () => {
+		debugger
 		if (isEditable)
 			navigate(`/reservations/form/${id}`, { replace: true })
 		else

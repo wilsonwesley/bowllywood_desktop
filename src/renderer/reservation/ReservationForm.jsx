@@ -150,7 +150,8 @@ function ReservationDetail ({ action='ADD' }) {
 			resTime: resTime ?? '',
 			seatNr: reservation.seatNr ?? 1,
 			status: reservation.status ?? 'KEPT',
-			userID: reservation.userID ?? '',
+			restaurantID: reservation.restaurantID ?? '',
+			consumerID: reservation.consumerID ?? '',
 			type: reservation.type ?? 'INDOOR'
 		},
         validationSchema,
