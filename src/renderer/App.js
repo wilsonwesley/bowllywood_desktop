@@ -117,6 +117,7 @@ function App() {
             <Route path="/profile" element={<Maintenance />} />
             <Route path="/erreur" element={<ErrorScreen />}/>
             <Route path="/userList" element={<UserListScreen />} />
+            <Route path="/reviews" element={<Maintenance/>}/>
             <Route path="*" element={<ErrorScreen errCode={404} errText="La page demandée n'existe pas. Veuillez recommencer ou retourner sur la page d'accueil." />}/>
           </Route>
         </Routes>
