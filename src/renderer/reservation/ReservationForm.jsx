@@ -1,17 +1,19 @@
 import './reservation.scss';
 // routines
-import { getOneReservation, editReservation, createReservation } from '../../services/reservation';
-import { useState, useEffect/*, useContext*/ } from 'react';
+import { getOneReservation, editReservation, createReservation, getReservationByDay } from '../../services/reservation';
+import { getRestaurantDetail } from '../../services/restaurants';
+import { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 // import { errorHandler } from '../../utils/errorHandler';
 // dateTime
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+// import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { LocalizationProvider } from 'localize-react';
 // front
 import * as yup from 'yup';
 import { useFormik } from 'formik';
 import { Row, Col } from 'react-bootstrap';
+import { DatePicker, TimePicker } from "antd";
 import ThinHeader from '../../components/ThinHeader';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
@@ -47,29 +49,26 @@ const validationSchema = yup.object({
 		.string()
 		.required('Une erreur est survenue durant la vérification des informations saisies.')
 		.matches('^(KEPT)$|^(CLS)$|^(CLD)$', 'Saisie incorrecte.')
-		.default('KEPT'),
-
-	userID: yup
-		.string()
-        .nullable(true),
-
-	type: yup
-		.string()
-		.required('Une erreur est survenue durant la vérification des informations saisies.')
-		.default('INDOOR')
+		.default('KEPT')
 })
 
 function ReservationDetail ({ action='ADD' }) {
 
 	const [ reservation, setReservation ] = useState({}),
 		  [ resDate, setResDate ] = useState(''),
+		  [ restaurantID, setRestaurantID ] = useState(''),
+		  [ restauCapacity, setRestauCapacity ] = useState(''),
+		  [ overbookedHours, setOverbookedHours ] = useState(''),
+		  [ disabledHours, setDisabledHours ] = useState(''),
+		  [ disabledMinutes, setDisabledMinutes ] = useState(''),
+		  [ schedule, setSchedule ] = useState(''),
 		  [ resTime, setResTime ] = useState('');
 
 	const { id } = useParams(),
 		  navigate = useNavigate();
 
     // const authContext = useContext(AuthContext),
-    // userID = authContext.auth.userID;
+    	  // user = authContext.auth;
 
 	let editMode = false,
 		resID = '';
@@ -79,8 +78,16 @@ function ReservationDetail ({ action='ADD' }) {
 		resID = id;
 	}
 
+	/*test picker*/
+	const userHour = '19:30',
+          userSeats = 2;
+	/*test picker*/
+
 	// get reservation informations if it is edit mode
 	useEffect(()=>{
+   		// get oken : role : get fav ou get workingID
+		// setRestaurantID('')
+
 		if (editMode && resID !== '')
 		{
 			getOneReservation(resID).then((res)=>{
@@ -96,8 +103,6 @@ function ReservationDetail ({ action='ADD' }) {
 
 			}).catch((err)=>{
 				console.log('GET ONE RESERVATION : ', err);
-				// setReturnedError('La réservation n\'a pas été trouvée.')
-				// navigate('reservations/create', {replace: true})
 				// choisir si redirection quelque soit l'erreur, puisque c'est on click qu'on va dessus.
 				// errorHandler('REDIRECT', err.status) 
 			})
@@ -112,7 +117,7 @@ function ReservationDetail ({ action='ADD' }) {
 			setResDate(date);
 			setResTime(time);
 		}
-	}, [editMode, resID])
+	}, [editMode, resID]);
 
     const onSubmit = (values) => {
 
@@ -157,6 +162,55 @@ function ReservationDetail ({ action='ADD' }) {
         validationSchema,
         onSubmit
     });
+
+	useEffect(()=>{   		
+	    // get restaurant informations
+	    /*getRestaurantDetail(restaurantID).then((res)=>{
+	        setRestauCapacity(res.data.capacity)
+	        // setSchedule(res.data.schedule)
+		}).catch((err)=>{
+			debugger
+			console.error('RESTAURANT : ', err)
+		})
+*/
+	    // 
+		getReservationByDay(values.resDate).then((res)=>{
+			debugger
+			let hoursArr = [],
+				reservOfDay = res.data;
+
+			for (let currHour = schedule.open; currHour >= schedule.close; currHour + '30min')
+			{
+			   reservOfDay.forEach((reservation)=>{})
+			}
+
+			setOverbookedHours(res.data)
+			/*
+				récupération de toutes les réservations du jour voulu
+				boucle sur toutes les heures ouvrées (scandées en /30) lors de la sélection du jour et lors du premier rendu
+				génération de l'heure minimale et maximale en fonction de l'heure courrante
+				récupération de toutes les sièges des réservations dont l'heure d'arrivée est prévue entre :
+				 l'heure minimale et l'heure voulue
+				 l'heure maximale et l'heure voulue
+				différence entre la capacité du restaurant avec :
+				 le nombre de sièges pour le premier intervalle
+				 le nombre de sièges pour le deuxièm intervalle
+				si les deux différences sont inférieures au nombre de personnes voulues
+				alors : stocke cette demie heure dans un tableau des demies-heures indisponibles.
+
+				On boucle sur les heures indisponibles lors de la sélection de l'heure et lors du premier rendu,
+				si la précédente HH: est égale à l'HH: courante, signifie que ses deux demie-heure sont indispoibles.
+				dans ce cas, on stocke l'HH: dans le tableau des heures indisponibles.
+				lorsqu'on tombe sur l'HH: sélectionnée (par défaut ou par action utilisteur), on regarde les :mm
+				les minutes qui s'y trouve sont stockées dans un tableau des minutes indisponibles.
+			*/
+			setDisabledHours()
+			setDisabledMinutes()
+		}).catch((err)=>{
+			console.log('DAY SEATS : ', err)
+		})
+
+	}, [restaurantID, values.resDate, values.resTime])
 
 	return (
 		<div className="resCtnr d-flex flex-column px-5 py-4">
@@ -204,14 +258,27 @@ function ReservationDetail ({ action='ADD' }) {
                         error={errors.resDate}
 					/>
 
-					<Input 
+					{/*<Input
 						name="resTime"
                         desc="Heure de la réservation"
                         type="time"
                         onChange={handleChange}
                         value={values.resTime}
                         error={errors.resTime}
-					/>
+					/>*/}
+
+					{/*test picker*/}
+					{/*<DatePicker
+      					format="HH:mm"
+      					// disabledHours={disabledHours}
+      					minuteStep={30} />*/}
+
+					<TimePicker
+      					format="HH:mm"
+      					// disabledHours={disabledHours}
+      					minuteStep={30}
+      				/>
+					{/*test picker*/}
 
 					<Input 
 						name="seatNr"

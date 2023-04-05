@@ -20,10 +20,10 @@ export const cancelReservation = (id) => {
     return axiosInstance.patch(`/reservations/cancel/${id}`);
 }
 
-export const getOneReservation = (id) => {
-    return axiosInstance.get(`/reservations/${id}`);
+export const getReservationByDay = (day) => {
+    return axiosInstance.get(`/reservations/day-seats/${day}`);
 }
 
-export const getReservationsDetails = (id) => {
+export const getOneReservation = (id) => {
     return axiosInstance.get(`/reservations/${id}`);
 }
