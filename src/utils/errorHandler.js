@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 export function errorHandler(errType, errorCatched, navigate, subjectName) {
 	let errTitle, errMessage;
 	let errCode = errorCatched?.response?.status ?? errorCatched?.code ?? '',
-		catchedMsg = errorCatched?.response?.data?.message ?? undefined;
+		catchedMsg = errorCatched?.response?.data?.message ?? errorCatched?.message ?? undefined;
 
 	if (typeof navigate === 'string' && !subjectName) 
 	{
