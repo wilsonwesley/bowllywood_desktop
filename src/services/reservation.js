@@ -21,7 +21,7 @@ export const cancelReservation = (id) => {
 }
 
 export const getReservationByDay = (day) => {
-    return axiosInstance.get(`/reservations/day-seats/${day}`);
+    return axiosInstance.get(`/reservations/day-seats/${day}`)
 }
 
 export const getOneReservation = (id) => {

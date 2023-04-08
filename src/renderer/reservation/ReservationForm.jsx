@@ -2,9 +2,11 @@ import './reservation.scss';
 // routines
 import { getOneReservation, editReservation, createReservation, getReservationByDay } from '../../services/reservation';
 import { getRestaurantDetail } from '../../services/restaurants';
+import { getCurrentUserDetails } from '../../services/users';
 import { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-// import { errorHandler } from '../../utils/errorHandler';
+import { errorHandler } from '../../utils/errorHandler';
+import jwt_decode from "jwt-decode";
 // dateTime
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 // import { TimePicker } from '@mui/x-date-pickers/TimePicker';
@@ -83,42 +85,6 @@ function ReservationDetail ({ action='ADD' }) {
           userSeats = 2;
 	/*test picker*/
 
-	// get reservation informations if it is edit mode
-	useEffect(()=>{
-   		// get oken : role : get fav ou get workingID
-		// setRestaurantID('')
-
-		if (editMode && resID !== '')
-		{
-			getOneReservation(resID).then((res)=>{
-
-				// default date & time
-				let dateTime = res.data.reservDate;
-    			if (regex.test(dateTime)) {
-    				const [date, time] = dateTime.split('T', 2)
-					setResDate(date)
-					setResTime(time.slice(0, 5))
-    			}
-				setReservation(res.data)
-
-			}).catch((err)=>{
-				console.log('GET ONE RESERVATION : ', err);
-				// choisir si redirection quelque soit l'erreur, puisque c'est on click qu'on va dessus.
-				// errorHandler('REDIRECT', err.status) 
-			})
-		}
-		else 
-		{
-			// default date & time
-			let nowDate = new Date();
-			let date = nowDate.toLocaleDateString('en-CA'), // dd/MM/yyyy
-				time = nowDate.toLocaleTimeString('fr').slice(0, 5);; // HH:mm
-
-			setResDate(date);
-			setResTime(time);
-		}
-	}, [editMode, resID]);
-
     const onSubmit = (values) => {
 
     	// format date & time
@@ -163,54 +129,119 @@ function ReservationDetail ({ action='ADD' }) {
         onSubmit
     });
 
+// get reservation informations if it is edit mode
+	useEffect(()=>{
+   		// get fav resturant
+		const currentTokens = localStorage.getItem("userTokens");
+		if (currentTokens) {
+			const decodedToken = jwt_decode(JSON.parse(currentTokens).token);
+			const userRole = decodedToken?.roleID ?? '',
+				  profRoles = ['ROLE_MANAGER', 'ROLE_CEO', 'ROLE_WAITER']
+			if (profRoles.includes(userRole)) {
+				setRestaurantID(decodedToken?.workingResID)
+			} else {
+				getCurrentUserDetails().then((res)=>{
+					debugger
+					setRestaurantID(res.data.data.favouriteRestaurant_id);
+				}).catch((err)=>{
+					debugger
+				})
+			}
+		}
+
+		if (editMode && resID !== '')
+		{
+			getOneReservation(resID).then((res)=>{
+
+				// default date & time
+				let dateTime = res.data.reservDate;
+    			if (regex.test(dateTime)) {
+    				const [date, time] = dateTime.split('T', 2)
+					setResDate(date)
+					setResTime(time.slice(0, 5))
+    			}
+				setReservation(res.data)
+
+			}).catch((err)=>{
+				console.log('GET ONE RESERVATION : ', err);
+				// choisir si redirection quelque soit l'erreur, puisque c'est on click qu'on va dessus.
+				// errorHandler('REDIRECT', err.status) 
+			})
+		}
+		else 
+		{
+			// default date & time
+			let nowDate = new Date();
+			let date = nowDate.toLocaleDateString('en-CA'), // dd/MM/yyyy
+				time = nowDate.toLocaleTimeString('fr').slice(0, 5);; // HH:mm
+
+			setResDate(date);
+			setResTime(time);
+		}
+	}, [editMode, resID]);
+
 	useEffect(()=>{   		
 	    // get restaurant informations
-	    /*getRestaurantDetail(restaurantID).then((res)=>{
-	        setRestauCapacity(res.data.capacity)
-	        // setSchedule(res.data.schedule)
-		}).catch((err)=>{
-			debugger
-			console.error('RESTAURANT : ', err)
-		})
-*/
-	    // 
-		getReservationByDay(values.resDate).then((res)=>{
-			debugger
-			let hoursArr = [],
-				reservOfDay = res.data;
+		if (restaurantID)
+		{
+		    getRestaurantDetail(restaurantID).then((res)=>{
+		    	// i got every restaurants
+				debugger
+		    	if (res?.data?.length > 1) {throw new Error(404)}
+		    	// get schedule of current restaurant : archive 
+		        const scheduleObj = {
+					open : '11:00:00',
+					close : '23:00:00'
+	        	}
+		    	setRestauCapacity(40) //res?.data?.capacity
+		        setSchedule(scheduleObj)
+			}).catch((err)=>{
+				console.error('RESTAURANT : ', err)
+			})
+		}
+	}, [restaurantID])
 
-			for (let currHour = schedule.open; currHour >= schedule.close; currHour + '30min')
-			{
-			   reservOfDay.forEach((reservation)=>{})
-			}
+	useEffect(()=>{   		
+		if (values.resDate && schedule && restauCapacity)
+		{
+			getReservationByDay(values.resDate).then((res)=>{
+				let hoursArr = [],
+					reservOfDay = res.data;
 
-			setOverbookedHours(res.data)
-			/*
-				récupération de toutes les réservations du jour voulu
-				boucle sur toutes les heures ouvrées (scandées en /30) lors de la sélection du jour et lors du premier rendu
-				génération de l'heure minimale et maximale en fonction de l'heure courrante
-				récupération de toutes les sièges des réservations dont l'heure d'arrivée est prévue entre :
-				 l'heure minimale et l'heure voulue
-				 l'heure maximale et l'heure voulue
-				différence entre la capacité du restaurant avec :
-				 le nombre de sièges pour le premier intervalle
-				 le nombre de sièges pour le deuxièm intervalle
-				si les deux différences sont inférieures au nombre de personnes voulues
-				alors : stocke cette demie heure dans un tableau des demies-heures indisponibles.
+	    		debugger
+				for (let currHour = schedule.open; currHour >= schedule.close; currHour + '30min')
+				{
+				   reservOfDay.forEach((reservation)=>{})
+				}
 
-				On boucle sur les heures indisponibles lors de la sélection de l'heure et lors du premier rendu,
-				si la précédente HH: est égale à l'HH: courante, signifie que ses deux demie-heure sont indispoibles.
-				dans ce cas, on stocke l'HH: dans le tableau des heures indisponibles.
-				lorsqu'on tombe sur l'HH: sélectionnée (par défaut ou par action utilisteur), on regarde les :mm
-				les minutes qui s'y trouve sont stockées dans un tableau des minutes indisponibles.
-			*/
-			setDisabledHours()
-			setDisabledMinutes()
-		}).catch((err)=>{
-			console.log('DAY SEATS : ', err)
-		})
+				setOverbookedHours(res.data)
+				/*
+					récupération de toutes les réservations du jour voulu
+					boucle sur toutes les heures ouvrées (scandées en /30) lors de la sélection du jour et lors du premier rendu
+					génération de l'heure minimale et maximale en fonction de l'heure courrante
+					récupération de toutes les sièges des réservations dont l'heure d'arrivée est prévue entre :
+					 l'heure minimale et l'heure voulue
+					 l'heure maximale et l'heure voulue
+					différence entre la capacité du restaurant avec :
+					 le nombre de sièges pour le premier intervalle
+					 le nombre de sièges pour le deuxièm intervalle
+					si les deux différences sont inférieures au nombre de personnes voulues
+					alors : stocke cette demie heure dans un tableau des demies-heures indisponibles.
 
-	}, [restaurantID, values.resDate, values.resTime])
+					On boucle sur les heures indisponibles lors de la sélection de l'heure et lors du premier rendu,
+					si la précédente HH: est égale à l'HH: courante, signifie que ses deux demie-heure sont indispoibles.
+					dans ce cas, on stocke l'HH: dans le tableau des heures indisponibles.
+					lorsqu'on tombe sur l'HH: sélectionnée (par défaut ou par action utilisteur), on regarde les :mm
+					les minutes qui s'y trouve sont stockées dans un tableau des minutes indisponibles.
+				*/
+				setDisabledHours()
+				setDisabledMinutes()
+			}).catch((err)=>{
+				console.log('DAY SEATS : ', err)
+			})
+		}
+	}, [values.resDate, values.resTime, restauCapacity, schedule])
+
 
 	return (
 		<div className="resCtnr d-flex flex-column px-5 py-4">
