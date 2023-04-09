@@ -4,8 +4,8 @@ export const createReservation = (values) => {
     return axiosInstance.post('/reservations/create', values);
 }
 
-export const getAllReservations = () => {
-    return axiosInstance.get('/reservations/admin-list');
+export const getAllReservations = (day) => {
+    return axiosInstance.get(`/reservations/admin-list/${day}`);
 }
 
 export const getUserReservations = () => {
@@ -20,8 +20,8 @@ export const cancelReservation = (id) => {
     return axiosInstance.patch(`/reservations/cancel/${id}`);
 }
 
-export const getReservationByDay = (day) => {
-    return axiosInstance.get(`/reservations/day-seats/${day}`)
+export const getReservationByDay = (day, status) => {
+    return axiosInstance.get(`/reservations/day-seats/${day}/${status}`)
 }
 
 export const getOneReservation = (id) => {

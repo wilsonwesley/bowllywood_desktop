@@ -84,6 +84,11 @@
 	}
 
 	.addIcon {font-size: 4.5rem}
+
+	.ant-picker-input{
+		cursor: pointer;
+		input {display: none}
+	}
 }
 
 /************* reservation details file **************/

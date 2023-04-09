@@ -26,7 +26,9 @@ function ReservationDetail () {
 	const navigate = useNavigate();
 
 	useEffect(()=>{
-		if (resID)
+		let cancel = false;
+
+		if (resID && !cancel)
 		{
 			getOneReservation(resID).then((res)=>{
 				formatStatus(res.data.status);
@@ -64,6 +66,10 @@ function ReservationDetail () {
 			}).finally(() => {
 				setLoaded(true);
 			})
+		}
+
+		return () => { 
+		    cancel = true;
 		}
 	}, [resID, navigate])
 
@@ -108,11 +114,7 @@ function ReservationDetail () {
 	}
 
 	const navigateForm = () => {
-		debugger
-		if (isEditable)
-			navigate(`/reservations/form/${id}`, { replace: true })
-		else
-			console.log('message non authorisé car terminé, ou annulé mais date dépassée')
+		if (isEditable) navigate(`/reservations/form/${id}`, { action: 'EDIT', replace: true })
 	}
 
 	const cancelReservationBtn = (id) => {
@@ -121,38 +123,9 @@ function ReservationDetail () {
 			cancelReservation(id).then((res) => {
 				formatStatus(res.data.status);
 				setIsEditable(false)
-				/*toast.info('La réservation a été annulée.', {
-					position: "bottom-center",
-					autoClose: 2500,
-					hideProgressBar: true,
-					closeOnClick: true,
-					pauseOnHover: true,
-					draggable: true,
-					progress: undefined,
-					theme: "dark",
-					});
-
-				<ToastContainer
-					position="bottom-center"
-					autoClose={2500}
-					hideProgressBar
-					newestOnTop={false}
-					closeOnClick
-					rtl={false}
-					pauseOnFocusLoss
-					draggable
-					pauseOnHover
-					theme="dark"
-					/>
-			*/
-
 			}).catch((err) => {
 				console.log(err)
 			})
-		}
-		else
-		{
-			console.log('message non authorisé car terminé, ou annulé mais date dépassée')
 		}
 	}
 
