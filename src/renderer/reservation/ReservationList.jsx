@@ -19,6 +19,7 @@ function ReservationList () {
 
 	const [reservations, setReservations] = useState([]),
 		  [cancel, setCancel] = useState(false),
+		  [rotate, setRotate] = useState(false),
 		  [sortIcon, setSortIcon] = useState('up'),
 		  [seatNumber, setSeatNumber] = useState(0),
 		  [selectedDate, setSelectedDate] = useState(new Date()),
@@ -172,8 +173,6 @@ function ReservationList () {
 	}
 
 	return (
-	<>
-	{/*{setCancel(true)}*/}
 	<div className="resCtnr d-flex flex-column px-5 py-4">
 
 		<ThinHeader subTitle="Gérer les réservations" />
@@ -206,7 +205,10 @@ function ReservationList () {
 								<i className="fa-solid fa-grip mr-3" onClick={console.log('oui')}></i>
 								<i className="fa-solid fa-bars-staggered" onClick={console.log('oui')}></i>
 							</div>*/}
-							<i className="fa-solid fa-rotate-right mr-3" onClick={() => setRefreshData(!refreshData)}></i>
+							<i className={`fa-solid fa-rotate-right me-3 ${(rotate) ? 'rotate' : ''}`} 
+								onClick={() => {setRefreshData(!refreshData); setRotate(true) }}
+						        onAnimationEnd={() => setRotate(false)}
+							></i>
 							<i className={`fa-solid fa-arrow-${sortIcon}`} onClick={sortList}></i>
 						</div>
 
@@ -232,7 +234,6 @@ function ReservationList () {
 			</Col>
 		</Row>
 	</div>
-	</>
 	)
 }
 

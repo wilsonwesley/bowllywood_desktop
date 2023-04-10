@@ -353,7 +353,7 @@ function ReservationDetail ({ action='ADD' }) {
 		<div className="resCtnr d-flex flex-column px-5 py-4">
 
 			<ThinHeader subTitle="Gérer les réservations" />
-			<form onSubmit={handleSubmit} className="resForm  pl-5 ml-1">
+			<form onSubmit={handleSubmit} className="resForm pl-5 ml-1">
 				{
 					(!editMode)
 					? <Col xs={12} className="pl-4 mb-4">
