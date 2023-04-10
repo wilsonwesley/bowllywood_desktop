@@ -205,7 +205,7 @@ function ReservationList () {
 								<i className="fa-solid fa-grip mr-3" onClick={console.log('oui')}></i>
 								<i className="fa-solid fa-bars-staggered" onClick={console.log('oui')}></i>
 							</div>*/}
-							<i className={`fa-solid fa-rotate-right me-3 ${(rotate) ? 'rotate' : ''}`} 
+							<i className={`fa-solid fa-rotate-right mr-3 ${(rotate) ? 'rotate' : ''}`} 
 								onClick={() => {setRefreshData(!refreshData); setRotate(true) }}
 						        onAnimationEnd={() => setRotate(false)}
 							></i>

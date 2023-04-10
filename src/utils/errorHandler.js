@@ -49,9 +49,12 @@ export function errorHandler(errType, errorCatched, navigate, subjectName) {
 		return returnMsg;
 	}
 	
-	if (catchedMsg && errCode !== 'ERR_NETWORK') {
+	if (catchedMsg && errCode !== 'ERR_NETWORK' && errCode !== 0) {
 		errMessage = catchedMsg
 	} else {
+		if (errCode === 0) {
+			errCode = ''
+		}
 		errMessage = get_default_message(errCode, subjectName)
 	}
 	errTitle =`Erreur ${errCode}`

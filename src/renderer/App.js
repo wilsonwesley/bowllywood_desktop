@@ -45,20 +45,14 @@ function App() {
         <Routes>
           <Route path="/" element={<LoginScreen />} />
           <Route path="/" element={<Template />}>
-            <Route element={<RouteProtector permittedRoles={['ROLE_USER', 'ROLE_WAITER', 'ROLE_CEO']} />}>
+            <Route element={<RouteProtector permittedRoles={['ROLE_USER', 'ROLE_WAITER', 'ROLE_MANAGER', 'ROLE_CEO']} />}>
               <Route path="/reservations/form" element={<ReservationForm />} />
               <Route path="/reservations/form/:id"element={<ReservationForm action="EDIT" />} />
               <Route path="/reservations/:id" element={<ReservationDetail />} />
             </Route>
 
             <Route path="/reservations" element={
-              <RouteProtector permittedRoles={['ROLE_WAITER', 'ROLE_CEO']}>
-                <ReservationList />
-              </RouteProtector>
-            } />
-
-            <Route path="/my-reservations" element={
-              <RouteProtector permittedRoles={['ROLE_USER']}>
+              <RouteProtector permittedRoles={['ROLE_WAITER', 'ROLE_MANAGER', 'ROLE_CEO']}>
                 <ReservationList />
               </RouteProtector>
             } />

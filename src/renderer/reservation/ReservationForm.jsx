@@ -305,6 +305,8 @@ function ReservationDetail ({ action='ADD' }) {
 				// if every hour are booked, disable the selection
 				if (bookedHour.lentgh >= 24) {
 					setDayOverBooked(true)
+				} else {
+					setDayOverBooked(false)
 				}
 
 				const userChoice = getHourFromString(values.resTime);
@@ -317,6 +319,7 @@ function ReservationDetail ({ action='ADD' }) {
 
 			}).catch((err)=>{
 				setOverBookedHalf([])
+				setDayOverBooked(true) // disable time selection
 				console.log('DAY SEATS : ', err?.response?.data ?? err)
 			})
 		}
