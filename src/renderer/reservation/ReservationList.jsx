@@ -131,10 +131,6 @@ function ReservationList () {
 		return {status, statusColor};
 	}
 
-	const modifyDate = (current) => {
-		setSelectedDate(current)
-	}
-
 	const ReservationsRender = () => {
 		if (reservations.length > 0)
 		{
@@ -195,7 +191,7 @@ function ReservationList () {
 						bordered={false}
 						size='large'
 						value={selectedDate ? dayjs(selectedDate) : null}
-						onChange={modifyDate}
+						onChange={setSelectedDate}
 					/>
 				</Row>
 				<Row className="flex-column-reverse flex-md-row justify-content-between px-4" >
