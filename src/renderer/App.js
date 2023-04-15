@@ -33,6 +33,7 @@ import SuppliersListScreen from "./supplierList/SupplierListScreen";
 import Maintenance from "./maintenance/Maintenance";
 import ErrorScreen from "./errorScreen/ErrorScreen";
 import UserListScreen from "./userList/UserListScreen";
+import RouteProtector from '../components/RouteProtector';
 
 import { AuthProvider } from "../providers/AuthProvider";
 
@@ -44,15 +45,18 @@ function App() {
         <Routes>
           <Route path="/" element={<LoginScreen />} />
           <Route path="/" element={<Template />}>
-            <Route path="/reservations/form" element={<ReservationForm />} />
-            <Route
-              path="/reservations/form/:id"
-              element={<ReservationForm action="EDIT" />}
-            />
-            <Route path="/reservations/:id" element={<ReservationDetail />} />
-            <Route path="/reservations" element={<ReservationList />} />
-            <Route path="/home" element={<HomeScreen />} />
+            <Route element={<RouteProtector permittedRoles={['ROLE_USER', 'ROLE_WAITER', 'ROLE_MANAGER', 'ROLE_CEO']} />}>
+              <Route path="/reservations/form" element={<ReservationForm />} />
+              <Route path="/reservations/form/:id"element={<ReservationForm action="EDIT" />} />
+              <Route path="/reservations/:id" element={<ReservationDetail />} />
+            </Route>
 
+            <Route path="/reservations" element={
+              <RouteProtector permittedRoles={['ROLE_WAITER', 'ROLE_MANAGER', 'ROLE_CEO']}>
+                <ReservationList />
+              </RouteProtector>
+            } />
+            <Route path="/home" element={<HomeScreen />} />
             <Route
               path="/restaurants/delete/:id"
               element={<RestaurantArchiveScreen />}
@@ -107,6 +111,7 @@ function App() {
             <Route path="/profile" element={<Maintenance />} />
             <Route path="/erreur" element={<ErrorScreen />}/>
             <Route path="/userList" element={<UserListScreen />} />
+            <Route path="/reviews" element={<Maintenance/>}/>
             <Route path="*" element={<ErrorScreen errCode={404} errText="La page demandée n'existe pas. Veuillez recommencer ou retourner sur la page d'accueil." />}/>
           </Route>
         </Routes>

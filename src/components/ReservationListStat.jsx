@@ -18,11 +18,12 @@ const ReservationListStat = ({number, title, subNumber, subTitle, isPercent}) =>
 			<span className={`headerNbr ${fontColor} font-weight-bold`} >{number}</span>
 			<p className="m-0">{title}</p>
 			{
-			 	(subNumber && subTitle) ? 
-				<p className="smallText">
-					<span className="font-weight-bold mr-2">{subNumber}</span>
-					<span>{subTitle}</span>
-				</p> : ''
+			 	(subNumber || subTitle) 
+			 	? <p className="smallText">
+			 		{(subNumber) ? <span className="font-weight-bold mr-2">{subNumber}</span> : ''}
+			 		{(subTitle) ? <span>{subTitle}</span> : ''}
+				  </p>
+				: ''
 			}
         </div>
     )

@@ -1,30 +1,29 @@
-/*
-Time Picker avec par défaut time grisé/
-*/
-
-
-// import ErrorHandler from '../../conf/ErrorHandler';
 import './reservation.scss';
 // routines
-import { getOneReservation, editReservation, createReservation } from '../../services/reservation';
-import { useState, useEffect/*, useContext*/ } from 'react';
+import { getOneReservation, editReservation, createReservation, getReservationByDay } from '../../services/reservation';
+import { getRestaurantDetail } from '../../services/restaurants';
+import { getCurrentUserDetails } from '../../services/users';
+import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { errorHandler } from '../../utils/errorHandler';
+import jwt_decode from "jwt-decode";
 // dateTime
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { TimePicker } from '@mui/x-date-pickers/TimePicker';
-import { LocalizationProvider } from 'localize-react';
+import moment from 'moment';
+import dayjs from 'dayjs';
+import locale from 'antd/es/date-picker/locale/fr_FR'
 // front
 import * as yup from 'yup';
 import { useFormik } from 'formik';
-import { Row, Col } from 'react-bootstrap';
+import { Col } from 'react-bootstrap';
 import ThinHeader from '../../components/ThinHeader';
+import LoadingSpinner from '../../components/LoadingSpinner';
 import Input from '../../components/Input';
+import CustomTimePicker from '../../components/CustomTimePicker';
 import Button from '../../components/Button';
 
 // regex for format : 2023-03-05T18:40
 const regex = new RegExp(/^([0-9]{4})-([0-9]{2})-([0-9]{2})[T]([0-9]{2})[:]([0-9]{2})/gm);
 
-// .min(new Date(), 'Vous ne pouvez pas sélectionner une date antérieure à aujourd\'hui.')
 const validationSchema = yup.object({
 	reservName: yup
 		.string()
@@ -52,45 +51,120 @@ const validationSchema = yup.object({
 		.string()
 		.required('Une erreur est survenue durant la vérification des informations saisies.')
 		.matches('^(KEPT)$|^(CLS)$|^(CLD)$', 'Saisie incorrecte.')
-		.default('KEPT'),
-
-	userID: yup
-		.string()
-        .nullable(true),
-
-	type: yup
-		.string()
-		.required('Une erreur est survenue durant la vérification des informations saisies.')
-		.default('INDOOR')
+		.default('KEPT')
 })
 
 function ReservationDetail ({ action='ADD' }) {
 
 	const [ reservation, setReservation ] = useState({}),
-		  [ returnedError, setReturnedError ] = useState(false),
 		  [ resDate, setResDate ] = useState(''),
+		  [ restaurantID, setRestaurantID ] = useState(''),
+		  [ restauCapacity, setRestauCapacity ] = useState(''),
+		  [ disabledHours, setDisabledHours ] = useState([]),
+		  [ overBookedHalf, setOverBookedHalf ] = useState([]),
+		  [ schedule, setSchedule ] = useState(),
+		  [ dayOverBooked, setDayOverBooked ] = useState(false),
+		  [ isLoaded, setIsLoaded ] = useState(false),
 		  [ resTime, setResTime ] = useState('');
 
 	const { id } = useParams(),
 		  navigate = useNavigate();
 
-    // const authContext = useContext(AuthContext),
-    // userID = authContext.auth.userID;
-
 	let editMode = false,
 		resID = '';
-
 	if (action === 'EDIT') {
 		editMode = true;
 		resID = id;
 	}
 
+    const onSubmit = (values) => {
+
+    	// format date & time
+	    values.reservDate = `${values.resDate}T${values.resTime}:00.000Z`
+	    delete values.resDate;
+	   	delete values.resTime;
+
+    	if (!values.consumerID) delete values.consumerID;
+
+    	if (editMode) {
+    		editReservation(resID, values).then((res) => {
+				navigate(`/reservations/${res.data._id}`, { replace: true })
+            }).catch((err) => {
+            	// setReturnedError(err.response.data)
+            })
+    	} else {
+	        createReservation(values).then((res) => {
+				navigate(`/reservations/${res.data._id}`, { replace: true })
+            }).catch((err) => {
+            	// setReturnedError(err.response.data)
+            })
+    	}
+    };
+
+    const setTimeSchedule = (selectedDate, time) => {
+    	const splited = time.split(':', 2), // HH:mm(:ss)
+			  currHour = parseInt(splited[0]),
+			  currMins = parseInt(splited[1]);
+
+		let newDate = new Date(selectedDate.setHours(currHour,currMins,0,0))
+		return newDate;
+    }
+
+    const getHourFromString = (stringHour) => parseInt(stringHour.slice(0,2));
+
+    const getDateObject = (date) => {
+    	let correctDate = date.replace('.000Z', '');
+    	return new Date(correctDate)
+    }
+
+    const { values, errors, handleChange, setFieldValue, handleReset, handleSubmit } =
+    useFormik(
+    {
+		enableReinitialize: true,
+		initialValues: {
+			reservName: reservation.reservName ?? '',
+			reservPhone: reservation.reservPhone ?? '',
+			resDate: resDate ?? '',
+			resTime: resTime ?? '11:00',
+			seatNr: reservation.seatNr ?? 1,
+			status: reservation.status ?? 'KEPT',
+			restaurantID: reservation.restaurantID ?? '',
+			consumerID: reservation.consumerID ?? '',
+			type: reservation.type ?? 'INDOOR'
+		},
+        validationSchema,
+        onSubmit
+    });
+
 	// get reservation informations if it is edit mode
 	useEffect(()=>{
+		let cancel = false;
+
+   		// get fav resturant
+		const currentTokens = localStorage.getItem("userTokens");
+		if (currentTokens) {
+			const decodedToken = jwt_decode(JSON.parse(currentTokens).token),
+				  userRole = decodedToken?.roleID ?? '',
+				  profRoles = ['ROLE_MANAGER', 'ROLE_CEO', 'ROLE_WAITER']
+
+			if (profRoles.includes(userRole)) {
+				setRestaurantID(decodedToken?.workingResID)
+			} else {
+				getCurrentUserDetails().then((res)=>{
+					if (cancel) return;
+					debugger
+					setRestaurantID(res.data.data.favouriteRestaurant_id);
+				}).catch((err)=>{
+					debugger
+				})
+			}
+		}
+
 		if (editMode && resID !== '')
 		{
 			getOneReservation(resID).then((res)=>{
 
+				if (cancel) return;
 				// default date & time
 				let dateTime = res.data.reservDate;
     			if (regex.test(dateTime)) {
@@ -101,84 +175,188 @@ function ReservationDetail ({ action='ADD' }) {
 				setReservation(res.data)
 
 			}).catch((err)=>{
-				console.log('GET ONE RESERVATION : ', err);
-				setReturnedError('La réservation n\'a pas été trouvée.')
-				// navigate('reservations/create', {replace: true})
-				// choisir si redirection quelque soit l'erreur, puisque c'est on click qu'on va dessus.
-				// ErrorHandler('REDIRECT', err.status) 
+				if (err?.code === 404) {
+					errorHandler('REDIRECT', err, navigate, 'réservation') 
+				}
+				console.error(err)
+			}).finally(()=>{
+				setIsLoaded(true)
 			})
 		}
 		else 
 		{
-			// default date & time
+			// default date like dd/MM/yyyy
 			let nowDate = new Date();
-			let date = nowDate.toLocaleDateString('en-CA'), // dd/MM/yyyy
-				time = nowDate.toLocaleTimeString('fr').slice(0, 5);; // HH:mm
-
+			let date = nowDate.toLocaleDateString('en-CA');
 			setResDate(date);
-			setResTime(time);
 		}
-	}, [editMode, resID])
 
-    const onSubmit = (values) => {
+		return () => { 
+		    cancel = true;
+		}
+	}, [editMode, resID, navigate]);
 
-    	// format date & time
-    	let dateTime = `${values.resDate}T${values.resTime}`
-	    values.reservDate = new Date(dateTime)
-	   	delete values.resDate;
-	   	delete values.resTime;
+	// get current restaurant infos
+	useEffect(()=>{   		
+		let cancel = false;
+	    // get restaurant informations
+		if (restaurantID)
+		{
+		    getRestaurantDetail(restaurantID).then((res)=>{
+		    	if (cancel) return;
+		    	// i got every restaurants
+		    	if (res?.data?.length > 1) {throw new Error(404)}
+		    	// get schedule of current restaurant : archive 
+		        const scheduleObj = {
+					open : '11:00:00',
+					close : '23:00:00'
+	        	}
+		    	setRestauCapacity(40) //res?.data?.capacity
+		        setSchedule(scheduleObj)
+			}).catch((err)=>{
+				console.error('RESTAURANT : ', err)
+			})
+		}
+		return () => { 
+		    cancel = true;
+		}
+	}, [restaurantID])
 
-    	if (!values.userID) delete values.userID;
+	// get reservations disponibilities
+	useEffect(()=>{   		
+		let cancel = false,
+	    	bookedHalf = [],
+	    	bookedHour = [],
+	    	lastBookedHour;
 
-    	if (editMode) {
-    		// debugger
-    		editReservation(resID, values).then((res) => {
-				navigate(`/reservations/${res.data._id}`, { replace: true })
-            }).catch((err) => {
-            	setReturnedError(err.response.data)
-            })
-    	} else {
-	        createReservation(values).then((res) => {
-				navigate(`/reservations/${res.data._id}`, { replace: true })
-            }).catch((err) => {
-            	setReturnedError(err.response.data)
-            })
-    	}
-    };
+		if (values.resDate && schedule && restauCapacity)
+		{
+    		// store hours that exceed the schedule
+    		const selectedDate = new Date(values.resDate),
+    			  openHour = getHourFromString(schedule.open),
+    			  closeHour = getHourFromString(schedule.close),
+				  hoursBeforeOpen = Array.from({ length: openHour }).map( (_, index) => index ),
+				  hoursAfterClose = Array.from({ length: 24 }).map((_, index) => index).filter((hour) => hour > (closeHour-2));
 
-    const { values, errors, handleChange, setFieldValue, handleReset, handleSubmit } =
-    useFormik(
-    {
-		enableReinitialize: true,
-		initialValues: {
-			reservName: reservation.reservName ?? '',
-			reservPhone: reservation.reservPhone ?? '',
-			resDate: resDate ?? '',
-			resTime: resTime ?? '',
-			seatNr: reservation.seatNr ?? 1,
-			status: reservation.status ?? 'KEPT',
-			userID: reservation.userID ?? '',
-			type: reservation.type ?? 'INDOOR'
-		},
-        validationSchema,
-        onSubmit
-    });
+			bookedHour.push(...hoursAfterClose)
+			bookedHour.push(...hoursBeforeOpen)
+
+			// get enabled hours by day
+			getReservationByDay(values.resDate, 'KEPT').then((res)=>{
+				if (cancel) return;
+				const reservOfDay = res.data,
+	    			  openedTime = setTimeSchedule(selectedDate, schedule.open),
+	    			  closedTime = setTimeSchedule(selectedDate, schedule.close);
+
+				// calculate the over booked hours 
+	    		let currHalf = openedTime;
+	    		do {
+	    			let minHour = moment(currHalf).subtract(2, 'h').toDate(),
+						maxHour = moment(currHalf).add(2, 'h').toDate(),
+	    				reservedBefore = 0,
+	    				reservedAfter = 0;
+
+	    			// eslint-disable-next-line
+					reservOfDay.forEach((checkedReservation)=>{
+						let checkedResID = checkedReservation._id;
+						if (editMode && (checkedResID === reservation._id))
+						{
+							return
+						}
+
+						const reservationTime = getDateObject(checkedReservation.reservDate),
+							  currHalfTime =  new Date(currHalf);
+
+						// check si la réservation se trouve après l'heure minimum, et si se termine avant l'heure courante
+						if (reservationTime > minHour && reservationTime < currHalfTime) {
+							reservedBefore += checkedReservation.seatNr;
+						}
+
+						// check si la réservation commence vers l'heure courante
+						if (reservationTime >= currHalfTime && reservationTime < maxHour) {
+							reservedAfter += checkedReservation.seatNr;
+						}
+					})
+		
+					const leftBefore = restauCapacity - reservedBefore,
+						  leftAfter = restauCapacity - reservedAfter,
+						  leftDuring = restauCapacity - (reservedAfter + reservedBefore);
+
+
+					if (leftDuring < values.seatNr || leftBefore < values.seatNr || leftAfter < values.seatNr)
+					{
+						bookedHalf.push(currHalf);
+					}
+
+					currHalf = moment(currHalf).add(30, 'm').toDate();
+	    		} while (currHalf < closedTime)
+
+				// store over booked hour HH: and half-hour HH:mm
+				setOverBookedHalf(bookedHalf)
+				bookedHalf.forEach((currDate)=>{
+					let currBookedHour = currDate.getHours();
+					if (currBookedHour === lastBookedHour)
+					{
+						bookedHour.push(currBookedHour)
+					}
+					lastBookedHour = currDate.getHours();
+				})
+
+				// if every hour are booked, disable the selection
+				if (bookedHour.lentgh >= 24) {
+					setDayOverBooked(true)
+				} else {
+					setDayOverBooked(false)
+				}
+
+				const userChoice = getHourFromString(values.resTime);
+	    		if (userChoice && bookedHour.includes(userChoice))
+	    		{
+    				setFieldValue('resTime', '');
+	    			const err = {message: `Pas de bowl ! Aucune place n'est disponible pour ${values.seatNr} places à l'heure choisie. Veuillez en sélectionner une à nouveau.`}
+	    			errorHandler('TOAST', err)
+	    		}
+
+			}).catch((err)=>{
+				setOverBookedHalf([])
+				setDayOverBooked(true) // disable time selection
+				console.log('DAY SEATS : ', err?.response?.data ?? err)
+			})
+		}
+
+		setDisabledHours(bookedHour)
+
+		return () => { 
+		    cancel = true;
+		}
+	}, [values.resDate, values.resTime, values.seatNr, setFieldValue, restauCapacity, schedule, reservation, editMode])
+
+	const disabledTime = (current, type) => {
+		const disabledMinutes = (current) => {
+			if (current > 0) {
+				let bookedMins = []
+				overBookedHalf.forEach((currHalf)=>{
+					let currBookedHour = currHalf.getHours();
+					if (currBookedHour === current && !disabledHours.includes(currBookedHour))
+					{
+						bookedMins.push(currHalf.getMinutes())
+					}
+				})
+				return bookedMins;
+			}
+		}
+
+		return {
+			disabledHours: () => disabledHours,
+			disabledMinutes: disabledMinutes,
+		}
+	};
 
 	return (
 		<div className="resCtnr d-flex flex-column px-5 py-4">
 
 			<ThinHeader subTitle="Gérer les réservations" />
-
-			{
-				(returnedError) 
-				? <Row className="justify-content-center">
-					<Col md={6}>
-						<p className="negativeColor text-center">{returnedError}</p>
-					</Col>
-				</Row>
-				: ''
-			}
-			<form onSubmit={handleSubmit} className="resForm  pl-5 ml-1">
+			<form onSubmit={handleSubmit} className="resForm pl-5 ml-1">
 				{
 					(!editMode)
 					? <Col xs={12} className="pl-4 mb-4">
@@ -190,70 +368,91 @@ function ReservationDetail ({ action='ADD' }) {
 					</Col>
 				}
 
-				<Col md={7} className="d-flex flex-column pl-2 pr-0">
-					<Input 
-						name="reservName"
-                        desc="Nom du client"
-                        type="text"
-                        onChange={handleChange}
-                        value={values.reservName}
-                        placeholder="Hertat"
-                        error={errors.reservName}
-					/>
+				{
+					(!editMode || isLoaded)
+					? <> <Col md={7} className="d-flex flex-column pl-2 pr-0">
+						<Input 
+							name="reservName"
+	                        desc="Nom du client"
+	                        type="text"
+	                        onChange={handleChange}
+	                        value={values.reservName}
+	                        placeholder="Hertat"
+	                        error={errors.reservName}
+						/>
 
-					<Input 
-						name="reservPhone"
-                        desc="Numéro de téléphone"
-                        type="text"
-                        onChange={handleChange}
-                        value={values.reservPhone}
-                        placeholder="ex: 0625489875"
-                        error={errors.reservPhone}
-					/>
+						<Input 
+							name="reservPhone"
+	                        desc="Numéro de téléphone"
+	                        type="text"
+	                        onChange={handleChange}
+	                        value={values.reservPhone}
+	                        placeholder="ex: 0625489875"
+	                        error={errors.reservPhone}
+						/>
 
-					<Input 
-						name="resDate"
-                        desc="Date de la réservation"
-                        type="date"
-                        onChange={handleChange}
-                        value={values.resDate}
-                        error={errors.resDate}
-					/>
+						<Input 
+							name="resDate"
+	                        desc="Date de la réservation"
+	                        type="date"
+	                        onChange={handleChange}
+	                        min={dayjs().format('YYYY-MM-DD')}
+	                        value={values.resDate}
+	                        error={errors.resDate}
+						/>
 
-					<Input 
-						name="resTime"
-                        desc="Heure de la réservation"
-                        type="time"
-                        onChange={handleChange}
-                        value={values.resTime}
-                        error={errors.resTime}
-					/>
+						<CustomTimePicker
+							name="resTime"
+	                        desc="Heure de la réservation"
+	          				format="HH:mm"
+							locale={locale}
+							allowClear={false}
+							size='large'
+							onChange={(timeVal)=>{
+								if (timeVal)
+								{
+	    							setFieldValue('resTime', timeVal.format('HH:mm'));
+								}
+	                        }}
+	      					value={values.resTime ? moment(values.resTime, 'HH:mm') : null}
+	      					minuteStep={30}
+	      					disabledTime={disabledTime}
+							showNow={false}
+							inputReadOnly={true}
+							disabled={dayOverBooked}
+	                        error={errors.resTime}
+							// cellRender
+						/>
 
-					<Input 
-						name="seatNr"
-                        desc="Nombre de personnes"
-                        type="number"
-                        onChange={(value)=>{
-                        	let targetVal = value.target.value;
-							if (targetVal < 1) {
-								targetVal = 0;
-							}
-							else if (targetVal > 15) {
-								targetVal = 16;
-							}
-							setFieldValue('seatNr', targetVal)
-						}}
-                        value={values.seatNr}
-                        placeholder="ex: 5"
-                        error={errors.seatNr}
-					/>
-				</Col>
-				<Col xs={7} className="px-0 mt-4">
-					<div className="d-flex btnCtnr justify-content-end">
-						<Button type="button" bsType="secondary" onClick={handleReset}>Réinitialiser la saisie</Button>
-						<Button type="submit">{(resID, editMode) ? 'Modifier' : 'Ajouter la réservation' }</Button>
- 					</div>
-				</Col>
+						<Input 
+							name="seatNr"
+	                        desc="Nombre de personnes"
+	                        type="number"
+	                        onChange={(value)=>{
+	                        	let targetVal = value.target.value;
+								if (targetVal < 1) {
+									targetVal = 0;
+								}
+								else if (targetVal > 15) {
+									targetVal = 16;
+								}
+								setFieldValue('seatNr', targetVal)
+							}}
+	                        value={values.seatNr}
+	                        placeholder="ex: 5"
+	                        error={errors.seatNr}
+						/>
+					</Col>
+
+					<Col xs={7} className="px-0 mt-4">
+						<div className="d-flex btnCtnr justify-content-end">
+							<Button type="button" bsType="secondary" onClick={handleReset}>Réinitialiser la saisie</Button>
+							<Button type="submit">{(resID, editMode) ? 'Modifier' : 'Ajouter la réservation' }</Button>
+	 					</div>
+					</Col>
+					</>
+					: <LoadingSpinner />
+				}
 			</form>
 		</div>
 	)
