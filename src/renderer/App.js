@@ -34,6 +34,9 @@ import Maintenance from "./maintenance/Maintenance";
 import ErrorScreen from "./errorScreen/ErrorScreen";
 import UserListScreen from "./userList/UserListScreen";
 import RouteProtector from '../components/RouteProtector';
+import BowlAdminList from "./bowl/BowlAdminList";
+import BowlDetail from "./bowl/BowlDetail";
+import BowlForm from "./bowl/BowlForm";
 
 import { AuthProvider } from "../providers/AuthProvider";
 
@@ -56,6 +59,14 @@ function App() {
                 <ReservationList />
               </RouteProtector>
             } />
+            <Route element={<RouteProtector permittedRoles={['ROLE_SUPERADMIN', 'ROLE_ADMIN', 'ROLE_CEO', 'ROLE_MANAGER', 'ROLE_COOK', 'ROLE_WAITER']} />}>
+                <Route path="/menus/admin-list" element={<BowlAdminList />} />
+                <Route path="/menus/:id" element={<BowlDetail />} />
+            </Route>
+            <Route element={<RouteProtector permittedRoles={['ROLE_ADMIN']} />}>
+              <Route path="/menus/create" element={<BowlForm action='ADD' />} />
+              <Route path="/menus/edit/:id" element={<BowlForm action='EDIT' />} />
+            </Route>
             <Route path="/home" element={<HomeScreen />} />
             <Route
               path="/restaurants/delete/:id"

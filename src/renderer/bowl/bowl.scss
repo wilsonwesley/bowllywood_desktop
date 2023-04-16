@@ -1,0 +1,193 @@
+@import '../../sass/styles.scss';
+
+/************* common style of bowl view files **************/
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}
+
+.rotate {
+  animation: rotation .5s ease-out;
+}
+
+.sweetColor {color: #2D3CA8 } // 901534
+.saltedColor {color: #A87736 }
+
+.adminListCtnr{
+  margin-top: 6em;
+
+  ul {
+    row-gap: 5em;
+  }
+
+  .imgCtnr {
+    width: 10rem;
+    height: 10rem;
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      vertical-align:middle;
+    }
+  }
+}
+
+.bowlCtnr {
+  &:not(.bowlDetailCtnr) {
+    background-image: url('https://bowllywood-8llo.onrender.com/images/saltedBg.png');
+    background-position: bottom right;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+  }
+
+    row-gap: 4.7em !important;
+    min-height: 100vh;
+    height: fit-content;
+
+    .thinHeader {
+      padding: 0;
+    }
+
+  p {
+    margin: 0;
+    font-family: $ibm-font;
+  }
+
+  .inheritText {font-size: inherit;}
+  .largeText {font-size: 1.2rem}
+  .mediumText {font-size: 0.85rem}
+  .smallText {font-size: 0.75rem}
+
+  i {
+    font-size: 1.7rem;
+    cursor: pointer;
+  }
+
+  .bowlListContent, .resDetailTop {
+    p:not(p.addText) {
+      font-size: 1.3rem;
+    }
+  }
+
+  i.disabled {
+    color: $pale-grey ;
+    cursor: default;
+  }
+
+  .disabled-link {
+    & > * {
+      color: $pale-grey ;
+      cursor: default;
+    } 
+
+  }
+}
+
+/************* bowl list file **************/
+.bowlStatistic {
+  column-gap: 5.5rem;
+
+  span.headerNbr {
+    font-size: 1.8rem;
+    font-weight: bold;
+  }
+}
+
+.bowlListContent {
+
+  .checked{
+    background-color: $dark-green;
+    background-color: rgba(145,213,163,0.3);
+    color: $dark-grey;
+  }
+
+  .bowlListSelect.rw-dropdown-list{
+    width: 10rem;
+    div { 
+      background-color: transparent !important;
+      box-shadow: none;
+      border: none;
+
+      .rw-dropdown-list-input {
+        padding-left: 0;
+      } 
+    }
+  }
+
+  .bowlList i {
+    font-size: 1.6rem;
+    cursor: pointer;
+  }
+
+  .bowlListItem {
+    // overwrite
+    border: none;
+    border-radius: 0;
+    border-bottom: 1px solid $dark-grey;
+    background-color: transparent !important;
+    color: $dark-grey !important;
+
+    p {
+      line-height: 1em;
+    }
+  }
+
+  a {
+    text-decoration: none;
+    color: $dark-grey !important;
+    border-color: $dark-grey !important;
+  }
+
+  .addIcon {font-size: 4.5rem}
+
+  .ant-picker-input{
+    cursor: pointer;
+    input {display: none}
+  }
+}
+
+/************* bowl form file **************/
+.bowlForm {
+  .textMeal {
+    textarea {
+      background-color: #fff;
+      background-color: rgba(255, 255, 255, 0.5)
+    }
+  }
+
+  .bowlFile{
+    label {
+      line-height: 1;
+      span {
+        font-variant-caps: normal;
+        font-size: .8rem;
+        font-style: italic;
+      }
+    }
+  }
+
+  .btnCtnr {
+    column-gap: 2em;
+  }
+}
+
+/************* bowl details **************/
+.bowlDetails{
+  column-gap: 2rem;
+}
+
+.bowlBtnCtnr {
+  // overwrite
+  .fa-square-xmark {
+    line-height: .96;
+  }
+}

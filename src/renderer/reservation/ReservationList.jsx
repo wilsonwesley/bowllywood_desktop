@@ -1,3 +1,4 @@
+import './reservation.scss';
 // data
 import { useState, useEffect } from 'react';
 import { getAllReservations } from '../../services/reservation';
@@ -13,7 +14,6 @@ import dayjs from 'dayjs';
 import locale from 'antd/es/date-picker/locale/fr_FR'
 // utils
 import {errorHandler} from '../../utils/errorHandler';
-import './reservation.scss';
  
 function ReservationList () {
 
@@ -183,7 +183,7 @@ function ReservationList () {
 			<Col>
 				<Row className="mb-3 align-items-center">
 					<p className="d-inline">Liste des réservations</p>
-					<span className=" mx-2"> – </span> 
+					<span className="mx-2"> – </span> 
 					<span>journée du {getFullDate(selectedDate, 'DATS')}</span>
 					<DatePicker 
 						locale={locale}
