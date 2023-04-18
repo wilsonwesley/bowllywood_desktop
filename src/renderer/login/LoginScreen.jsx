@@ -41,9 +41,9 @@ function LoginScreen() {
                         'userTokens',
                         JSON.stringify(response.data)
                     );
+
                     authContext.setAuth(JSON.stringify(response.data));
                     navigate(redirectSource, { replace: true });
-                    console.log(`test ${response.data}`);
                 } catch (err) {
                     if (!err.response) {
                         setErrorMessage('Pas de réponse du serveur');

@@ -9,7 +9,6 @@ import jwt_decode from "jwt-decode";
 
 
 const Template = () => {
-
   const checkStorage = () => {
     const currentTokens = localStorage.getItem("userTokens");
     if (currentTokens) {
@@ -23,8 +22,6 @@ const Template = () => {
   const tokens = checkStorage();
   const decodedToken = jwt_decode(JSON.parse(tokens).token);
   const role = decodedToken.roleID
-
-    
     const handleLogout = () => {
         // Supprimer les données utilisateur du localStorage
         localStorage.removeItem('userTokens');
@@ -52,6 +49,9 @@ const Template = () => {
       || role === "ROLE_CEO")  {
       data = [
         <SidebarItem>
+            <GoBackButton />
+        </SidebarItem>,
+        <SidebarItem>
           <Link to="/home" className="text-decoration-none text-black text-center">
             <i className="fa-solid fa-house text-black flex-center"></i>
             <p className="text-black">Accueil</p>
@@ -73,6 +73,15 @@ const Template = () => {
           >
             <i className="fa-solid fa-shop text-black flex-center"></i>
             <p>Restaurants</p>
+          </Link>
+        </SidebarItem>,
+        <SidebarItem>
+          <Link
+            to="/menus/admin-list"
+            className="text-decoration-none text-black text-center"
+          >
+            <i className="fa-solid fa-bowl-food text-black flex-center"></i>
+            <p>Bowls</p>
           </Link>
         </SidebarItem>,
         <SidebarItem>
@@ -145,6 +154,9 @@ const Template = () => {
     } else if (role === "ROLE_MANAGER" ) {
       data = [
         <SidebarItem>
+            <GoBackButton />
+        </SidebarItem>,
+        <SidebarItem>
           <Link to="/home" className="text-decoration-none text-black text-center">
             <i className="fa-solid fa-house text-black flex-center"></i>
             <p className="text-black">Accueil</p>
@@ -199,6 +211,9 @@ const Template = () => {
     } else if (role === "ROLE_WAITER"
       || role === "ROLE_COOK" ) {
         data = [
+        <SidebarItem>
+            <GoBackButton />
+        </SidebarItem>,
           <SidebarItem>
             <Link to="/home" className="text-decoration-none text-black text-center">
               <i className="fa-solid fa-house text-black flex-center"></i>

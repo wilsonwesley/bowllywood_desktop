@@ -1,36 +1,79 @@
 import './reservation.scss';
+// data
 import { useState, useEffect } from 'react';
 import { getAllReservations } from '../../services/reservation';
+// component
 import { Row, Col, ListGroup, ListGroupItem } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import ThinHeader from '../../components/ThinHeader';
 import ReservationListStat from '../../components/ReservationListStat';
 import LoadingSpinner from '../../components/LoadingSpinner';
+// date
+import { DatePicker } from 'antd';
+import dayjs from 'dayjs';
+import locale from 'antd/es/date-picker/locale/fr_FR'
+// utils
 import {errorHandler} from '../../utils/errorHandler';
-
-let dateObj, resDate, resTime;
+ 
 function ReservationList () {
 
 	const [reservations, setReservations] = useState([]),
+		  [cancel, setCancel] = useState(false),
+		  [rotate, setRotate] = useState(false),
 		  [sortIcon, setSortIcon] = useState('up'),
+		  [seatNumber, setSeatNumber] = useState(0),
+		  [selectedDate, setSelectedDate] = useState(new Date()),
+		  [fullDate, setFullDate] = useState(''),
+		  [capacity/*, setCapacity*/] = useState(40),
+		  [openedHours/*, setOpenedHours*/] = useState(12),
+		  [seatsPerDay, setSeatsPerDay] = useState(12),
+		  [refreshData, setRefreshData] = useState(false),
 		  [isLoaded, setIsLoaded] = useState(false);
 
-	useEffect(()=>{	
-		getAllReservations().then((res)=>{
+	let today = dayjs().format('YYYY-MM-DD');
+
+	useEffect(()=>{
+		setCancel(false)
+
+		let filterDate = dayjs(selectedDate).format('YYYY-MM-DD')
+		setFullDate(filterDate)
+		getAllReservations(filterDate).then((res)=>{
+			if (cancel) return;
 			// place items depending of the date
 			// descendent mode
 			res.data.sort((first, second)=>{
 				return (first.reservDate < second.reservDate) ? 1 : -1;
 			})
+
+			let allSeatNumber = 0;
+			res.data.forEach((item)=>{
+				let dateObj = item.reservDate;
+				if (dateObj.includes('Z')) {
+					dateObj = dateObj.split('Z')[0];
+				}
+				item.resDate = getFullDate(dateObj);
+				item.resTime = getFullTime(dateObj);
+
+				if (item.status === 'KEPT') { allSeatNumber += item.seatNr }
+			})
+
+
 			setReservations(res.data)
-			
+			setSeatNumber(allSeatNumber)
 		}).catch((err)=>{
-			// console.log('GET ALL RESERV : ', err)
-			errorHandler('TOAST', err)
+			setSeatNumber(0)
+			setReservations([])
+			if (err?.response?.status !== 404) errorHandler('TOAST', err)
 		}).finally(()=>{
 			setIsLoaded(true)
 		})
-	}, [])
+
+		setSeatsPerDay(capacity*openedHours)
+
+		return () => { 
+		    setCancel(true);
+		}
+	}, [refreshData, capacity, openedHours, selectedDate, cancel])
 		
 	const sortList = () => {
 		let newIcon = (sortIcon === 'down') ? 'up' : 'down';
@@ -41,9 +84,8 @@ function ReservationList () {
 		});
 	}
 
-	const getFullDate = (dateObj) =>
-	{
-		if (typeof dateObj != 'object') {
+	const getFullDate = (dateObj) => {
+		if (typeof dateObj !== 'object' || !(dateObj instanceof Date)) {
 			dateObj = new Date(dateObj);
 		}
 
@@ -55,9 +97,8 @@ function ReservationList () {
 		});
 	}
 
-	const getFullTime = (dateObj) =>
-	{
-		if (typeof dateObj != 'object') {
+	const getFullTime = (dateObj) => {
+		if (typeof dateObj !== 'object' || !(dateObj instanceof Date)) {
 			dateObj = new Date(dateObj);
 		}
 
@@ -90,33 +131,11 @@ function ReservationList () {
 		return {status, statusColor};
 	}
 
-	// Get the first day of the week
-	var currDate;
-	if (!currDate) 
-	{
-		// Get current day number, converting Sunday to 7
-		currDate = new Date();
-		let day = currDate.getDay() || 7;
-
-		// calculate the number of hours to subtract from the current day
-		if( day !== 1 ) {
-			currDate.setHours(-24 * (day - 1));
-		}
-		currDate = getFullDate(currDate, 'DATS');
-	}
-
 	const ReservationsRender = () => {
 		if (reservations.length > 0)
 		{
 			return (reservations.map((reserv) => {
 				let {status, statusColor} = formatStatus(reserv.status);
-
-				dateObj = reserv.reservDate;
-				if (dateObj.includes('Z')) {
-					dateObj = dateObj.split('Z')[0];
-				}
-				resDate = getFullDate(dateObj);
-				resTime = getFullTime(dateObj);
 
 				return (
 				<ListGroupItem key={reserv._id} action={true} active={true} href={`/reservations/${reserv._id}`} className="resListItem px-0">
@@ -127,11 +146,11 @@ function ReservationList () {
 						</Col>
 						<Col md={7} xl={5} className="p-0">
 							<p>
-								{resDate}
+								{reserv.resDate}
 								<span className="mediumText mx-2"> à </span>
-								{resTime}
+								{reserv.resTime}
 							</p>
-							<span className={/*mediumText*/` ${statusColor}`}>{status}</span>
+							<span className={` ${statusColor}`}>{status}</span>
 						</Col>
 					</Row>
 				</ListGroupItem>
@@ -141,10 +160,9 @@ function ReservationList () {
 		}
 		else
 		{
-			// devrait être remplacé par la gestion des erreurs.
 			return(
-				<div className="d-flex align-items-center justify-content-center">
-					<span>Aucune réservation n'a été trouvée.</span>
+				<div className="d-flex align-items-center justify-content-center text-center mt-5">
+					<span>Aucune réservation n'a encore été enregistrée dans votre restaurant pour la date sélectionnée.</span>
 				</div>
 			)
 		}
@@ -156,25 +174,37 @@ function ReservationList () {
 		<ThinHeader subTitle="Gérer les réservations" />
 		
 		<Row className="resStatistic justify-content-center" >
-			<ReservationListStat number="12" title="Tables disponibles" subNumber="6" subTitle="tables réservées" />
-			<ReservationListStat number="49" title="Places restantes" subNumber="23" subTitle="Places réservées" />
-			<ReservationListStat number="67" title="Occupation de la salle" isPercent="true"/>
+			<ReservationListStat number={(seatNumber !== 0) ? 12 : 27} title="Tables disponibles" subNumber={(seatNumber !== 0) ? 15 : '0'} subTitle="tables réservées" />
+			<ReservationListStat number={seatNumber} title="Places réservées" subTitle={(today !== fullDate) ? getFullDate(selectedDate, 'DATS') : 'aujourd\'hui'} />
+			<ReservationListStat number={Math.round((seatNumber*100/seatsPerDay) * 10 )/10} title="Occupation de la salle" subTitle="pour toute la journée" isPercent="true"/>
 		</Row>
 
 		<Row className="resListContent">
 			<Col>
 				<Row className="mb-3 align-items-center">
 					<p className="d-inline">Liste des réservations</p>
-					<span className=" mx-2"> – </span> 
-					<span>semaine du {currDate}</span>
+					<span className="mx-2"> – </span> 
+					<span>journée du {getFullDate(selectedDate, 'DATS')}</span>
+					<DatePicker 
+						locale={locale}
+						allowClear={false}
+						bordered={false}
+						size='large'
+						value={selectedDate ? dayjs(selectedDate) : null}
+						onChange={setSelectedDate}
+					/>
 				</Row>
 				<Row className="flex-column-reverse flex-md-row justify-content-between px-4" >
 					<Col md={8} xxl={7} className="resList">
 						<div className="d-flex justify-content-end mb-3">
 							{/*<div>
-								<i className="fa-solid fa-grip mr-3"onClick={}></i>
-								<i className="fa-solid fa-bars-staggered"onClick={}></i>
+								<i className="fa-solid fa-grip mr-3" onClick={console.log('oui')}></i>
+								<i className="fa-solid fa-bars-staggered" onClick={console.log('oui')}></i>
 							</div>*/}
+							<i className={`fa-solid fa-rotate-right mr-3 ${(rotate) ? 'rotate' : ''}`} 
+								onClick={() => {setRefreshData(!refreshData); setRotate(true) }}
+						        onAnimationEnd={() => setRotate(false)}
+							></i>
 							<i className={`fa-solid fa-arrow-${sortIcon}`} onClick={sortList}></i>
 						</div>
 
@@ -199,10 +229,8 @@ function ReservationList () {
 				</Row>
 			</Col>
 		</Row>
-		{/* <SimplePopup /> */}
 	</div>
 	)
 }
 
 export default ReservationList;
-// <Button bsType="button" onClick={() => { Popup.onClose() /*.close()*/ }} >Ok pour moi !</Button>

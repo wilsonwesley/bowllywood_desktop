@@ -11,21 +11,21 @@ export const AuthProvider = ({ children }) => {
     } else {
       return false;
     }
-  };
+  }
   useEffect(() => {
     if (checkStorage() && !auth) {
       const tokens = checkStorage();
       const decodedToken = jwt_decode(JSON.parse(tokens).token);
       const userID = decodedToken.id;
       const userROLE = decodedToken.roleID;
-      console.log(userROLE);
+
       let userInfos = {
         userId: userID,
         role: userROLE,
       };
       setAuth(userInfos);
     }
-  }, [auth]);
+  }, [auth, setAuth])
 
   return (
     <AuthContext.Provider value={{ auth, setAuth }}>

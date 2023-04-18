@@ -1,15 +1,14 @@
-// import ErrorHandler from '../../conf/ErrorHandler';
 import './reservation.scss';
 // routines
 import { useState, useEffect } from 'react';
 import { getOneReservation, cancelReservation } from '../../services/reservation';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { errorHandler } from '../../utils/errorHandler';
 import ThinHeader from '../../components/ThinHeader';
 // front
 import LoadingSpinner from '../../components/LoadingSpinner';
 import { Row, Col } from 'react-bootstrap';
-// import { ToastContainer, toast } from 'react-toastify';
 
 function ReservationDetail () {
 
@@ -27,7 +26,9 @@ function ReservationDetail () {
 	const navigate = useNavigate();
 
 	useEffect(()=>{
-		if (resID)
+		let cancel = false;
+
+		if (resID && !cancel)
 		{
 			getOneReservation(resID).then((res)=>{
 				formatStatus(res.data.status);
@@ -59,14 +60,21 @@ function ReservationDetail () {
 				setIsEditable(res.data.status === 'KEPT' || (res.data.status === 'CLD' && res.data.reservDate < currDate))
 
 			}).catch((err)=>{
-				console.log('GET ONE RESERVATION : ', err);
-				// choisir si redirection quelque soit l'erreur, puisque c'est on click qu'on va dessus.
-				// ErrorHandler('REDIRECT', err.status) 
+				if (err?.response?.status === 403)
+				{
+					delete err?.response?.data?.message;
+					delete err?.message;
+				}
+				errorHandler('REDIRECT', err, navigate, 'réservation')
 			}).finally(() => {
 				setLoaded(true);
 			})
 		}
-	}, [resID])
+
+		return () => { 
+		    cancel = true;
+		}
+	}, [resID, navigate])
 
 	const formatPhone = (phoneNumber) => {
 
@@ -108,11 +116,8 @@ function ReservationDetail () {
 		}
 	}
 
-	const navigateForm = (reservationID) => {
-		if (isEditable)
-			navigate(`/reservations/form/${id}`, { replace: true })
-		else
-			console.log('message non authorisé car terminé, ou annulé mais date dépassée')
+	const navigateForm = () => {
+		if (isEditable) navigate(`/reservations/form/${id}`, { action: 'EDIT', replace: true })
 	}
 
 	const cancelReservationBtn = (id) => {
@@ -121,38 +126,9 @@ function ReservationDetail () {
 			cancelReservation(id).then((res) => {
 				formatStatus(res.data.status);
 				setIsEditable(false)
-				/*toast.info('La réservation a été annulée.', {
-					position: "bottom-center",
-					autoClose: 2500,
-					hideProgressBar: true,
-					closeOnClick: true,
-					pauseOnHover: true,
-					draggable: true,
-					progress: undefined,
-					theme: "dark",
-					});
-
-				<ToastContainer
-					position="bottom-center"
-					autoClose={2500}
-					hideProgressBar
-					newestOnTop={false}
-					closeOnClick
-					rtl={false}
-					pauseOnFocusLoss
-					draggable
-					pauseOnHover
-					theme="dark"
-					/>
-			*/
-
 			}).catch((err) => {
 				console.log(err)
 			})
-		}
-		else
-		{
-			console.log('message non authorisé car terminé, ou annulé mais date dépassée')
 		}
 	}
 
