@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import {Navigate, Outlet, useLocation, useNavigate} from 'react-router-dom';
+import { Navigate, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import jwt_decode from "jwt-decode";
 import { errorHandler } from '../utils/errorHandler';
 
@@ -9,9 +9,8 @@ const RouteProtector = ({permittedRoles, children}) => {
         location = useLocation(),
         navigate = useNavigate();
 
-    if (permittedRoles === undefined) {
+    if (permittedRoles === undefined)
         permittedRoles = [];
-    }
 
     useEffect(() => {
         try {
@@ -43,7 +42,6 @@ const RouteProtector = ({permittedRoles, children}) => {
             : <Navigate to="/erreur" state={{ code: 401, message: "Vous n'êtes pas autorisé à accéder à cette page." }} replace />
         }
     }
-
     return (checked) ? <RenderPage children={children} permittedRoles={permittedRoles} /> : '';
 }
 

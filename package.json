@@ -47,7 +47,9 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "start127": "set \"HOST=127.0.0.1\" && react-scripts start",
     "dev": "concurrently \"yarn start\" \"wait-on http://127.0.0.1:3000/ && yarn electron .\"",
+    "dev127": "concurrently \"yarn start127\" && \"wait-on http://127.0.0.1:3000/ && yarn electron .\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
