@@ -5,22 +5,22 @@ import { useNavigate, useParams } from 'react-router-dom';
 // data
 import { getOneMeal, deleteMeal } from '../../services/bowl';
 import { getOneStock } from '../../services/stocks';
+import { imgurDeleteImage, getImageHash } from '../../services/imgur';
 import { errorHandler } from '../../utils/errorHandler';
 import jwt_decode from "jwt-decode";
 // front
-import { Col, Row, Container } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
 import ThinHeader from '../../components/ThinHeader';
 import LoadingSpinner from '../../components/LoadingSpinner';
 
 const BowlDetail = () => {
    const [bowl, setBowl] = useState(null),
+         [cleaning, setCleaning] = useState(false),
+         [imgError, setImgError] = useState(false),
          [isAdmitted, setIsAdmitted] = useState(false),
          [isLoaded, setIsLoaded] = useState(false),
          [ingredientsLoaded, setIngredientsLoaded] = useState(false),
          [ingredients, setIngredients] = useState([]);
-
-   const defaultImage = require('../../assets/img/bowlicon_grey.png')
-   const [filePath, setFilePath] = useState(defaultImage);
 
    const navigate = useNavigate(),
          { id } = useParams(),
@@ -38,9 +38,8 @@ const BowlDetail = () => {
 
    // get data
    useEffect( () => {
-      let cleaning = false,
-          stockArr = [],
-          ingredientsID = [];
+      setCleaning(false);
+      let stockArr = [];
 
       let admittedRoles = ['ROLE_ADMIN'] ;
       setIsAdmitted(admittedRoles.includes(userRole))
@@ -61,28 +60,12 @@ const BowlDetail = () => {
                   // nothing to inform
                }
             }
+
             setIngredients(stockArr)
             setIngredientsLoaded(true)
          }
 
          fetchStocks()
-
-         // fetch image
-         try
-         {
-            let fecthedImage = require(`/menu/${bowl?.image}`)
-            if (fecthedImage)
-            {
-               setFilePath(fecthedImage)
-            }
-         }
-         catch(err)
-         {
-            err.code = '';
-            err.message = "L'image du bowl n'a pas pu être récupérée."
-            errorHandler('TOAST', err)      
-         }
-
          setBowl(res.data)
 
       }).catch((err)=>{
@@ -92,27 +75,59 @@ const BowlDetail = () => {
       })
 
       return ()=>{
-         cleaning = true
+         setCleaning(true)
       }
 
-   }, [bowlID, userRole, navigate] )
+   }, [bowlID, userRole, navigate, cleaning] )
 
    const navigateForm = () => {
       navigate(`/menus/edit/${bowlID}`, { replace: true })
    }
 
-   const cancelReservationBtn = (bowlID) => {
-      deleteMeal(bowlID).then((res) => {
-         navigate('/menus/admin-list', 
+   const cancelReservationBtn = async (bowlID, bowlImage) => {
+
+      let deleted = false,
+          imgDeleted = false;
+
+      const goBackToList = (message) => {
+         navigate('/menus/admin-list',
          {
             replace: true, 
             state: {
-               message: 'Le bowl a été supprimé avec succès'
+               message: message
             } 
          })
-      }).catch((err) => {
+      }
+
+      try
+      {
+         let deletedMeal = await deleteMeal(bowlID);
+         if (deletedMeal)
+         {
+            deleted = true
+            let imageID = getImageHash(bowlImage);
+            let deletedImage = await imgurDeleteImage(imageID);
+
+
+            if (deletedImage.data.success){
+               imgDeleted = true;
+            }
+         }
+         goBackToList('Le bowl a été supprimé avec succès.')
+      }
+      catch(err)
+      {
+         if (!imgDeleted) {
+            err.code = ''
+            err.message = "L'image n'a pas pu être supprimée du serveur."
+         }
+
+         if (deleted) {
+            let message = (imgDeleted) ? 'Le bowl a été supprimé avec succès' : "Le bowl a été supprimé avec succès, mais son image n'a pas pu être retirée sur le serveur."
+            goBackToList(message)
+         }
          errorHandler('TOAST', err)
-      })
+      }
    }
 
    return (
@@ -131,13 +146,33 @@ const BowlDetail = () => {
                            (isAdmitted)
                            ? <div className="bowlBtnCtnr d-inline-flex align-items-end ml-4">
                               <i className='fa-solid fa-pen-to-square mr-2' onClick={()=>{navigateForm(bowl?._id)}}></i>
-                              <i className='fa-solid fa-square-xmark negativeColor' onClick={()=>{cancelReservationBtn(bowl?._id)}}></i>
+                              <i className='fa-solid fa-square-xmark negativeColor' onClick={()=>{cancelReservationBtn(bowl?._id, bowl?.image)}}></i>
                            </div>
                            : ''
                         }
                      </Col>
                      <Col xs={4} className="imgCtnr">
-                        <img src={filePath} alt={bowl?.name} className="img-fluid"/>
+                        {
+                           (!imgError) 
+                           ? <img
+                              src={bowl?.image}
+                              alt={bowl?.name}
+                              onError={(event) => {
+                                 let err = {
+                                    code: '',
+                                    message: "L'image du bowl n'a pas pu être récupérée."
+                                 }
+                                 errorHandler('TOAST', err)
+                                 setImgError(true)
+                              }}
+                              referrerPolicy="no-referrer"
+                              className="img-fluid"/>
+                           : <img 
+                              src="/bowlicon_grey.png"
+                              alt='Bowllywood default icon'
+                              referrerPolicy="no-referrer"
+                              className="img-fluid"/>
+                        }
                      </Col>
                      <Col xs={7}>
                         <div>
