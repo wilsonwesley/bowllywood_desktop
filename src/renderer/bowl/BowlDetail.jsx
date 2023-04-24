@@ -14,6 +14,8 @@ import LoadingSpinner from '../../components/LoadingSpinner';
 
 const BowlDetail = () => {
    const [bowl, setBowl] = useState(null),
+         [cleaning, setCleaning] = useState(false),
+         [imgError, setImgError] = useState(false),
          [isAdmitted, setIsAdmitted] = useState(false),
          [isLoaded, setIsLoaded] = useState(false),
          [ingredientsLoaded, setIngredientsLoaded] = useState(false),
@@ -38,8 +40,8 @@ const BowlDetail = () => {
 
    // get data
    useEffect( () => {
-      let cleaning = false,
-          stockArr = [],
+      setCleaning(false);
+      let stockArr = [],
           ingredientsID = [];
 
       let admittedRoles = ['ROLE_ADMIN'] ;
@@ -61,28 +63,12 @@ const BowlDetail = () => {
                   // nothing to inform
                }
             }
+
             setIngredients(stockArr)
             setIngredientsLoaded(true)
          }
 
          fetchStocks()
-
-         // fetch image
-         try
-         {
-            let fecthedImage = require(`/menu/${bowl?.image}`)
-            if (fecthedImage)
-            {
-               setFilePath(fecthedImage)
-            }
-         }
-         catch(err)
-         {
-            err.code = '';
-            err.message = "L'image du bowl n'a pas pu être récupérée."
-            errorHandler('TOAST', err)      
-         }
-
          setBowl(res.data)
 
       }).catch((err)=>{
@@ -92,7 +78,7 @@ const BowlDetail = () => {
       })
 
       return ()=>{
-         cleaning = true
+         setCleaning(true)
       }
 
    }, [bowlID, userRole, navigate] )
@@ -137,7 +123,28 @@ const BowlDetail = () => {
                         }
                      </Col>
                      <Col xs={4} className="imgCtnr">
-                        <img src={filePath} alt={bowl?.name} className="img-fluid"/>
+                        {
+                           //src={require("./bowlicon_grey.png")}
+                           (!imgError) 
+                           ? <img
+                              src={bowl?.image}
+                              alt={bowl?.name}
+                              onError={(event) => {
+                                 let err = {
+                                    code: '',
+                                    message: "L'image du bowl n'a pas pu être récupérée."
+                                 }
+                                 errorHandler('TOAST', err)
+                                 setImgError(true)
+                              }}
+                              referrerPolicy="no-referrer"
+                              className="img-fluid"/>
+                           : <img 
+                              src="/bowlicon_grey.png"
+                              alt='Bowllywood default image'
+                              referrerPolicy="no-referrer"
+                              className="img-fluid"/>
+                        }
                      </Col>
                      <Col xs={7}>
                         <div>

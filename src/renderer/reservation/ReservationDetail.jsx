@@ -31,6 +31,15 @@ function ReservationDetail () {
 		if (resID && !cancel)
 		{
 			getOneReservation(resID).then((res)=>{
+				let reservDate = new Date(res.data.reservDate)
+				let itemTime = reservDate.getTime(),
+					nowTime = new Date().getTime();
+
+				if (res.data.status !== 'CLD' && itemTime <= nowTime)
+				{
+					res.data.status = 'CLS';
+				}
+
 				formatStatus(res.data.status);
 
 				let dateObj = res.data.reservDate;

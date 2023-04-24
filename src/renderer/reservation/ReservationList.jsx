@@ -47,6 +47,16 @@ function ReservationList () {
 
 			let allSeatNumber = 0;
 			res.data.forEach((item)=>{
+
+				let reservDate = new Date(item.reservDate)
+				let itemTime = reservDate.getTime(),
+					nowTime = new Date().getTime();
+
+				if (item.status !== 'CLD' && itemTime <= nowTime)
+				{
+					item.status = 'CLS';
+				}
+
 				let dateObj = item.reservDate;
 				if (dateObj.includes('Z')) {
 					dateObj = dateObj.split('Z')[0];
