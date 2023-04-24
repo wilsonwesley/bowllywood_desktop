@@ -18,7 +18,7 @@ import {errorHandler} from '../../utils/errorHandler';
 function ReservationList () {
 
 	const [reservations, setReservations] = useState([]),
-		  [cancel, setCancel] = useState(false),
+		  [cleaning, setCleaning] = useState(false),
 		  [rotate, setRotate] = useState(false),
 		  [sortIcon, setSortIcon] = useState('up'),
 		  [seatNumber, setSeatNumber] = useState(0),
@@ -33,12 +33,12 @@ function ReservationList () {
 	let today = dayjs().format('YYYY-MM-DD');
 
 	useEffect(()=>{
-		setCancel(false)
+		setCleaning(false)
 
 		let filterDate = dayjs(selectedDate).format('YYYY-MM-DD')
 		setFullDate(filterDate)
 		getAllReservations(filterDate).then((res)=>{
-			if (cancel) return;
+			if (cleaning) return;
 			// place items depending of the date
 			// descendent mode
 			res.data.sort((first, second)=>{
@@ -47,6 +47,16 @@ function ReservationList () {
 
 			let allSeatNumber = 0;
 			res.data.forEach((item)=>{
+
+				let reservDate = new Date(item.reservDate)
+				let itemTime = reservDate.getTime(),
+					nowTime = new Date().getTime();
+
+				if (item.status !== 'CLD' && itemTime <= nowTime)
+				{
+					item.status = 'CLS';
+				}
+
 				let dateObj = item.reservDate;
 				if (dateObj.includes('Z')) {
 					dateObj = dateObj.split('Z')[0];
@@ -71,9 +81,9 @@ function ReservationList () {
 		setSeatsPerDay(capacity*openedHours)
 
 		return () => { 
-		    setCancel(true);
+		    setCleaning(true);
 		}
-	}, [refreshData, capacity, openedHours, selectedDate, cancel])
+	}, [refreshData, capacity, openedHours, selectedDate])
 		
 	const sortList = () => {
 		let newIcon = (sortIcon === 'down') ? 'up' : 'down';
@@ -114,7 +124,7 @@ function ReservationList () {
 				status = 'Maintenu';
 				statusColor = 'positiveColor';
 				break;
-			// cancelled
+			// canceled
 			case 'CLD':
 				status = 'Annulé';
 				statusColor = 'negativeColor';
