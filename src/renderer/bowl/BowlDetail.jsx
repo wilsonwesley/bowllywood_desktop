@@ -5,6 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 // data
 import { getOneMeal, deleteMeal } from '../../services/bowl';
 import { getOneStock } from '../../services/stocks';
+import { imgurDeleteImage, getImageHash } from '../../services/imgur';
 import { errorHandler } from '../../utils/errorHandler';
 import jwt_decode from "jwt-decode";
 // front
@@ -87,18 +88,52 @@ const BowlDetail = () => {
       navigate(`/menus/edit/${bowlID}`, { replace: true })
    }
 
-   const cancelReservationBtn = (bowlID) => {
-      deleteMeal(bowlID).then((res) => {
-         navigate('/menus/admin-list', 
+   const cancelReservationBtn = async (bowlID, bowlImage) => {
+
+      let deleted = false,
+          imgDeleted = false;
+
+      const goBackToList = (message) => {
+         navigate('/menus/admin-list',
          {
             replace: true, 
             state: {
-               message: 'Le bowl a été supprimé avec succès'
+               message: message
             } 
          })
-      }).catch((err) => {
+      }
+
+      try
+      {
+         let deletedMeal = await deleteMeal(bowlID);
+         if (deletedMeal)
+         {
+            deleted = true
+         debugger
+            let imageID = getImageHash(bowlImage);
+            let deletedImage = await imgurDeleteImage(imageID);
+
+
+            if (deletedImage.data.success){
+               imgDeleted = true;
+            }
+         }
+         goBackToList('Le bowl a été supprimé avec succès.')
+      }
+      catch(err)
+      {
+         if (!imgDeleted) {
+            err.code = ''
+            err.message = "L'image n'a pas pu être supprimée du serveur."
+         }
+
+         if (deleted) {
+            let message = (imgDeleted) ? 'Le bowl a été supprimé avec succès' : "Le bowl a été supprimé avec succès, mais son image n'a pas pu être retirée sur le serveur."
+            goBackToList(message)
+         }
+         console.log(err)
          errorHandler('TOAST', err)
-      })
+      }
    }
 
    return (
@@ -117,14 +152,13 @@ const BowlDetail = () => {
                            (isAdmitted)
                            ? <div className="bowlBtnCtnr d-inline-flex align-items-end ml-4">
                               <i className='fa-solid fa-pen-to-square mr-2' onClick={()=>{navigateForm(bowl?._id)}}></i>
-                              <i className='fa-solid fa-square-xmark negativeColor' onClick={()=>{cancelReservationBtn(bowl?._id)}}></i>
+                              <i className='fa-solid fa-square-xmark negativeColor' onClick={()=>{cancelReservationBtn(bowl?._id, bowl?.image)}}></i>
                            </div>
                            : ''
                         }
                      </Col>
                      <Col xs={4} className="imgCtnr">
                         {
-                           //src={require("./bowlicon_grey.png")}
                            (!imgError) 
                            ? <img
                               src={bowl?.image}

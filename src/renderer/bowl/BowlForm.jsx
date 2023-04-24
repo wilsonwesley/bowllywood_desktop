@@ -89,7 +89,15 @@ const BowlForm = ({action='ADD'}) => {
             }
             catch(err)
             {
-                err.message = "L'image n'a pas pu être téléchargée. Veuillez recommencer."
+                if (err.code === "ERR_NETWORK") {
+                    err.code = 'réseau'
+                    err.message = "Êtes-vous connecté en localhost ? L'upload est impossible sur cet hôte. Sinon, vérifiez votre connexion internet."
+                }
+                else
+                {
+                    err.message = "L'image n'a pas pu être téléchargée. Veuillez recommencer."
+                }
+
                 errorHandler('TOAST', err, 'Téléchargement de l\'image : ')
                 setImageUploading(false)
             }
@@ -354,7 +362,7 @@ const BowlForm = ({action='ADD'}) => {
                                         referrerPolicy="no-referrer"
                                         className="img-fluid"/>
                                    : <img 
-                                        src={require("./bowlicon_grey.png")}
+                                        src="/bowlicon_grey.png"
                                         alt='Bowllywood default image'
                                         referrerPolicy="no-referrer"
                                         className="img-fluid" />

@@ -3,11 +3,18 @@ const clientId = "f472ae0b1cb469c",
       accessToken = '4c5a0814482382318421cfbc00c112186ef4f9b6',
       authClient = `Client-ID ${clientId}`,
       beaderToken = `Bearer ${accessToken}`,
-	  refresh_token = '381a0c931c827eaa3a8eced642b90305383ed184',
-	  client_secret='7b55b6e153e717a9fc15ed52c769d092313b8eb6';
+	refresh_token = '381a0c931c827eaa3a8eced642b90305383ed184',
+	client_secret='7b55b6e153e717a9fc15ed52c769d092313b8eb6',
+	token = 'a147c15df18d58880f43d53e6283dce49d8de94c';
 
 export const imgurUpload = (formData) => {
 	return axios.post('https://api.imgur.com/3/upload', formData, {
+		headers: {Authorization: beaderToken }
+	})
+}
+
+export const imgurDeleteImage = (imageHash) =>{
+	return axios.delete(`https://api.imgur.com/3/image/${imageHash}`, {
 		headers: {Authorization: beaderToken }
 	})
 }
@@ -24,8 +31,16 @@ export const generateAccessToken = () =>{
 
 export const testImgur = (imageLink) =>{
 	return axios.get('https://api.imgur.com/3/image/ggRC6T7', {
-		headers: {
-			Authorization: beaderToken
-		}
+		headers: {Authorization: beaderToken}
 	})
+}
+
+export const getImageHash = (imageLink) => {
+	// exemple imageLink : https://i.imgur.com/kZTaMLp.jpg
+
+	let splited = imageLink.split(/[/]/), // ['https:', '', 'i.imgur.com', 'kZTaMLp.jpg']
+	    fileName = splited[splited.length - 1], // 'kZTaMLp.jpg'
+	    imageID = fileName.split('.')[0]; // 'kZTaMLp'
+
+	return imageID;
 }
