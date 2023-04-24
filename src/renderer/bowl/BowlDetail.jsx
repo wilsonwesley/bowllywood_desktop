@@ -9,7 +9,7 @@ import { imgurDeleteImage, getImageHash } from '../../services/imgur';
 import { errorHandler } from '../../utils/errorHandler';
 import jwt_decode from "jwt-decode";
 // front
-import { Col, Row, Container } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
 import ThinHeader from '../../components/ThinHeader';
 import LoadingSpinner from '../../components/LoadingSpinner';
 
@@ -21,9 +21,6 @@ const BowlDetail = () => {
          [isLoaded, setIsLoaded] = useState(false),
          [ingredientsLoaded, setIngredientsLoaded] = useState(false),
          [ingredients, setIngredients] = useState([]);
-
-   const defaultImage = require('../../assets/img/bowlicon_grey.png')
-   const [filePath, setFilePath] = useState(defaultImage);
 
    const navigate = useNavigate(),
          { id } = useParams(),
@@ -42,8 +39,7 @@ const BowlDetail = () => {
    // get data
    useEffect( () => {
       setCleaning(false);
-      let stockArr = [],
-          ingredientsID = [];
+      let stockArr = [];
 
       let admittedRoles = ['ROLE_ADMIN'] ;
       setIsAdmitted(admittedRoles.includes(userRole))
@@ -82,7 +78,7 @@ const BowlDetail = () => {
          setCleaning(true)
       }
 
-   }, [bowlID, userRole, navigate] )
+   }, [bowlID, userRole, navigate, cleaning] )
 
    const navigateForm = () => {
       navigate(`/menus/edit/${bowlID}`, { replace: true })
@@ -109,7 +105,6 @@ const BowlDetail = () => {
          if (deletedMeal)
          {
             deleted = true
-         debugger
             let imageID = getImageHash(bowlImage);
             let deletedImage = await imgurDeleteImage(imageID);
 
@@ -131,7 +126,6 @@ const BowlDetail = () => {
             let message = (imgDeleted) ? 'Le bowl a été supprimé avec succès' : "Le bowl a été supprimé avec succès, mais son image n'a pas pu être retirée sur le serveur."
             goBackToList(message)
          }
-         console.log(err)
          errorHandler('TOAST', err)
       }
    }
@@ -175,7 +169,7 @@ const BowlDetail = () => {
                               className="img-fluid"/>
                            : <img 
                               src="/bowlicon_grey.png"
-                              alt='Bowllywood default image'
+                              alt='Bowllywood default icon'
                               referrerPolicy="no-referrer"
                               className="img-fluid"/>
                         }

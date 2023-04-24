@@ -1,11 +1,10 @@
 import axios from "axios";
 const clientId = "f472ae0b1cb469c",
       accessToken = '4c5a0814482382318421cfbc00c112186ef4f9b6',
-      authClient = `Client-ID ${clientId}`,
+      // authClient = `Client-ID ${clientId}`,
       beaderToken = `Bearer ${accessToken}`,
 	refresh_token = '381a0c931c827eaa3a8eced642b90305383ed184',
-	client_secret='7b55b6e153e717a9fc15ed52c769d092313b8eb6',
-	token = 'a147c15df18d58880f43d53e6283dce49d8de94c';
+	client_secret='7b55b6e153e717a9fc15ed52c769d092313b8eb6';
 
 export const imgurUpload = (formData) => {
 	return axios.post('https://api.imgur.com/3/upload', formData, {

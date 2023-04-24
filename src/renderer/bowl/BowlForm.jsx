@@ -3,7 +3,7 @@ import './bowl.scss';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 // data
-import { createMeal, updateMeal, getOneMeal, imageUpload } from '../../services/bowl';
+import { createMeal, updateMeal, getOneMeal } from '../../services/bowl';
 import { getAllstock } from '../../services/stocks';
 import { imgurUpload } from '../../services/imgur';
 import { useFormik } from 'formik';
@@ -11,10 +11,6 @@ import { errorHandler } from '../../utils/errorHandler';
 import * as yup from 'yup';
 // front
 import { Col, Row, Container } from 'react-bootstrap';
-import Multiselect from 'react-widgets/Multiselect'
-import DropdownList from 'react-widgets/DropdownList'
-
-import {RadioGroup, Radio} from '@mui/material';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import CustomMultiSelect from '../../components/CustomMultiSelect';
 import ThinHeader from '../../components/ThinHeader';
@@ -363,7 +359,7 @@ const BowlForm = ({action='ADD'}) => {
                                         className="img-fluid"/>
                                    : <img 
                                         src="/bowlicon_grey.png"
-                                        alt='Bowllywood default image'
+                                        alt='Bowllywood default icon'
                                         referrerPolicy="no-referrer"
                                         className="img-fluid" />
                                 }
