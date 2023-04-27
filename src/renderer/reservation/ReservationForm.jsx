@@ -319,7 +319,15 @@ function ReservationDetail ({ action='ADD' }) {
 
 			}).catch((err)=>{
 				setOverBookedHalf([])
-				setDayOverBooked(true) // disable time selection
+				if (err?.response?.status !== 404) {
+					delete err?.response?.message;
+					err.message="Nous ne pouvons pas vérifier la disponibilité du restaurant pour la journée sélectionnée. Veuillez recommencer plus tard.";
+					errorHandler('TOAST', err)
+					setDayOverBooked(true) // disable time selection
+				} else {
+					setDayOverBooked(false) // disable time selection
+				}
+
 				console.log('DAY SEATS : ', err?.response?.data ?? err)
 			})
 		}
