@@ -94,7 +94,6 @@ function App() {
                       "ROLE_CEO",
                       "ROLE_MANAGER",
                       "ROLE_COOK",
-                      "ROLE_WAITER",
                     ]}
                   />
                 }

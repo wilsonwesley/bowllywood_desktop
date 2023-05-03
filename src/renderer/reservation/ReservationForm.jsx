@@ -2,7 +2,7 @@ import './reservation.scss';
 // routines
 import { getOneReservation, editReservation, createReservation, getReservationByDay } from '../../services/reservation';
 import { getRestaurantDetail } from '../../services/restaurants';
-import { getCurrentUserDetails } from '../../services/users';
+// import { getCurrentUserDetails } from '../../services/users';
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { errorHandler } from '../../utils/errorHandler';
@@ -125,7 +125,7 @@ function ReservationDetail ({ action='ADD' }) {
 			reservName: reservation.reservName ?? '',
 			reservPhone: reservation.reservPhone ?? '',
 			resDate: resDate ?? '',
-			resTime: resTime ?? '11:00',
+			resTime: resTime ?? '',
 			seatNr: reservation.seatNr ?? 1,
 			status: reservation.status ?? 'KEPT',
 			restaurantID: reservation.restaurantID ?? '',
@@ -150,13 +150,13 @@ function ReservationDetail ({ action='ADD' }) {
 			if (profRoles.includes(userRole)) {
 				setRestaurantID(decodedToken?.workingResID)
 			} else {
-				getCurrentUserDetails().then((res)=>{
+				/*getCurrentUserDetails().then((res)=>{
 					if (cancel) return;
 					debugger
 					setRestaurantID(res.data.data.favouriteRestaurant_id);
 				}).catch((err)=>{
 					debugger
-				})
+				})*/
 			}
 		}
 
@@ -409,28 +409,29 @@ function ReservationDetail ({ action='ADD' }) {
 	                        error={errors.resDate}
 						/>
 
-						<CustomTimePicker
-							name="resTime"
-	                        desc="Heure de la réservation"
-	          				format="HH:mm"
-							locale={locale}
-							allowClear={false}
-							size='large'
-							onChange={(timeVal)=>{
-								if (timeVal)
-								{
-	    							setFieldValue('resTime', timeVal.format('HH:mm'));
-								}
-	                        }}
-	      					value={values.resTime ? moment(values.resTime, 'HH:mm') : null}
-	      					minuteStep={30}
-	      					disabledTime={disabledTime}
-							showNow={false}
-							inputReadOnly={true}
-							disabled={dayOverBooked}
-	                        error={errors.resTime}
-							// cellRender
-						/>
+						{
+							(!editMode || (editMode && values.resTime))
+							? <CustomTimePicker
+								name="resTime"
+		                        desc="Heure de la réservation"
+		          				format="HH:mm"
+								locale={locale}
+								allowClear={false}
+								size='large'
+								onChange={(time)=>{
+									setFieldValue('resTime', time.format('HH:mm'));
+								}}
+		      					value={values.resTime ? dayjs(values.resTime, 'HH:mm') : null}
+		      					minuteStep={30}
+		      					disabledTime={disabledTime}
+								showNow={false}
+								inputReadOnly={true}
+								disabled={dayOverBooked}
+		                        error={errors.resTime}
+								// cellRender
+							/>
+							: <LoadingSpinner />
+						}
 
 						<Input 
 							name="seatNr"

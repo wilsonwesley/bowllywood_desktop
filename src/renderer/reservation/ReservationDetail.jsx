@@ -150,14 +150,14 @@ function ReservationDetail () {
 
 				<Col xs={4} md={3} className=" pl-2 pr-0">
 					<p>Réservation de</p>
-					<h2 className="m-0">M&#183;Mme {reservation.reservName}</h2>
-					<p>{(reservation.phone) ? <p>{formatPhone(reservation.phone)}</p> : 'Aucun tél. renseigné' }</p>
+					<h2 className="m-0">M&#183;Mme {reservation?.reservName}</h2>
+					<p>{(reservation?.reservPhone) ? <span>{formatPhone(reservation?.reservPhone)}</span> : 'Aucun tél. renseigné' }</p>
 				</Col>
 
 				<Col xs={4} md={2}>
 					<div className="d-flex align-items-end">
-						<i className={`fa-solid fa-pen-to-square mr-3 ${ (!isEditable) ? 'disabled' : '' }`} onClick={()=>{navigateForm(reservation._id)}}></i>
-						<i className={`fa-solid fa-square-xmark negativeColor ${ (!isEditable) ? 'disabled' : '' }`} onClick={()=>{cancelReservationBtn(reservation._id)}}></i>
+						<i className={`fa-solid fa-pen-to-square mr-3 ${ (!isEditable) ? 'disabled' : '' }`} onClick={()=>{navigateForm(reservation?._id)}}></i>
+						<i className={`fa-solid fa-square-xmark negativeColor ${ (!isEditable) ? 'disabled' : '' }`} onClick={()=>{cancelReservationBtn(reservation?._id)}}></i>
 					</div>
 				</Col>
 			</Row>
@@ -172,7 +172,7 @@ function ReservationDetail () {
 						</div>
 						<div className="detailNumbers">
 							<p>
-								<span className="font-weight-bold mr-2">{reservation.seatNr}</span> 
+								<span className="font-weight-bold mr-2">{reservation?.seatNr}</span> 
 								<span className="largeText">Personnes</span>
 							</p>
 							<p>
