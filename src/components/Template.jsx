@@ -169,6 +169,15 @@ const Template = () => {
             </Link>
         </SidebarItem>,
         <SidebarItem>
+          <Link
+            to="/menus/admin-list"
+            className="text-decoration-none text-black text-center"
+          >
+            <i className="fa-solid fa-bowl-food text-black flex-center"></i>
+            <p>Bowls</p>
+          </Link>
+        </SidebarItem>,
+        <SidebarItem>
             <Link to="/restaurants" className='text-decoration-none text-black text-center'>
                 <i className="fa-solid fa-shop text-black flex-center"></i>
                 <p>Restaurants</p>
