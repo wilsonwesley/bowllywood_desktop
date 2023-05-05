@@ -52,7 +52,7 @@ function HomeScreen() {
 	stocks = {
 		title: 'Inventaire',
 		isDisplayed: 'true',
-		description: '[cuisiniers ET/OU chef cuisiniers] Informer un changement de stocks. Ajouter ou retirer.',
+		description: 'Informer un changement de stocks. Ajouter ou retirer.',
 		route: '/stocks'
 	},
 	franchise = {
@@ -73,7 +73,7 @@ function HomeScreen() {
 	}
 
 	if (role === 'ROLE_ADMIN' || role === 'ROLE_SUPERADMIN' || role === 'ROLE_CEO') {
-		linkList = [kitchenCalendar, reservations, stocks, franchise]
+		linkList = [kitchenCalendar, stocks, franchise]
 		navList = [profilIcon, deconnIcon]
 	}
 	else if (role === 'ROLE_MANAGER' || role === 'ROLE_WAITER' || role === 'ROLE_COOK') {
