@@ -8,7 +8,8 @@ import './LoginScreen.scss';
 import { loginUser } from '../../services/users';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthContext';
-
+import jwt_decode from "jwt-decode";
+import { errorHandler } from '../../utils/errorHandler';
 const loginSchema = yup.object().shape({
     email: yup
         .string()
@@ -37,6 +38,19 @@ function LoginScreen() {
             onSubmit={async (values) => {
                 try {
                     const response = await loginUser(values);
+
+                    const decodedToken = jwt_decode(response.data.token),
+                          userRole = decodedToken?.roleID ?? '';
+
+                    if (userRole === 'ROLE_USER') {
+                        let err = {
+                            code: '',
+                            message: 'La connexion est impossible. Veuillez réessayer.'
+                        }
+                        errorHandler('TOAST', err)
+                        return
+                    }
+
                     localStorage.setItem(
                         'userTokens',
                         JSON.stringify(response.data)
