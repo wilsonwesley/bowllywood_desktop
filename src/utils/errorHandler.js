@@ -56,6 +56,7 @@ export function errorHandler(errType, errorCatched, navigate, subjectName) {
 			errCode = ''
 		}
 		errMessage = get_default_message(errCode, subjectName)
+	}
 
 		if (errCode === 401 || errCode === 403) {
 			errTitle = 'Accès refusé'
@@ -64,7 +65,6 @@ export function errorHandler(errType, errorCatched, navigate, subjectName) {
 		} else {
 			errTitle = 'Erreur'
 		}
-	}
 
 	// errTitle = (errCode !== '') ? errCode : 'Une erreur est survenue';
 
