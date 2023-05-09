@@ -186,7 +186,7 @@ function App() {
                 path="*"
                 element={
                   <ErrorScreen
-                    errCode={404}
+                    errCode="Page non trouvée"
                     errText="La page demandée n'existe pas. Veuillez recommencer ou retourner sur la page d'accueil."
                   />
                 }
